@@ -1,0 +1,9 @@
+.vertical-labeled-input {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.ui-toolbar {
+	border: none !important;
+}

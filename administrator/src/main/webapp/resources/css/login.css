@@ -1,0 +1,14 @@
+body, form {
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0;
+}
+
+.login-panel {
+	width: 30vw;
+	min-width: 300px;
+	padding: 2em;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
