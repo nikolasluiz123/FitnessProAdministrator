@@ -7,3 +7,36 @@
 .ui-toolbar {
 	border: none !important;
 }
+
+.top-bar {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    height: 4em;
+}
+
+.page-title {
+	padding-left: 9.2em;
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.sidebar-menu {
+    width: 12.5em;
+    position: fixed;
+    left: 0;
+    padding-top: 3em;
+    background-color: #f4f4f4; 
+}
+
+.menu-container {
+	height: 100vh;
+    overflow-y: auto;
+}
+
+.main-content {
+    margin-left: 12.5em; 
+    padding-top: 4em; 
+}

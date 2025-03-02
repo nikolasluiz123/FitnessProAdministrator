@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="../templates/template.xhtml">
+	<ui:define name="content">
+		<h:form>
+			<p:dataTable id="dataTableLogs" var="log" value="#{executionLogsMBean.lazyModel}"
+				rows="100" paginator="true" paginatorPosition="both"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
+				rowsPerPageTemplate="25, 50, 100"
+				widgetVar="executionLogsTableWV">
+
+				<p:column headerText="Tipo" sortBy="#{log.type.label}" filterBy="#{log.type.value}" filterMatchMode="exact">
+					<f:facet name="filter">
+						<p:selectOneMenu id="filterType" onchange="PF('executionLogsTableWV').filter()" styleClass="ui-full-width-filter">
+	                        <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
+	                        <f:selectItems value="#{executionLogsMBean.executionTypes}" 
+	                        			   var="typeItem"
+	                        			   itemValue="#{typeItem.value}" 
+	                        			   itemLabel="#{typeItem.label}" />
+	                    </p:selectOneMenu>
+					</f:facet>
+					
+					<h:outputText value="#{log.type.label}" />
+				</p:column>
+
+				<p:column headerText="Estado" sortBy="#{log.state.label}" filterBy="#{log.state.value}" filterMatchMode="exact">
+					<f:facet name="filter">
+						<p:selectOneMenu id="filterState" onchange="PF('executionLogsTableWV').filter()" styleClass="ui-full-width-filter">
+	                        <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
+	                        <f:selectItems value="#{executionLogsMBean.executionStates}" 
+	                        			   var="stateItem"
+	                        			   itemValue="#{stateItem.value}" 
+	                        			   itemLabel="#{stateItem.label}" />
+	                    </p:selectOneMenu>
+					</f:facet>
+					<h:outputText value="#{log.state.label}" />
+				</p:column>
+
+				<p:column field="executionStart" headerText="Início da Execução" filterMatchMode="between">
+					<f:facet name="filter">
+						<p:datePicker id="filterRangeExecutionStart" 
+									  selectionMode="range" 
+									  onchange="PF('executionLogsTableWV').filter()" 
+									  converter="LocalDateConverter" />
+					</f:facet>
+					
+					<h:outputText value="#{log.executionStart}">
+						<f:converter converterId="LocalDateTimeConverter" />
+					</h:outputText>
+				</p:column>
+
+				<p:column field="executionEnd" headerText="Fim da Execução" filterMatchMode="between">
+					<f:facet name="filter">
+						<p:datePicker id="filterRangeExecutionEnd" 
+									  selectionMode="range" 
+									  onchange="PF('executionLogsTableWV').filter()" 
+									  converter="LocalDateConverter" />
+					</f:facet>
+					
+					<h:outputText value="#{log.executionEnd}">
+						<f:converter converterId="LocalDateTimeConverter" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Serviço Chamado" sortBy="#{log.endpoint}" filterBy="#{log.endpoint}" filterMatchMode="contains">
+					<h:outputText value="#{log.endpoint}" />
+				</p:column>
+
+				<p:column headerText="Método Chamado" sortBy="#{log.methodName}" filterBy="#{log.methodName}" filterMatchMode="contains">
+					<h:outputText value="#{log.methodName}" />
+				</p:column>
+
+				<f:facet name="paginatorTopLeft">
+					<p:commandButton type="button" icon="pi pi-refresh" />
+				</f:facet>
+
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

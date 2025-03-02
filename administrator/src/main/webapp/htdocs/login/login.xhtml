@@ -12,7 +12,7 @@
 </h:head>
 <h:body>
 	<h:form id="loginForm">
-		<p:messages id="messages" showDetail="true" autoUpdate="true" />
+		<p:growl id="messages" showDetail="true" autoUpdate="true" />
 		<p:panel id="authenticationPanel" class="login-panel">
 			<div class="ui-g">
 				<div class="ui-g-12">
@@ -37,8 +37,7 @@
 				</f:facet>
 
 				<f:facet name="right">
-					<p:commandButton id="loginButton" value="Entrar"
-						action="#{loginMBean.authenticate}" />
+					<p:commandButton id="loginButton" value="Entrar" action="#{loginMBean.authenticate}" update="messages" />
 				</f:facet>
 			</p:toolbar>
 		</p:panel>

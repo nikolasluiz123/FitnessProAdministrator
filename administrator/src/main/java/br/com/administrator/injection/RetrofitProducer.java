@@ -23,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitProducer {
 	
 	 @Produces
-     public Retrofit produceRetrofit() {
+     public Retrofit produceRetrofit(OkHttpClient client) {
 			Gson gson = new GsonBuilder()
 					.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter())
 					.registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
@@ -32,6 +32,7 @@ public class RetrofitProducer {
          return new Retrofit.Builder()
              .baseUrl("http://192.168.0.41:8081/api/v1/")
              .addConverterFactory(GsonConverterFactory.create(gson))
+             .client(client)
              .build();
      }
 	 

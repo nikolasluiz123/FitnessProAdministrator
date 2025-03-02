@@ -1,10 +1,13 @@
-package br.com.administrator.managedbean;
+package br.com.administrator.managedbean.login;
 
 import java.io.Serializable;
 
 import br.com.administrator.to.TOLogin;
+import br.com.administrator.utils.FacesUtils;
 import br.com.administrator.viewmodel.LoginViewModel;
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.context.ExternalContext;
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -28,7 +31,11 @@ public class LoginMBean implements Serializable {
 	public void authenticate() {
 		try {
 			loginViewModel.authenticate(toLogin);
+			
+			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+	        externalContext.redirect(externalContext.getRequestContextPath() + "/htdocs/logs/logs_service_execution.jsf");
 		} catch (Exception e) {
+			FacesUtils.addErrorMessage(e.getMessage(), "Erro de Autenticação");
 			e.printStackTrace();
 		}
 	}

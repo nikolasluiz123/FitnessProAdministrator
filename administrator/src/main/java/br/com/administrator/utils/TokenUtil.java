@@ -20,7 +20,7 @@ public class TokenUtil {
 	    response.addCookie(cookie);
 	}
 	
-	public String getToken() {
+	public static String getToken() {
 	    HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
 	    
 	    Cookie[] cookies = request.getCookies();

@@ -1,6 +1,5 @@
 package br.com.administrator.viewmodel;
 
-import java.io.IOException;
 import java.io.Serializable;
 
 import br.com.administrator.service.webclient.AuthenticationWebClient;
@@ -21,7 +20,7 @@ public class LoginViewModel implements Serializable {
         this.authenticationWebClient = authenticationWebClient;
 	}
 
-	public void authenticate(TOLogin toLogin) throws IOException {
+	public void authenticate(TOLogin toLogin) throws Exception {
 		String token = authenticationWebClient.authenticate(toLogin.getEmail(), toLogin.getPassword());
 		TokenUtil.saveToken(token);
 	}

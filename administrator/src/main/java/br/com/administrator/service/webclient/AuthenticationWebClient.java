@@ -1,8 +1,9 @@
 package br.com.administrator.service.webclient;
 
-import java.io.IOException;
+import java.net.ConnectException;
 
 import br.com.administrator.service.IAuthenticationService;
+import br.com.administrator.service.exception.ServiceException;
 import br.com.fitnesspro.shared.communication.dtos.general.AuthenticationDTO;
 import br.com.fitnesspro.shared.communication.responses.AuthenticationServiceResponse;
 import jakarta.annotation.Nullable;
@@ -25,13 +26,21 @@ public class AuthenticationWebClient extends AbstractWebClient {
 	}
 	
 	@Nullable
-	public String authenticate(@NotNull String email, @NotNull String password) throws IOException {
-		AuthenticationDTO authenticationDTO = new AuthenticationDTO();
-		authenticationDTO.setEmail(email);
-		authenticationDTO.setPassword(password);
-		
-		AuthenticationServiceResponse response = getAuthResponseBody(service.authenticate(authenticationDTO));
-		
-		return response.getToken();
+	public String authenticate(@NotNull String email, @NotNull String password) throws Exception {
+		try {
+			AuthenticationDTO authenticationDTO = new AuthenticationDTO();
+			authenticationDTO.setEmail(email);
+			authenticationDTO.setPassword(password);
+			
+			AuthenticationServiceResponse response = getAuthResponseBody(service.authenticate(authenticationDTO));
+			
+			if (!response.getSuccess()) {
+				throw new ServiceException(response.getError());
+			}
+			
+			return response.getToken();
+		} catch (ConnectException exception) {
+			throw new ServiceException("Não foi possível se conectar ao servidor. Tente novamente mais tarde.", exception);
+		}
 	}
 }
