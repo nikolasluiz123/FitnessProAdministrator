@@ -1,20 +1,18 @@
 package br.com.administrator.managedbean.login;
 
-import java.io.Serializable;
-
+import br.com.administrator.managedbean.common.beans.AbstractBaseMBean;
+import br.com.administrator.managedbean.common.constants.IScreensRedirect;
 import br.com.administrator.to.TOLogin;
 import br.com.administrator.utils.FacesUtils;
 import br.com.administrator.viewmodel.LoginViewModel;
 import jakarta.annotation.PostConstruct;
-import jakarta.faces.context.ExternalContext;
-import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
 @Named("loginMBean")
 @ViewScoped
-public class LoginMBean implements Serializable {
+public class LoginMBean extends AbstractBaseMBean {
 
 	private static final long serialVersionUID = 1L;
 
@@ -31,12 +29,9 @@ public class LoginMBean implements Serializable {
 	public void authenticate() {
 		try {
 			loginViewModel.authenticate(toLogin);
-			
-			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-	        externalContext.redirect(externalContext.getRequestContextPath() + "/htdocs/logs/logs_service_execution.jsf");
+			FacesUtils.redirect(IScreensRedirect.EXECUTION_LOGS);
 		} catch (Exception e) {
-			FacesUtils.addErrorMessage(e.getMessage(), "Erro de Autenticação");
-			e.printStackTrace();
+			exceptionHandler(e, getBundle().getString("error_summary"));
 		}
 	}
 	
@@ -46,5 +41,10 @@ public class LoginMBean implements Serializable {
 	
 	public TOLogin getToLogin() {
 		return toLogin;
+	}
+
+	@Override
+	protected String getBundleFileName() {
+		return "login";
 	}
 }

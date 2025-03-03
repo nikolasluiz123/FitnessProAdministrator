@@ -1,7 +1,7 @@
 package br.com.administrator.enums;
 
 public enum EnumDateTimePatterns {
-	DATE_TIME("dd/MM/yyyy hh:mm"),
+	DATE_TIME("dd/MM/yyyy HH:mm"),
 	DATE("dd/MM/yyyy");
 	
 	private String pattern;

@@ -7,6 +7,15 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <ui:composition template="../templates/template.xhtml">
+	
+	<ui:define name="bundles">
+		<f:loadBundle var="bundle" basename="messages.execution_logs" />
+	</ui:define>
+
+	<ui:define name="title">
+		<h:outputText value="#{bundle['title']}" styleClass="page-title"/>
+	</ui:define>
+
 	<ui:define name="content">
 		<h:form>
 			<p:dataTable id="dataTableLogs" var="log" value="#{executionLogsMBean.lazyModel}"
@@ -16,10 +25,10 @@
 				rowsPerPageTemplate="25, 50, 100"
 				widgetVar="executionLogsTableWV">
 
-				<p:column headerText="Tipo" sortBy="#{log.type.label}" filterBy="#{log.type.value}" filterMatchMode="exact">
+				<p:column headerText="#{bundle['label_column_type']}" sortBy="#{log.type.label}" filterBy="#{log.type.value}" filterMatchMode="exact">
 					<f:facet name="filter">
 						<p:selectOneMenu id="filterType" onchange="PF('executionLogsTableWV').filter()" styleClass="ui-full-width-filter">
-	                        <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
+	                        <f:selectItem itemLabel="#{bundle['label_filter_all']}" itemValue="#{null}" noSelectionOption="true" />
 	                        <f:selectItems value="#{executionLogsMBean.executionTypes}" 
 	                        			   var="typeItem"
 	                        			   itemValue="#{typeItem.value}" 
@@ -30,10 +39,10 @@
 					<h:outputText value="#{log.type.label}" />
 				</p:column>
 
-				<p:column headerText="Estado" sortBy="#{log.state.label}" filterBy="#{log.state.value}" filterMatchMode="exact">
+				<p:column headerText="#{bundle['label_column_state']}" sortBy="#{log.state.label}" filterBy="#{log.state.value}" filterMatchMode="exact">
 					<f:facet name="filter">
 						<p:selectOneMenu id="filterState" onchange="PF('executionLogsTableWV').filter()" styleClass="ui-full-width-filter">
-	                        <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
+	                        <f:selectItem itemLabel="#{bundle['label_filter_all']}" itemValue="#{null}" noSelectionOption="true" />
 	                        <f:selectItems value="#{executionLogsMBean.executionStates}" 
 	                        			   var="stateItem"
 	                        			   itemValue="#{stateItem.value}" 
@@ -43,7 +52,7 @@
 					<h:outputText value="#{log.state.label}" />
 				</p:column>
 
-				<p:column field="executionStart" headerText="Início da Execução" filterMatchMode="between">
+				<p:column field="executionStart" headerText="#{bundle['label_column_execution_start']}" filterMatchMode="between">
 					<f:facet name="filter">
 						<p:datePicker id="filterRangeExecutionStart" 
 									  selectionMode="range" 
@@ -56,7 +65,7 @@
 					</h:outputText>
 				</p:column>
 
-				<p:column field="executionEnd" headerText="Fim da Execução" filterMatchMode="between">
+				<p:column field="executionEnd" headerText="#{bundle['label_column_execution_end']}" filterMatchMode="between">
 					<f:facet name="filter">
 						<p:datePicker id="filterRangeExecutionEnd" 
 									  selectionMode="range" 
@@ -69,11 +78,11 @@
 					</h:outputText>
 				</p:column>
 
-				<p:column headerText="Serviço Chamado" sortBy="#{log.endpoint}" filterBy="#{log.endpoint}" filterMatchMode="contains">
+				<p:column headerText="#{bundle['label_column_endpoint']}" sortBy="#{log.endpoint}" filterBy="#{log.endpoint}" filterMatchMode="contains">
 					<h:outputText value="#{log.endpoint}" />
 				</p:column>
 
-				<p:column headerText="Método Chamado" sortBy="#{log.methodName}" filterBy="#{log.methodName}" filterMatchMode="contains">
+				<p:column headerText="#{bundle['label_column_method_name']}" sortBy="#{log.methodName}" filterBy="#{log.methodName}" filterMatchMode="contains">
 					<h:outputText value="#{log.methodName}" />
 				</p:column>
 

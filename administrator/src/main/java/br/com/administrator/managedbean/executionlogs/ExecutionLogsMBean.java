@@ -1,8 +1,8 @@
 package br.com.administrator.managedbean.executionlogs;
 
-import java.io.Serializable;
 import java.util.List;
 
+import br.com.administrator.managedbean.common.beans.AbstractBaseMBean;
 import br.com.administrator.managedbean.common.labeledenum.LabeledEnum;
 import br.com.administrator.viewmodel.ExecutionLogsViewModel;
 import br.com.fitnesspro.models.executions.enums.EnumExecutionType;
@@ -14,7 +14,7 @@ import jakarta.inject.Named;
 
 @Named("executionLogsMBean")
 @ViewScoped
-public class ExecutionLogsMBean implements Serializable {
+public class ExecutionLogsMBean extends AbstractBaseMBean {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -51,6 +51,11 @@ public class ExecutionLogsMBean implements Serializable {
 
 	public List<LabeledEnum<EnumExecutionState>> getExecutionStates() {
 		return executionStates;
+	}
+
+	@Override
+	protected String getBundleFileName() {
+		return "execution_logs";
 	}
 	
 }

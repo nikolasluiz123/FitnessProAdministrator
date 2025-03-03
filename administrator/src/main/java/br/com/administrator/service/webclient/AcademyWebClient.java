@@ -1,0 +1,84 @@
+package br.com.administrator.service.webclient;
+
+import java.net.ConnectException;
+import java.util.List;
+
+import br.com.administrator.service.IAcademyService;
+import br.com.administrator.service.exception.ServiceException;
+import br.com.fitnesspro.shared.communication.dtos.general.AcademyDTO;
+import br.com.fitnesspro.shared.communication.filter.AcademyFilter;
+import br.com.fitnesspro.shared.communication.paging.CommonPageInfos;
+import br.com.fitnesspro.shared.communication.responses.PersistenceServiceResponse;
+import br.com.fitnesspro.shared.communication.responses.ReadServiceResponse;
+import br.com.fitnesspro.shared.communication.responses.SingleValueServiceResponse;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import retrofit2.Call;
+
+@ApplicationScoped
+public class AcademyWebClient extends AbstractWebClient {
+	
+	private final IAcademyService service;
+	
+	public AcademyWebClient() {
+		this.service = null;
+	}
+	
+	@Inject
+	public AcademyWebClient(IAcademyService service) {
+		this.service = service;
+	}
+	
+	public List<AcademyDTO> getListAcademy(AcademyFilter filter, CommonPageInfos pageInfos) throws Exception {
+		try {
+			String token = getFormatedToken();
+			
+			Call<ReadServiceResponse<AcademyDTO>> serviceCall = service.getListAcademy(token, filter, pageInfos);
+			ReadServiceResponse<AcademyDTO> response = getReadResponseBody(serviceCall, AcademyDTO.class);
+			
+			if (!response.getSuccess()) {
+				throw new ServiceException(response.getError());
+			}
+			
+			return response.getValues();
+		} catch (ConnectException exception) {
+			throw new ServiceException("Não foi possível se conectar ao servidor. Tente novamente mais tarde.", exception);
+		}
+	}
+	
+	public Integer getCountListAcademy(AcademyFilter filter) throws Exception {
+		try {
+			String token = getFormatedToken();
+			
+			Call<SingleValueServiceResponse<Integer>> serviceCall = service.getCountAcademy(token, filter);
+			SingleValueServiceResponse<Integer> response = getSingleResponseBody(serviceCall, Integer.class);
+			
+			if (!response.getSuccess()) {
+				throw new ServiceException(response.getError());
+			}
+			
+			return response.getValue();
+		} catch (ConnectException exception) {
+			throw new ServiceException("Não foi possível se conectar ao servidor. Tente novamente mais tarde.", exception);
+		}
+	}
+	
+	public PersistenceServiceResponse saveAcademy(AcademyDTO dto) throws Exception {
+		try {
+			String token = getFormatedToken();
+			
+			Call<PersistenceServiceResponse> serviceCall = service.saveAcademy(token, dto);
+			PersistenceServiceResponse response = getPersistenceResponseBody(serviceCall);
+			
+			if (!response.getSuccess()) {
+				throw new ServiceException(response.getError());
+			}
+			
+			return response;
+			
+		} catch (ConnectException exception) {
+			throw new ServiceException("Não foi possível se conectar ao servidor. Tente novamente mais tarde.", exception);
+		}
+	}
+
+}

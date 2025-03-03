@@ -1,5 +1,6 @@
 package br.com.administrator.injection;
 
+import br.com.administrator.service.IAcademyService;
 import br.com.administrator.service.IAuthenticationService;
 import br.com.administrator.service.IExecutionLogsService;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -17,6 +18,11 @@ public class RetrofitServiceProducer {
 	@Produces
 	public IExecutionLogsService produceExecutionLogsService(Retrofit retrofit) {
 		return retrofit.create(IExecutionLogsService.class);
+	}
+	
+	@Produces
+	public IAcademyService produceAcademyService(Retrofit retrofit) {
+		return retrofit.create(IAcademyService.class);
 	}
 
 }

@@ -11,33 +11,30 @@
 	<h:outputStylesheet name="css/login.css" />
 </h:head>
 <h:body>
+	<f:loadBundle var="bundle" basename="messages.login" />
+
 	<h:form id="loginForm">
 		<p:growl id="messages" showDetail="true" autoUpdate="true" />
 		<p:panel id="authenticationPanel" class="login-panel">
 			<div class="ui-g">
 				<div class="ui-g-12">
 					<div class="vertical-labeled-input">
-						<p:outputLabel id="labelEmail" for="email" value="E-mail" />
+						<p:outputLabel id="labelEmail" for="email" value="#{bundle['label_email_field']}" />
 						<p:inputText id="email" value="#{loginMBean.toLogin.email}" required="true" />
 					</div>
 				</div>
 
 				<div class="ui-g-12">
 					<div class="vertical-labeled-input">
-						<p:outputLabel id="labelPassword" for="password" value="Senha" />
+						<p:outputLabel id="labelPassword" for="password" value="#{bundle['label_password_field']}" />
 						<p:password id="password" value="#{loginMBean.toLogin.password}" required="true" />
 					</div>
 				</div>
 			</div>
 
 			<p:toolbar id="toolbar">
-				<f:facet name="left">
-					<p:commandButton id="registerButton" value="Cadastrar-se"
-						action="#{loginMBean.register}" styleClass="ui-button-outlined" />
-				</f:facet>
-
 				<f:facet name="right">
-					<p:commandButton id="loginButton" value="Entrar" action="#{loginMBean.authenticate}" update="messages" />
+					<p:commandButton id="loginButton" value="#{bundle['label_login_button']}" action="#{loginMBean.authenticate}" update="messages" />
 				</f:facet>
 			</p:toolbar>
 		</p:panel>

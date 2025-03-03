@@ -13,25 +13,29 @@
 </h:head>
 
 <h:body>
+	<f:loadBundle var="menuBundle" basename="messages.menu" />
+
+	<ui:insert name="bundles" />
+
 	<h:form id="formMessages">
 		<p:growl id="messages" showDetail="true" autoUpdate="true" />
 	</h:form>
 
     <p:toolbar styleClass="top-bar">
         <p:toolbarGroup>
-            <h:outputText value="Título de Teste" styleClass="page-title"/>
+        	<ui:insert name="title" />
         </p:toolbarGroup>
     </p:toolbar>
 
 	<div class="sidebar-menu">
 		<h:form id="menuForm">
 			<p:menu id="menuItems" class="menu-container">
-				<p:submenu label="Monitoramento">
-					<p:menuitem value="Logs de Execução do Serviço" />
-					<p:menuitem value="Usuários Autenticados" />
+				<p:submenu label="#{menuBundle['label_submenu_monitoring']}">
+					<p:menuitem value="#{menuBundle['label_menu_item_execution_logs']}" action="#{menuMBean.onExecutionLogsClick}" />
+					<p:menuitem value="#{menuBundle['label_menu_item_users']}" action="#{menuMBean.onUsersClick}" />
 				</p:submenu>
-				<p:submenu label="Cadastros">
-					<p:menuitem value="Academias" />
+				<p:submenu label="#{menuBundle['label_submenu_registers']}">
+					<p:menuitem value="#{menuBundle['label_menu_item_academies']}" action="#{menuMBean.onAcademiesClick}" />
 				</p:submenu>
 			</p:menu>
 		</h:form>

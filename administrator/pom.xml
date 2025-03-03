@@ -21,6 +21,7 @@
 		<jakarta.el.api.version>6.0.1</jakarta.el.api.version>
 		<jakarta.enterprise.cdi.api.version>4.1.0</jakarta.enterprise.cdi.api.version>
 		<primefaces.version>14.0.12</primefaces.version>
+		<primeflex.version>3.3.1</primeflex.version>
 		<wildfly.bom.version>30.0.1.Final</wildfly.bom.version>
 		<retrofit.version>2.11.0</retrofit.version>
 		<gson.version>2.12.1</gson.version>
