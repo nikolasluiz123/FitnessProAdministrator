@@ -43,7 +43,9 @@
 				</p:column>
 
 				<p:column headerText="#{bundleAcademySearch['label_column_phone']}">
-					<h:outputText value="#{item.phone}" />
+					<h:outputText value="#{item.phone}">
+						<f:converter converterId="PhoneConverter" />
+					</h:outputText>
 				</p:column>
 				
 				<p:column headerText="#{bundleAcademySearch['label_column_creation_date']}" sortBy="#{item.creationDate}">
@@ -100,7 +102,7 @@
 						
 						<div class="ui-g-6 vertical-labeled-input">
 							<p:outputLabel id="labelPhone" for="phone" value="#{bundleAcademyDialog['label_field_phone']}" />
-							<p:inputText id="phone" value="#{academyDialogMBean.toAcademy.phone}" />
+							<p:inputMask id="phone" value="#{academyDialogMBean.toAcademy.phone}" mask="(99) 9999-9999[9]" />
 						</div>
 					</div>
 			
