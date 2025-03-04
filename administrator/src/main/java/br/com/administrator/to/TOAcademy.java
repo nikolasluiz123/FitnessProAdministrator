@@ -13,6 +13,7 @@ public class TOAcademy extends AbstractModelTO {
 	private String phone;
 	private LocalDateTime creationDate;
 	private LocalDateTime updateDate;
+	private Boolean active;
 
 	public String getName() {
 		return name;
@@ -54,4 +55,12 @@ public class TOAcademy extends AbstractModelTO {
 		this.updateDate = updateDate;
 	}
 
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+	
 }

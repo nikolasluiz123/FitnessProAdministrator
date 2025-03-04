@@ -40,12 +40,27 @@ public class AcademyDialogMBean extends AbstractBaseMBean {
 		}
 	}
 	
+	public void onAcademyInactivateClick( ) {
+		try {
+			viewModel.inactivateAcademy(toAcademy);
+			
+			FacesUtils.addSucccessMessage(getBundleString("inactivate_academy_success", toAcademy.getName()), 
+				  						  getBundleString("save_success_summary"));
+		} catch (Exception exception) {
+			exceptionHandler(exception, getBundleString("inactivation_error_summary"));
+		}
+	}
+	
 	public String getTitle() {
 		if (toAcademy.getId() != null) {
 			return getBundleString("label_title_academy", toAcademy.getName());
 		} else {
 			return getBundleString("label_title_new_academy");
 		}
+	}
+	
+	public String getMessageConfirmationInactivation() {
+		return getBundleString("message_dialog_confirmation_inactivation", toAcademy.getName());
 	}
 
 	public TOAcademy getToAcademy() {

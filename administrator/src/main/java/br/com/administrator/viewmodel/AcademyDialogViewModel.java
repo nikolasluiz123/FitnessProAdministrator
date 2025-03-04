@@ -22,17 +22,28 @@ public class AcademyDialogViewModel implements Serializable {
 	}
 	
 	public void saveAcademy(TOAcademy to) throws Exception {
-		AcademyDTO dto = new AcademyDTO();
-		dto.setId(to.getId());
-		dto.setActive(true);
-		dto.setAddress(to.getAddress());
-		dto.setName(to.getName());
-		dto.setPhone(to.getPhone());
+		AcademyDTO dto = getAcademyDTO(to);
 		
 		PersistenceServiceResponse response = webClient.saveAcademy(dto);
 		
 		if (response.getSuccess()) {
 			to.setId(response.getId());
 		}
+	}
+
+	public void inactivateAcademy(TOAcademy to) throws Exception {
+		to.setActive(false);
+		webClient.saveAcademy(getAcademyDTO(to));
+	}
+	
+	private AcademyDTO getAcademyDTO(TOAcademy to) {
+		AcademyDTO dto = new AcademyDTO();
+		dto.setId(to.getId());
+		dto.setActive(to.getActive());
+		dto.setAddress(to.getAddress());
+		dto.setName(to.getName());
+		dto.setPhone(to.getPhone());
+		
+		return dto;
 	}
 }

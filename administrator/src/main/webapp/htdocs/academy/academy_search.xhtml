@@ -72,7 +72,7 @@
 				</p:column>
 
 				<f:facet name="paginatorTopLeft">
-					<p:commandButton type="button" icon="pi pi-refresh" />
+					<p:commandButton type="button" icon="pi pi-refresh" oncomplete="onRequestReloadDatatable();" />
 				</f:facet>
 
 			</p:dataTable>
@@ -104,12 +104,16 @@
 					<div class="ui-g">
 						<div class="ui-g-6 vertical-labeled-input">
 							<p:outputLabel id="labelName" for="name" value="#{bundleAcademyDialog['label_field_name']}" />
-							<p:inputText id="name" value="#{academyDialogMBean.toAcademy.name}" />
+							<p:inputText id="name" 
+										 value="#{academyDialogMBean.toAcademy.name}" 
+										 disabled="${!academyDialogMBean.toAcademy.active}" />
 						</div>
 					
 						<div class="ui-g-6 vertical-labeled-input">
 							<p:outputLabel id="labelAddress" for="address" value="#{bundleAcademyDialog['label_field_address']}" />
-							<p:inputText id="address" value="#{academyDialogMBean.toAcademy.address}" />
+							<p:inputText id="address" 
+										 value="#{academyDialogMBean.toAcademy.address}" 
+										 disabled="${!academyDialogMBean.toAcademy.active}" />
 						</div>
 						
 						<div class="ui-g-6 vertical-labeled-input">
@@ -117,16 +121,32 @@
 							<p:inputMask id="phone" 
 										 value="#{academyDialogMBean.toAcademy.phone}" 
 										 mask="(99) 9999-9999[9]"
-										 converter="NoMaskConverter" />
+										 converter="NoMaskConverter"
+										 disabled="${!academyDialogMBean.toAcademy.active}" />
 						</div>
 					</div>
 			
 					<p:toolbar id="toolbar">
+						<f:facet name="left">
+							<p:commandButton id="btnInactivateAcademy" 
+											 styleClass="ui-button-danger"
+											 value="#{bundleAcademyDialog['label_button_inactivate']}" 
+											 action="#{academyDialogMBean.onAcademyInactivateClick}" 
+											 update="@form"
+											 disabled="${!academyDialogMBean.toAcademy.active}">
+											 
+								<p:confirm header="#{bundleAcademyDialog['title_dialog_confirmation_inactivation']}" 
+										   message="#{academyDialogMBean.messageConfirmationInactivation}"
+										   icon="pi pi-exclamation-triangle" />
+							</p:commandButton>
+						</f:facet>
+					
 						<f:facet name="right">
 							<p:commandButton id="btnSaveAcademy" 
 											 value="#{bundleAcademyDialog['label_button_save']}" 
 											 action="#{academyDialogMBean.onAcademySaveClick}" 
-											 update="academyDialogMessages, dialogHeader" />
+											 update="academyDialogMessages, dialogHeader"
+											 disabled="${!academyDialogMBean.toAcademy.active}" />
 						</f:facet>
 					</p:toolbar>
 			  </h:form>

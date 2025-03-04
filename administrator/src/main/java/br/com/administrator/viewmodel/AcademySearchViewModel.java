@@ -64,6 +64,7 @@ public class AcademySearchViewModel implements Serializable {
 		to.setName(dto.getName());
 		to.setPhone(dto.getPhone());
 		to.setUpdateDate(dto.getUpdateDate());
+		to.setActive(dto.getActive());
 		
 		return to;
 	}

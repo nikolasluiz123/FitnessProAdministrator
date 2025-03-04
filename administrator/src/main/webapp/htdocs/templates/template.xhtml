@@ -14,6 +14,7 @@
 
 <h:body>
 	<f:loadBundle var="menuBundle" basename="messages.menu" />
+	<f:loadBundle var="commonBundle" basename="messages.common" />
 
 	<ui:insert name="bundles" />
 
@@ -43,6 +44,14 @@
 
 	<div class="main-content">
 		<ui:insert name="content" />
+		
+		
+		<h:form id="formDefaultDialogs">
+	        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="500">
+	            <p:commandButton value="#{commonBundle['label_button_cancel']}" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+	            <p:commandButton value="#{commonBundle['label_button_confirm']}" type="button" styleClass="ui-confirmdialog-yes" />
+	        </p:confirmDialog>
+		</h:form>
 	</div>
 </h:body>
 </html>
