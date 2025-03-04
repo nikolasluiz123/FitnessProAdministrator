@@ -15,6 +15,9 @@ import br.com.administrator.to.common.AbstractModelTO;
 public abstract class AbstractLazyDataModel<T extends AbstractModelTO> extends LazyDataModel<T> {
 
 	private List<T> data;
+	private int first;
+	private Map<String, SortMeta> sortBy;
+	private Map<String, FilterMeta> filterBy;
 
 	public AbstractLazyDataModel() {
 		super();
@@ -25,6 +28,10 @@ public abstract class AbstractLazyDataModel<T extends AbstractModelTO> extends L
 	
 	@Override
 	public List<T> load(int first, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
+		this.first = first;
+		this.sortBy = sortBy;
+		this.filterBy = filterBy;
+		
 		List<T> result = onLoad(first, pageSize, sortBy, filterBy);
 		this.data = result;
 		
@@ -45,6 +52,10 @@ public abstract class AbstractLazyDataModel<T extends AbstractModelTO> extends L
 		return object.getId();
 	}
 
+	public void reloadPreservingPagingState() {
+		load(this.first, getPageSize(), this.sortBy, this.filterBy);
+	}
+	
 	public List<T> getData() {
 		return data;
 	}

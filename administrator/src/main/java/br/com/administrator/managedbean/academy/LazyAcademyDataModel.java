@@ -31,8 +31,7 @@ public class LazyAcademyDataModel extends AbstractLazyDataModel<TOAcademy> {
 
 	
 	@Override
-	protected List<TOAcademy> onLoad(int first, int pageSize, Map<String, SortMeta> sortBy,
-			Map<String, FilterMeta> filterBy) {
+	protected List<TOAcademy> onLoad(int first, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
 		try {
 			return viewModel.getListAcademy(first, pageSize, sortBy, filterBy);
 		} catch (Exception e) {

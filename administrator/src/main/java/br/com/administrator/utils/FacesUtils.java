@@ -35,4 +35,17 @@ public class FacesUtils {
 		
 		return bundle;
 	}
+	
+	public static void addRequestParam(String key, Object value) {
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		externalContext.getRequestMap().put(key, value);
+	}
+	
+	public static Object getRequestParamAndRemove(String key) {
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		Object value = externalContext.getRequestMap().get(key);
+		externalContext.getRequestMap().remove(key);
+		
+		return value;
+	}
 }

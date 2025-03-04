@@ -24,6 +24,10 @@ public class AcademyDialogMBean extends AbstractBaseMBean {
 	public void init() {
 		this.toAcademy = new TOAcademy();
 	}
+	
+	public void init(TOAcademy to) {
+		this.toAcademy = to;
+	}
 
 	public void onAcademySaveClick() {
 		try {
