@@ -36,7 +36,9 @@
 						update="formMessages:messages, logDialog"
 						oncomplete="PF('logDialogWV').show();" />
 
-				<p:column headerText="#{bundleExecutionLog['label_column_type']}" sortBy="#{log.type.label}" filterBy="#{log.type.value}" filterMatchMode="exact">
+				<p:column headerText="#{bundleExecutionLog['label_column_type']}" 
+						  filterBy="#{log.type.value}" 
+						  filterMatchMode="exact">
 					<f:facet name="filter">
 						<p:selectOneMenu id="filterType" onchange="PF('executionLogsTableWV').filter()" styleClass="ui-full-width-filter">
 	                        <f:selectItem itemLabel="#{bundleExecutionLog['label_filter_all']}" itemValue="#{null}" noSelectionOption="true" />
@@ -50,7 +52,9 @@
 					<h:outputText value="#{log.type.label}" />
 				</p:column>
 
-				<p:column headerText="#{bundleExecutionLog['label_column_state']}" sortBy="#{log.state.label}" filterBy="#{log.state.value}" filterMatchMode="exact">
+				<p:column headerText="#{bundleExecutionLog['label_column_state']}" 
+						  filterBy="#{log.state.value}"
+						  filterMatchMode="exact">
 					<f:facet name="filter">
 						<p:selectOneMenu id="filterState" onchange="PF('executionLogsTableWV').filter()" styleClass="ui-full-width-filter">
 	                        <f:selectItem itemLabel="#{bundleExecutionLog['label_filter_all']}" itemValue="#{null}" noSelectionOption="true" />
@@ -63,7 +67,11 @@
 					<h:outputText value="#{log.state.label}" />
 				</p:column>
 
-				<p:column field="executionStart" headerText="#{bundleExecutionLog['label_column_execution_start']}" filterMatchMode="between">
+				<p:column field="executionStart" 
+						  headerText="#{bundleExecutionLog['label_column_execution_start']}" 
+						  filterMatchMode="between" 
+						  sortBy="#{log.executionStart}"
+						  sortOrder="desc">
 					<f:facet name="filter">
 						<p:datePicker id="filterRangeExecutionStart" 
 									  selectionMode="range" 
@@ -76,7 +84,10 @@
 					</h:outputText>
 				</p:column>
 
-				<p:column field="executionEnd" headerText="#{bundleExecutionLog['label_column_execution_end']}" filterMatchMode="between">
+				<p:column field="executionEnd" 
+						  headerText="#{bundleExecutionLog['label_column_execution_end']}" 
+						  filterMatchMode="between"
+						  sortBy="#{log.executionEnd}">
 					<f:facet name="filter">
 						<p:datePicker id="filterRangeExecutionEnd" 
 									  selectionMode="range" 
@@ -89,16 +100,22 @@
 					</h:outputText>
 				</p:column>
 
-				<p:column headerText="#{bundleExecutionLog['label_column_endpoint']}" sortBy="#{log.endpoint}" filterBy="#{log.endpoint}" filterMatchMode="contains">
+				<p:column headerText="#{bundleExecutionLog['label_column_endpoint']}" 
+						  sortBy="#{log.endpoint}" 
+						  filterBy="#{log.endpoint}" 
+						  filterMatchMode="contains">
 					<h:outputText value="#{log.endpoint}" />
 				</p:column>
 
-				<p:column headerText="#{bundleExecutionLog['label_column_method_name']}" sortBy="#{log.methodName}" filterBy="#{log.methodName}" filterMatchMode="contains">
+				<p:column headerText="#{bundleExecutionLog['label_column_method_name']}" 
+						  sortBy="#{log.methodName}"
+						  filterBy="#{log.methodName}" 
+						  filterMatchMode="contains">
 					<h:outputText value="#{log.methodName}" />
 				</p:column>
 
 				<f:facet name="paginatorTopLeft">
-					<p:commandButton type="button" icon="pi pi-refresh" oncomplete="onRequestReloadDatatable();" />
+					<p:commandButton icon="pi pi-refresh" oncomplete="onRequestReloadDatatable();" />
 				</f:facet>
 
 			</p:dataTable>
