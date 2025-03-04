@@ -6,11 +6,13 @@ import java.util.Map;
 
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
+import org.primefaces.model.SortOrder;
 
 import br.com.administrator.service.webclient.AcademyWebClient;
 import br.com.administrator.to.TOAcademy;
 import br.com.fitnesspro.shared.communication.dtos.general.AcademyDTO;
 import br.com.fitnesspro.shared.communication.filter.AcademyFilter;
+import br.com.fitnesspro.shared.communication.filter.Sort;
 import br.com.fitnesspro.shared.communication.paging.CommonPageInfos;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
@@ -29,7 +31,7 @@ public class AcademySearchViewModel implements Serializable {
 	
 	public List<TOAcademy> getListAcademy(int first, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) throws Exception {
 		CommonPageInfos pageInfos = new CommonPageInfos(pageSize, first / pageSize);
-		AcademyFilter filter = getAcademyFilter(filterBy);
+		AcademyFilter filter = getAcademyFilter(filterBy, sortBy);
 		
 		List<AcademyDTO> result = webClient.getListAcademy(filter, pageInfos);
 		
@@ -37,10 +39,10 @@ public class AcademySearchViewModel implements Serializable {
 	}
 
 	public int getCountListAcademy(Map<String, FilterMeta> filterBy) throws Exception {
-		return webClient.getCountListAcademy(getAcademyFilter(filterBy));
+		return webClient.getCountListAcademy(getAcademyFilter(filterBy, null));
 	}
 	
-	private AcademyFilter getAcademyFilter(Map<String, FilterMeta> filterBy) {
+	private AcademyFilter getAcademyFilter(Map<String, FilterMeta> filterBy, Map<String, SortMeta> sortBy) {
 		AcademyFilter filter = new AcademyFilter();
 		
 		if (filterBy.containsKey("name")) {
@@ -51,6 +53,13 @@ public class AcademySearchViewModel implements Serializable {
 		if (filterBy.containsKey("address")) {
 			String filterValue = filterBy.get("address").getFilterValue().toString();
 			filter.setAddress(filterValue);
+		}
+		
+		if (sortBy != null && !sortBy.values().isEmpty()) {
+			SortMeta sortMeta = sortBy.values().stream().findFirst().get();
+			filter.setSort(new Sort(sortMeta.getField(), sortMeta.getOrder() == SortOrder.ASCENDING));
+		} else {
+			filter.setSort(new Sort("name", true));
 		}
 		
 		return filter;

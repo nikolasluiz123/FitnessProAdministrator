@@ -13,21 +13,21 @@ import jakarta.inject.Named;
 public class AcademySearchMBean extends AbstractBaseMBean {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Inject
 	private LazyAcademyDataModel lazyModel;
-	
+
 	@Inject
-    private AcademyDialogMBean academyDialogMBean;
-	
+	private AcademyDialogMBean academyDialogMBean;
+
 	public LazyAcademyDataModel getLazyModel() {
 		return lazyModel;
 	}
-	
+
 	public void onNewAcademyClick() {
 		academyDialogMBean.init();
 	}
-	
+
 	public void onRowSelect(SelectEvent<TOAcademy> event) {
 		academyDialogMBean.init(event.getObject());
 	}
@@ -35,10 +35,10 @@ public class AcademySearchMBean extends AbstractBaseMBean {
 	public void onRequestReloadDatatable() {
 		lazyModel.reloadPreservingPagingState();
 	}
-	
+
 	@Override
 	protected String getBundleFileName() {
 		return "academy_search";
 	}
-	
+
 }
