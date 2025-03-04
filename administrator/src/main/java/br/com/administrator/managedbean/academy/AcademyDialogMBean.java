@@ -3,7 +3,7 @@ package br.com.administrator.managedbean.academy;
 import br.com.administrator.managedbean.common.beans.AbstractBaseMBean;
 import br.com.administrator.to.TOAcademy;
 import br.com.administrator.utils.FacesUtils;
-import br.com.administrator.viewmodel.AcademyDialogViewModel;
+import br.com.administrator.viewmodel.academy.AcademyDialogViewModel;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;

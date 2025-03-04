@@ -4,7 +4,7 @@ import br.com.administrator.managedbean.common.beans.AbstractBaseMBean;
 import br.com.administrator.managedbean.common.constants.IScreensRedirect;
 import br.com.administrator.to.TOLogin;
 import br.com.administrator.utils.FacesUtils;
-import br.com.administrator.viewmodel.LoginViewModel;
+import br.com.administrator.viewmodel.login.LoginViewModel;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;

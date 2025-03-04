@@ -1,4 +1,4 @@
-package br.com.administrator.viewmodel;
+package br.com.administrator.viewmodel.login;
 
 import java.io.Serializable;
 

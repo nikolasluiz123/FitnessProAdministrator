@@ -44,3 +44,11 @@
 .main-top-bar {
 	margin-bottom: 12px;
 }
+
+.bold-label {
+	font-weight: 500;
+}
+
+.label-value {
+	font-weight: 300;
+}

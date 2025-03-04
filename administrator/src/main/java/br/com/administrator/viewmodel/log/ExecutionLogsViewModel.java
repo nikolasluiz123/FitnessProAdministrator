@@ -1,4 +1,4 @@
-package br.com.administrator.viewmodel;
+package br.com.administrator.viewmodel.log;
 
 import java.io.Serializable;
 import java.time.LocalDate;

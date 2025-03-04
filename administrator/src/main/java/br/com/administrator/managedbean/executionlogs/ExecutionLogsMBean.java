@@ -2,9 +2,12 @@ package br.com.administrator.managedbean.executionlogs;
 
 import java.util.List;
 
+import org.primefaces.event.SelectEvent;
+
 import br.com.administrator.managedbean.common.beans.AbstractBaseMBean;
 import br.com.administrator.managedbean.common.labeledenum.LabeledEnum;
-import br.com.administrator.viewmodel.ExecutionLogsViewModel;
+import br.com.administrator.to.TOExecutionLog;
+import br.com.administrator.viewmodel.log.ExecutionLogsViewModel;
 import br.com.fitnesspro.models.executions.enums.EnumExecutionType;
 import br.com.fitnesspro.shared.communication.enums.execution.EnumExecutionState;
 import jakarta.annotation.PostConstruct;
@@ -23,6 +26,9 @@ public class ExecutionLogsMBean extends AbstractBaseMBean {
 	
 	@Inject
 	private ExecutionLogsViewModel viewModel;
+	
+	@Inject 
+	private LogDialogMBean logDialogMBean;
 
 	private List<LabeledEnum<EnumExecutionType>> executionTypes;
 	private List<LabeledEnum<EnumExecutionState>> executionStates;
@@ -33,6 +39,14 @@ public class ExecutionLogsMBean extends AbstractBaseMBean {
 		this.executionStates = EnumExecutionState.getEntries().stream().map(x -> getLabeledState(x)).toList();
 	}
 
+	public void onRowSelect(SelectEvent<TOExecutionLog> event) {
+		logDialogMBean.init(event.getObject());
+	}
+
+	public void onRequestReloadDatatable() {
+		lazyModel.reloadPreservingPagingState();
+	}
+	
 	private LabeledEnum<EnumExecutionType> getLabeledType(EnumExecutionType x) {
 		return new LabeledEnum<EnumExecutionType>(x, viewModel.getLabelExecutionType(x));
 	}

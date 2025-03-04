@@ -9,7 +9,7 @@ import org.primefaces.model.SortMeta;
 
 import br.com.administrator.managedbean.common.lazymodel.AbstractLazyDataModel;
 import br.com.administrator.to.TOAcademy;
-import br.com.administrator.viewmodel.AcademySearchViewModel;
+import br.com.administrator.viewmodel.academy.AcademySearchViewModel;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 

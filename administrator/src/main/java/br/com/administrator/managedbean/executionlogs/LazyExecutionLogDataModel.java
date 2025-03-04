@@ -9,7 +9,7 @@ import org.primefaces.model.SortMeta;
 
 import br.com.administrator.managedbean.common.lazymodel.AbstractLazyDataModel;
 import br.com.administrator.to.TOExecutionLog;
-import br.com.administrator.viewmodel.ExecutionLogsViewModel;
+import br.com.administrator.viewmodel.log.ExecutionLogsViewModel;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 
