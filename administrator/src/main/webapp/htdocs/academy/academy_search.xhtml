@@ -109,14 +109,14 @@
 							<p:outputLabel id="labelName" for="name" value="#{bundleAcademyDialog['label_field_name']}" />
 							<p:inputText id="name" 
 										 value="#{academyDialogMBean.toAcademy.name}" 
-										 disabled="${!academyDialogMBean.toAcademy.active}" />
+										 disabled="${academyDialogMBean.disabledDialog}" />
 						</div>
 					
 						<div class="ui-g-6 vertical-labeled-input">
 							<p:outputLabel id="labelAddress" for="address" value="#{bundleAcademyDialog['label_field_address']}" />
 							<p:inputText id="address" 
 										 value="#{academyDialogMBean.toAcademy.address}" 
-										 disabled="${!academyDialogMBean.toAcademy.active}" />
+										 disabled="${academyDialogMBean.disabledDialog}" />
 						</div>
 						
 						<div class="ui-g-6 vertical-labeled-input">
@@ -125,7 +125,7 @@
 										 value="#{academyDialogMBean.toAcademy.phone}" 
 										 mask="(99) 9999-9999[9]"
 										 converter="NoMaskConverter"
-										 disabled="${!academyDialogMBean.toAcademy.active}" />
+										 disabled="${academyDialogMBean.disabledDialog}" />
 						</div>
 					</div>
 			
@@ -136,7 +136,7 @@
 											 value="#{bundleAcademyDialog['label_button_inactivate']}" 
 											 action="#{academyDialogMBean.onAcademyInactivateClick}" 
 											 update="@form"
-											 disabled="${!academyDialogMBean.toAcademy.active}">
+											 disabled="${academyDialogMBean.disabledDialog}">
 											 
 								<p:confirm header="#{bundleAcademyDialog['title_dialog_confirmation_inactivation']}" 
 										   message="#{academyDialogMBean.messageConfirmationInactivation}"
@@ -149,7 +149,7 @@
 											 value="#{bundleAcademyDialog['label_button_save']}" 
 											 action="#{academyDialogMBean.onAcademySaveClick}" 
 											 update="academyDialogMessages, dialogHeader"
-											 disabled="${!academyDialogMBean.toAcademy.active}" />
+											 disabled="${academyDialogMBean.disabledDialog}" />
 						</f:facet>
 					</p:toolbar>
 			  </h:form>

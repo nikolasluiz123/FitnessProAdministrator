@@ -1,4 +1,4 @@
-package br.com.administrator.service.adapter;
+package br.com.administrator.service.gson.adapter;
 
 import java.lang.reflect.Type;
 import java.time.LocalDate;

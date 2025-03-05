@@ -8,9 +8,9 @@ import java.util.concurrent.TimeUnit;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import br.com.administrator.service.adapter.LocalDateTimeTypeAdapter;
-import br.com.administrator.service.adapter.LocalDateTypeAdapter;
-import br.com.administrator.service.adapter.LocalTimeTypeAdapter;
+import br.com.administrator.service.gson.adapter.LocalDateTimeTypeAdapter;
+import br.com.administrator.service.gson.adapter.LocalDateTypeAdapter;
+import br.com.administrator.service.gson.adapter.LocalTimeTypeAdapter;
 import br.com.fitnesspro.shared.communication.constants.Timeouts;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;

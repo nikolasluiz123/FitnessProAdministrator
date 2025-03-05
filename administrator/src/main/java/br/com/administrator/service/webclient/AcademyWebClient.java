@@ -3,8 +3,11 @@ package br.com.administrator.service.webclient;
 import java.net.ConnectException;
 import java.util.List;
 
+import com.google.gson.Gson;
+
 import br.com.administrator.service.IAcademyService;
 import br.com.administrator.service.exception.ServiceException;
+import br.com.administrator.service.gson.utils.GsonUtils;
 import br.com.fitnesspro.shared.communication.dtos.general.AcademyDTO;
 import br.com.fitnesspro.shared.communication.filter.AcademyFilter;
 import br.com.fitnesspro.shared.communication.paging.CommonPageInfos;
@@ -32,8 +35,12 @@ public class AcademyWebClient extends AbstractWebClient {
 	public List<AcademyDTO> getListAcademy(AcademyFilter filter, CommonPageInfos pageInfos) throws Exception {
 		try {
 			String token = getFormatedToken();
+			Gson defaultGson = GsonUtils.getDefaultGson();
 			
-			Call<ReadServiceResponse<AcademyDTO>> serviceCall = service.getListAcademy(token, filter, pageInfos);
+			Call<ReadServiceResponse<AcademyDTO>> serviceCall = service.getListAcademy(token, 
+																					   defaultGson.toJson(filter), 
+																					   defaultGson.toJson(pageInfos));
+			
 			ReadServiceResponse<AcademyDTO> response = getReadResponseBody(serviceCall, AcademyDTO.class);
 			
 			if (!response.getSuccess()) {
@@ -49,8 +56,9 @@ public class AcademyWebClient extends AbstractWebClient {
 	public Integer getCountListAcademy(AcademyFilter filter) throws Exception {
 		try {
 			String token = getFormatedToken();
+			Gson defaultGson = GsonUtils.getDefaultGson();
 			
-			Call<SingleValueServiceResponse<Integer>> serviceCall = service.getCountAcademy(token, filter);
+			Call<SingleValueServiceResponse<Integer>> serviceCall = service.getCountAcademy(token, defaultGson.toJson(filter));
 			SingleValueServiceResponse<Integer> response = getSingleResponseBody(serviceCall, Integer.class);
 			
 			if (!response.getSuccess()) {

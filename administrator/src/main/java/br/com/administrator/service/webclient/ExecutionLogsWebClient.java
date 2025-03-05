@@ -3,8 +3,11 @@ package br.com.administrator.service.webclient;
 import java.net.ConnectException;
 import java.util.List;
 
+import com.google.gson.Gson;
+
 import br.com.administrator.service.IExecutionLogsService;
 import br.com.administrator.service.exception.ServiceException;
+import br.com.administrator.service.gson.utils.GsonUtils;
 import br.com.fitnesspro.shared.communication.dtos.logs.ExecutionLogDTO;
 import br.com.fitnesspro.shared.communication.filter.ExecutionLogsFilter;
 import br.com.fitnesspro.shared.communication.paging.CommonPageInfos;
@@ -31,8 +34,12 @@ public class ExecutionLogsWebClient extends AbstractWebClient {
 	public List<ExecutionLogDTO> getListExecutionLog(ExecutionLogsFilter filter, CommonPageInfos pageInfos) throws Exception {
 		try {
 			String token = getFormatedToken();
+			Gson defaultGson = GsonUtils.getDefaultGson();
 			
-			Call<ReadServiceResponse<ExecutionLogDTO>> serviceCall = service.getListExecutionLog(token, filter, pageInfos);
+			Call<ReadServiceResponse<ExecutionLogDTO>> serviceCall = service.getListExecutionLog(token, 
+																								 defaultGson.toJson(filter), 
+																								 defaultGson.toJson(pageInfos));
+			
 			ReadServiceResponse<ExecutionLogDTO> response = getReadResponseBody(serviceCall, ExecutionLogDTO.class);
 			
 			if (!response.getSuccess()) {
@@ -48,8 +55,9 @@ public class ExecutionLogsWebClient extends AbstractWebClient {
 	public Integer getCountListExecutionLog(ExecutionLogsFilter filter) throws Exception {
 		try {
 			String token = getFormatedToken();
+			Gson defaultGson = GsonUtils.getDefaultGson();
 			
-			Call<SingleValueServiceResponse<Integer>> serviceCall = service.getCountListExecutionLog(token, filter);
+			Call<SingleValueServiceResponse<Integer>> serviceCall = service.getCountListExecutionLog(token, defaultGson.toJson(filter));
 			SingleValueServiceResponse<Integer> response = getSingleResponseBody(serviceCall, Integer.class);
 			
 			if (!response.getSuccess()) {

@@ -14,6 +14,10 @@ public class TOAcademy extends AbstractModelTO {
 	private LocalDateTime creationDate;
 	private LocalDateTime updateDate;
 	private Boolean active;
+	
+	public TOAcademy() {
+		this.active = true;
+	}
 
 	public String getName() {
 		return name;

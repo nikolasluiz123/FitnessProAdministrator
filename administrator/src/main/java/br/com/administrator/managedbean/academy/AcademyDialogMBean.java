@@ -70,6 +70,10 @@ public class AcademyDialogMBean extends AbstractBaseMBean {
 	public void setToAcademy(TOAcademy toAcademy) {
 		this.toAcademy = toAcademy;
 	}
+	
+	public Boolean getDisabledDialog() {
+		return this.toAcademy.getId() != null && !this.toAcademy.getActive();
+	}
 
 	@Override
 	protected String getBundleFileName() {
