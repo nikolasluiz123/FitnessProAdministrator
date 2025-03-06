@@ -13,8 +13,10 @@ public class TOExecutionLog extends AbstractModelTO {
 
 	private LabeledEnum<EnumExecutionType> type;
 	private LabeledEnum<EnumExecutionState> state;
-	private LocalDateTime executionStart;
-	private LocalDateTime executionEnd;
+	private LocalDateTime serviceExecutionStart;
+	private LocalDateTime serviceExecutionEnd;
+	private LocalDateTime clientExecutionStart;
+	private LocalDateTime clientExecutionEnd;
 	private String endpoint;
 	private String requestBody;
 	private String error;
@@ -36,20 +38,36 @@ public class TOExecutionLog extends AbstractModelTO {
 		this.state = state;
 	}
 
-	public LocalDateTime getExecutionStart() {
-		return executionStart;
+	public LocalDateTime getServiceExecutionStart() {
+		return serviceExecutionStart;
 	}
 
-	public void setExecutionStart(LocalDateTime executionStart) {
-		this.executionStart = executionStart;
+	public void setServiceExecutionStart(LocalDateTime serviceExecutionStart) {
+		this.serviceExecutionStart = serviceExecutionStart;
 	}
 
-	public LocalDateTime getExecutionEnd() {
-		return executionEnd;
+	public LocalDateTime getServiceExecutionEnd() {
+		return serviceExecutionEnd;
 	}
 
-	public void setExecutionEnd(LocalDateTime executionEnd) {
-		this.executionEnd = executionEnd;
+	public void setServiceExecutionEnd(LocalDateTime serviceExecutionEnd) {
+		this.serviceExecutionEnd = serviceExecutionEnd;
+	}
+
+	public LocalDateTime getClientExecutionStart() {
+		return clientExecutionStart;
+	}
+
+	public void setClientExecutionStart(LocalDateTime clientExecutionStart) {
+		this.clientExecutionStart = clientExecutionStart;
+	}
+
+	public LocalDateTime getClientExecutionEnd() {
+		return clientExecutionEnd;
+	}
+
+	public void setClientExecutionEnd(LocalDateTime clientExecutionEnd) {
+		this.clientExecutionEnd = clientExecutionEnd;
 	}
 
 	public String getEndpoint() {
@@ -83,5 +101,5 @@ public class TOExecutionLog extends AbstractModelTO {
 	public void setMethodName(String methodName) {
 		this.methodName = methodName;
 	}
-	
+
 }

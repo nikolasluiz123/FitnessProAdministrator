@@ -29,7 +29,8 @@
 				currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
 				rowsPerPageTemplate="25, 50, 100"
 				widgetVar="executionLogsTableWV"
-				selectionMode="single" rowKey="${log.id}" allowUnsorting="true">
+				selectionMode="single" rowKey="${log.id}" allowUnsorting="true"
+				scrollable="true">
 				
 				<p:ajax event="rowSelect" 
 						listener="#{executionLogsMBean.onRowSelect}" 
@@ -67,35 +68,67 @@
 					<h:outputText value="#{log.state.label}" />
 				</p:column>
 
-				<p:column field="executionStart" 
-						  headerText="#{bundleExecutionLog['label_column_execution_start']}" 
+				<p:column field="serviceExecutionStart" 
+						  headerText="#{bundleExecutionLog['label_column_service_execution_start']}" 
 						  filterMatchMode="between" 
-						  sortBy="#{log.executionStart}"
+						  sortBy="#{log.serviceExecutionStart}"
 						  sortOrder="desc">
 					<f:facet name="filter">
-						<p:datePicker id="filterRangeExecutionStart" 
+						<p:datePicker id="filterRangeServiceExecutionStart" 
 									  selectionMode="range" 
 									  onchange="PF('executionLogsTableWV').filter()" 
 									  converter="LocalDateConverter" />
 					</f:facet>
 					
-					<h:outputText value="#{log.executionStart}">
+					<h:outputText value="#{log.serviceExecutionStart}">
 						<f:converter converterId="LocalDateTimeConverter" />
 					</h:outputText>
 				</p:column>
 
-				<p:column field="executionEnd" 
-						  headerText="#{bundleExecutionLog['label_column_execution_end']}" 
+				<p:column field="serviceExecutionEnd" 
+						  headerText="#{bundleExecutionLog['label_column_service_execution_end']}" 
 						  filterMatchMode="between"
-						  sortBy="#{log.executionEnd}">
+						  sortBy="#{log.serviceExecutionEnd}">
 					<f:facet name="filter">
-						<p:datePicker id="filterRangeExecutionEnd" 
+						<p:datePicker id="filterRangeServiceExecutionEnd" 
 									  selectionMode="range" 
 									  onchange="PF('executionLogsTableWV').filter()" 
 									  converter="LocalDateConverter" />
 					</f:facet>
 					
-					<h:outputText value="#{log.executionEnd}">
+					<h:outputText value="#{log.serviceExecutionEnd}">
+						<f:converter converterId="LocalDateTimeConverter" />
+					</h:outputText>
+				</p:column>
+				
+				<p:column field="clientExecutionStart" 
+						  headerText="#{bundleExecutionLog['label_column_client_execution_start']}" 
+						  filterMatchMode="between" 
+						  sortBy="#{log.clientExecutionStart}">
+					<f:facet name="filter">
+						<p:datePicker id="filterRangeClientExecutionStart" 
+									  selectionMode="range" 
+									  onchange="PF('executionLogsTableWV').filter()" 
+									  converter="LocalDateConverter" />
+					</f:facet>
+					
+					<h:outputText value="#{log.clientExecutionStart}">
+						<f:converter converterId="LocalDateTimeConverter" />
+					</h:outputText>
+				</p:column>
+
+				<p:column field="clientExecutionEnd" 
+						  headerText="#{bundleExecutionLog['label_column_client_execution_end']}" 
+						  filterMatchMode="between"
+						  sortBy="#{log.clientExecutionEnd}">
+					<f:facet name="filter">
+						<p:datePicker id="filterRangeClientExecutionEnd" 
+									  selectionMode="range" 
+									  onchange="PF('executionLogsTableWV').filter()" 
+									  converter="LocalDateConverter" />
+					</f:facet>
+					
+					<h:outputText value="#{log.clientExecutionEnd}">
 						<f:converter converterId="LocalDateTimeConverter" />
 					</h:outputText>
 				</p:column>
@@ -105,13 +138,6 @@
 						  filterBy="#{log.endpoint}" 
 						  filterMatchMode="contains">
 					<h:outputText value="#{log.endpoint}" />
-				</p:column>
-
-				<p:column headerText="#{bundleExecutionLog['label_column_method_name']}" 
-						  sortBy="#{log.methodName}"
-						  filterBy="#{log.methodName}" 
-						  filterMatchMode="contains">
-					<h:outputText value="#{log.methodName}" />
 				</p:column>
 
 				<f:facet name="paginatorTopLeft">
@@ -140,13 +166,13 @@
 					
 					<div class="ui-g-12">
 						<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
-							<p:outputLabel id="labelExecutionStart" value="#{bundleLogDialog['label_field_execution_start']}" styleClass="bold-label" />
-							<p:outputLabel id="valueExecutionStart" value="#{logDialogMBean.toExecutionLog.executionStart}" converter="LocalDateTimeConverter" styleClass="label-value" />
+							<p:outputLabel id="labelServiceExecutionStart" value="#{bundleLogDialog['label_field_service_execution_start']}" styleClass="bold-label" />
+							<p:outputLabel id="valueServiceExecutionStart" value="#{logDialogMBean.toExecutionLog.serviceExecutionStart}" converter="LocalDateTimeConverter" styleClass="label-value" />
 						</div>
 						
 						<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
-							<p:outputLabel id="labelExecutionEnd" value="#{bundleLogDialog['label_field_execution_end']}" styleClass="bold-label" />
-							<p:outputLabel id="valueExecutionEnd" value="#{logDialogMBean.toExecutionLog.executionEnd}" converter="LocalDateTimeConverter" styleClass="label-value" />
+							<p:outputLabel id="labelServiceExecutionEnd" value="#{bundleLogDialog['label_field_service_execution_end']}" styleClass="bold-label" />
+							<p:outputLabel id="valueServiceExecutionEnd" value="#{logDialogMBean.toExecutionLog.serviceExecutionEnd}" converter="LocalDateTimeConverter" styleClass="label-value" />
 						</div>
 						
 						<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
@@ -169,6 +195,26 @@
 						<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
 							<p:outputLabel id="labelMethodName" value="#{bundleLogDialog['label_field_method_name']}" styleClass="bold-label" />
 							<p:outputLabel id="valueMethodName" value="#{logDialogMBean.toExecutionLog.methodName}" styleClass="label-value" />
+						</div>
+					</div>
+					
+					<div class="ui-g-12">
+						<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
+							<p:outputLabel id="labelClientExecutionStart" 
+										   value="#{bundleLogDialog['label_field_client_execution_start']}" 
+										   styleClass="bold-label"
+										   rendered="#{logDialogMBean.toExecutionLog.clientExecutionStart != null}" />
+										   
+							<p:outputLabel id="valueClientExecutionStart" value="#{logDialogMBean.toExecutionLog.clientExecutionStart}" converter="LocalDateTimeConverter" styleClass="label-value" />
+						</div>
+						
+						<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
+							<p:outputLabel id="labelClientExecutionEnd" 
+										   value="#{bundleLogDialog['label_field_client_execution_end']}" 
+										   styleClass="bold-label"
+										   rendered="#{logDialogMBean.toExecutionLog.clientExecutionEnd != null}" />
+										   
+							<p:outputLabel id="valueClientExecutionEnd" value="#{logDialogMBean.toExecutionLog.clientExecutionEnd}" converter="LocalDateTimeConverter" styleClass="label-value" />
 						</div>
 					</div>
 				

@@ -1,9 +1,6 @@
 package br.com.administrator.viewmodel.log;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +11,7 @@ import org.primefaces.model.SortOrder;
 import br.com.administrator.managedbean.common.labeledenum.LabeledEnum;
 import br.com.administrator.service.webclient.ExecutionLogsWebClient;
 import br.com.administrator.to.TOExecutionLog;
+import br.com.administrator.utils.PrimefacesFiltersUtil;
 import br.com.fitnesspro.models.executions.enums.EnumExecutionType;
 import br.com.fitnesspro.shared.communication.dtos.logs.ExecutionLogDTO;
 import br.com.fitnesspro.shared.communication.enums.execution.EnumExecutionState;
@@ -22,7 +20,6 @@ import br.com.fitnesspro.shared.communication.filter.Sort;
 import br.com.fitnesspro.shared.communication.paging.CommonPageInfos;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
-import kotlin.Pair;
 
 @Dependent
 public class ExecutionLogsViewModel implements Serializable {
@@ -49,46 +46,43 @@ public class ExecutionLogsViewModel implements Serializable {
 		return webClient.getCountListExecutionLog(getExecutionLogsFilter(filterBy, null));
 	}
 	
-	@SuppressWarnings("unchecked")
 	private ExecutionLogsFilter getExecutionLogsFilter(Map<String, FilterMeta> filterBy, Map<String, SortMeta> sortBy) {
 		ExecutionLogsFilter filter = new ExecutionLogsFilter();
+		PrimefacesFiltersUtil filterUtils = new PrimefacesFiltersUtil(filterBy);
 		
 		if (filterBy.containsKey("type.value")) {
-			String filterValue = filterBy.get("type.value").getFilterValue().toString();
-			filter.setType(EnumExecutionType.valueOf(filterValue));
+			filter.setType(filterUtils.getEnumFilterValue("type.value", EnumExecutionType.class));
 		}
 		
 		if (filterBy.containsKey("state.value")) {
-			String filterValue = filterBy.get("state.value").getFilterValue().toString();
-			filter.setState(EnumExecutionState.valueOf(filterValue));
+			filter.setState(filterUtils.getEnumFilterValue("state.value", EnumExecutionState.class));
 		}
 		
-		if (filterBy.containsKey("executionStart")) {
-			List<LocalDate> filterValue = (List<LocalDate>) filterBy.get("executionStart").getFilterValue();
-			
-			LocalDateTime start = LocalDateTime.of(filterValue.get(0), LocalTime.of(0, 0));
-			LocalDateTime end = LocalDateTime.of(filterValue.get(1), LocalTime.of(23, 59));
-			filter.setExecutionStart(new Pair<LocalDateTime, LocalDateTime>(start, end));
+		if (filterBy.containsKey("serviceExecutionStart")) {
+			filter.setServiceExecutionStart(filterUtils.getDateTimeRangeFilter("serviceExecutionStart"));
 		}
 		
-		if (filterBy.containsKey("executionEnd")) {
-			List<LocalDate> filterValue = (List<LocalDate>) filterBy.get("executionEnd").getFilterValue();
-			
-			LocalDateTime start = LocalDateTime.of(filterValue.get(0), LocalTime.of(0, 0));
-			LocalDateTime end = LocalDateTime.of(filterValue.get(1), LocalTime.of(23, 59));
-			filter.setExecutionEnd(new Pair<LocalDateTime, LocalDateTime>(start, end));
+		if (filterBy.containsKey("serviceExecutionEnd")) {
+			filter.setServiceExecutionEnd(filterUtils.getDateTimeRangeFilter("serviceExecutionEnd"));
+		}
+		
+		if (filterBy.containsKey("clientExecutionStart")) {
+			filter.setClientExecutionStart(filterUtils.getDateTimeRangeFilter("clientExecutionStart"));
+		}
+		
+		if (filterBy.containsKey("clientExecutionEnd")) {
+			filter.setClientExecutionEnd(filterUtils.getDateTimeRangeFilter("clientExecutionEnd"));
 		}
 		
 		if (filterBy.containsKey("endpoint")) {
-			String filterValue = filterBy.get("endpoint").getFilterValue().toString();
-			filter.setEndPoint(filterValue);
+			filter.setEndPoint(filterUtils.getStringFilterValue("endpoint"));
 		}
 		
 		if (sortBy != null && !sortBy.values().isEmpty()) {
 			SortMeta sortMeta = sortBy.values().stream().findFirst().get();
 			filter.setSort(new Sort(sortMeta.getField(), sortMeta.getOrder() == SortOrder.ASCENDING));
 		} else {
-			filter.setSort(new Sort("executionStart", true));
+			filter.setSort(new Sort("serviceExecutionStart", true));
 		}
 		
 		return filter;
@@ -98,8 +92,10 @@ public class ExecutionLogsViewModel implements Serializable {
 		TOExecutionLog to = new TOExecutionLog();
 		to.setEndpoint(dto.getEndPoint());
 		to.setError(dto.getError());
-		to.setExecutionEnd(dto.getExecutionEnd());
-		to.setExecutionStart(dto.getExecutionStart());
+		to.setServiceExecutionEnd(dto.getServiceExecutionEnd());
+		to.setServiceExecutionStart(dto.getServiceExecutionStart());
+		to.setClientExecutionStart(dto.getClientExecutionStart());
+		to.setClientExecutionEnd(dto.getClientExecutionEnd());
 		to.setId(dto.getId());
 		to.setRequestBody(dto.getRequestBody());
 		to.setType(new LabeledEnum<EnumExecutionType>(dto.getType(), getLabelExecutionType(dto.getType())));
