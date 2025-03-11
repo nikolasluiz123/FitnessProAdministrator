@@ -166,8 +166,7 @@
 										   
 							<p:outputLabel id="valuePageSize" 
 										   value="#{logDialogMBean.toExecutionLog.pageSize}" 
-										   styleClass="label-value"
-										   converter="jakarta.faces.Integer" />
+										   styleClass="label-value" />
 						</div>
 					
 						<div class="ui-g-4 vertical-labeled-input ui-g-nopad" jsf:rendered="#{logDialogMBean.isVisibleLastUpdateDate}">
@@ -270,19 +269,19 @@
 							<p:column headerText="#{bundleLogDialog['label_column_inserted_items_count']}" 
 									  sortBy="#{package.insertedItemsCount}"
 									  field="#{EnumExecutionLogsPackageFields.INSERTED_ITEMS_COUNT.fieldName}">
-								<h:outputText value="#{package.insertedItemsCount}" converter="jakarta.faces.Integer" />
+								<h:outputText value="#{package.insertedItemsCount}" />
 							</p:column>				
 						
 							<p:column headerText="#{bundleLogDialog['label_column_updated_items_count']}" 
 									  sortBy="#{package.updatedItemsCount}"
 									  field="#{EnumExecutionLogsPackageFields.UPDATED_ITEMS_COUNT.fieldName}">
-								<h:outputText value="#{package.updatedItemsCount}" converter="jakarta.faces.Integer" />
+								<h:outputText value="#{package.updatedItemsCount}" />
 							</p:column>		
 							
 							<p:column headerText="#{bundleLogDialog['label_column_all_items_count']}"
 									  sortBy="#{package.allItemsCount}"
 									  field="#{EnumExecutionLogsPackageFields.ALL_ITEMS_COUNT.fieldName}">
-								<h:outputText value="#{package.allItemsCount}" converter="jakarta.faces.Integer" />
+								<h:outputText value="#{package.allItemsCount}" />
 							</p:column>					
 						</p:dataTable>
 					</div>
@@ -347,16 +346,14 @@
 							<p:outputLabel id="labelInsertedItemsCount" value="#{bundleLogPackageDialog['label_field_inserted_items_count']}" styleClass="bold-label" />
 							<p:outputLabel id="valueInsertedItemsCount" 
 										   value="#{logPackageDialogMBean.toExecutionLogPackage.insertedItemsCount}" 
-										   styleClass="label-value"
-										   converter="javax.faces.Integer" />
+										   styleClass="label-value" />
 						</div>
 						
 						<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
 							<p:outputLabel id="labelUpdatedItemsCount" value="#{bundleLogPackageDialog['label_field_updated_items_count']}" styleClass="bold-label" />
 							<p:outputLabel id="valueUpdatedItemsCount" 
 										   value="#{logPackageDialogMBean.toExecutionLogPackage.updatedItemsCount}" 
-										   styleClass="label-value"
-										   converter="javax.faces.Integer" />
+										   styleClass="label-value" />
 						</div>
 					</div>
 					
@@ -365,8 +362,7 @@
 							<p:outputLabel id="labelAllItemsCount" value="#{bundleLogPackageDialog['label_field_all_items_count']}" styleClass="bold-label" />
 							<p:outputLabel id="valueAllItemsCount" 
 										   value="#{logPackageDialogMBean.toExecutionLogPackage.allItemsCount}" 
-										   styleClass="label-value"
-										   converter="javax.faces.Integer" />
+										   styleClass="label-value" />
 						</div>					
 					</div>
 					
@@ -381,6 +377,7 @@
 					</div>
 				</div>
 			</h:form>
+		</p:dialog>
 	</ui:define>
 </ui:composition>
 </html>
