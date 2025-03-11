@@ -66,7 +66,7 @@ public class ExecutionLogsMBean extends AbstractBaseMBean {
 	public List<LabeledEnum<EnumExecutionState>> getExecutionStates() {
 		return executionStates;
 	}
-
+	
 	@Override
 	protected String getBundleFileName() {
 		return "execution_logs";

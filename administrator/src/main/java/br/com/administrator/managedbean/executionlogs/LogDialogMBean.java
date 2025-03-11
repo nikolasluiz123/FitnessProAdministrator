@@ -1,8 +1,10 @@
 package br.com.administrator.managedbean.executionlogs;
 
+import org.primefaces.event.SelectEvent;
+
 import br.com.administrator.managedbean.common.beans.AbstractBaseMBean;
 import br.com.administrator.to.TOExecutionLog;
-import br.com.administrator.viewmodel.log.LogDialogViewModel;
+import br.com.administrator.to.TOExecutionLogPackage;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -17,7 +19,10 @@ public class LogDialogMBean extends AbstractBaseMBean {
 	private TOExecutionLog toExecutionLog;
 	
 	@Inject
-	private LogDialogViewModel viewModel;	
+	private LazyExecutionLogDataModel lazyModel;
+	
+	@Inject
+	private LogPackageDialogMBean logPackageDialog;
 	
 	@PostConstruct
 	public void init() {
@@ -28,6 +33,25 @@ public class LogDialogMBean extends AbstractBaseMBean {
 		this.toExecutionLog = to;
 	}
 	
+	public void onRowSelect(SelectEvent<TOExecutionLogPackage> event) {
+		logPackageDialog.init(event.getObject());
+	}
+
+	public void onRequestReloadDatatable() {
+		lazyModel.reloadPreservingPagingState();
+	}
+	
+	public boolean isVisibleUserEmail() {
+		return this.toExecutionLog.getUserEmail() != null;
+	}
+
+	public boolean isVisiblePageSize() {
+		return this.toExecutionLog.getPageSize() != null;
+	}
+	
+	public boolean isVisibleLastUpdateDate() {
+		return this.toExecutionLog.getLastUpdateDate() != null;
+	}
 
 	@Override
 	protected String getBundleFileName() {

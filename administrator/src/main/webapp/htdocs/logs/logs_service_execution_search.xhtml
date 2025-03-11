@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+<ui:composition template="../templates/template.xhtml">
+	
+	<ui:define name="bundles">
+		<f:loadBundle var="bundleExecutionLog" basename="messages.execution_logs" />
+		<f:loadBundle var="bundleLogDialog" basename="messages.log_dialog" />
+		<f:loadBundle var="bundleLogPackageDialog" basename="messages.log_package_dialog" />
+	</ui:define>
+
+	<ui:define name="title">
+		<h:outputText value="#{bundleExecutionLog['title']}" styleClass="page-title"/>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form>
+			<p:importEnum type="br.com.fitnesspro.shared.communication.query.enums.EnumExecutionLogsFields" 
+						  var="EnumExecutionLogsFields" />
+		
+			<p:remoteCommand name="onRequestReloadDatatableLogs"
+							 action="#{executionLogsMBean.onRequestReloadDatatable}"
+							 update="dataTableLogs" />
+							 
+			<p:dataTable id="dataTableLogs" var="log" value="#{executionLogsMBean.lazyModel}"
+				rows="100" paginator="true" paginatorPosition="both"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
+				rowsPerPageTemplate="25, 50, 100"
+				widgetVar="executionLogsTableWV"
+				selectionMode="single" rowKey="${log.id}"
+				scrollable="true">
+				
+				<p:ajax event="rowSelect" 
+						listener="#{executionLogsMBean.onRowSelect}" 
+						update="formMessages:messages, logDialog"
+						oncomplete="PF('logDialogWV').show();" />
+
+				<p:column headerText="#{bundleExecutionLog['label_column_type']}" 
+						  filterBy="#{log.type.value}" 
+						  filterMatchMode="exact"
+						  field="#{EnumExecutionLogsFields.EXECUTION_TYPE.fieldName}">
+					<f:facet name="filter">
+						<p:selectOneMenu id="filterType" onchange="PF('executionLogsTableWV').filter()" styleClass="ui-full-width-filter">
+	                        <f:selectItem itemLabel="#{bundleExecutionLog['label_filter_all']}" itemValue="#{null}" noSelectionOption="true" />
+	                        <f:selectItems value="#{executionLogsMBean.executionTypes}" 
+	                        			   var="typeItem"
+	                        			   itemValue="#{typeItem.value}" 
+	                        			   itemLabel="#{typeItem.label}" />
+	                    </p:selectOneMenu>
+					</f:facet>
+					
+					<h:outputText value="#{log.type.label}" />
+				</p:column>
+
+				<p:column headerText="#{bundleExecutionLog['label_column_state']}" 
+						  filterBy="#{log.state.value}"
+						  filterMatchMode="exact"
+						  field="#{EnumExecutionLogsFields.EXECUTION_STATE.fieldName}">
+					<f:facet name="filter">
+						<p:selectOneMenu id="filterState" onchange="PF('executionLogsTableWV').filter()" styleClass="ui-full-width-filter">
+	                        <f:selectItem itemLabel="#{bundleExecutionLog['label_filter_all']}" itemValue="#{null}" noSelectionOption="true" />
+	                        <f:selectItems value="#{executionLogsMBean.executionStates}" 
+	                        			   var="stateItem"
+	                        			   itemValue="#{stateItem.value}" 
+	                        			   itemLabel="#{stateItem.label}" />
+	                    </p:selectOneMenu>
+					</f:facet>
+					<h:outputText value="#{log.state.label}" />
+				</p:column>
+
+				<p:column headerText="#{bundleExecutionLog['label_column_endpoint']}" 
+						  sortBy="#{log.endpoint}" 
+						  filterBy="#{log.endpoint}" 
+						  filterMatchMode="contains"
+						  field="#{EnumExecutionLogsFields.END_POINT.fieldName}">
+					<h:outputText value="#{log.endpoint}" />
+				</p:column>
+				
+				<p:column headerText="#{bundleExecutionLog['label_column_method_name']}" 
+						  sortBy="#{log.methodName}" 
+						  filterBy="#{log.methodName}" 
+						  filterMatchMode="contains"
+						  field="#{EnumExecutionLogsFields.METHOD_NAME.fieldName}">
+					<h:outputText value="#{log.methodName}" />
+				</p:column>
+				
+				<p:column headerText="#{bundleExecutionLog['label_column_user_email']}" 
+						  sortBy="#{log.userEmail}" 
+						  filterBy="#{log.userEmail}" 
+						  filterMatchMode="contains"
+						  field="#{EnumExecutionLogsFields.USER_EMAIL.fieldName}">
+					<h:outputText value="#{log.userEmail}" />
+				</p:column>
+
+				<f:facet name="paginatorTopLeft">
+					<p:commandButton icon="pi pi-refresh" oncomplete="onRequestReloadDatatableLogs();" />
+				</f:facet>
+
+			</p:dataTable>
+		</h:form>
+		
+		<p:dialog id="logDialog" 
+				  widgetVar="logDialogWV" 
+				  modal="true"
+				  fitViewport="true"
+				  responsive="true"
+				  width="900px"
+				  resizable="false"
+				  dynamic="true"
+				  onHide="onRequestReloadDatatableLogs();">
+
+			<f:facet name="header">
+				<h:outputText id="dialogHeader" value="#{bundleLogDialog['label_title']}" />
+			</f:facet>
+
+			<h:form id="logDialogForm">
+				<p:importEnum type="br.com.fitnesspro.shared.communication.query.enums.EnumExecutionLogsPackageFields" 
+							  var="EnumExecutionLogsPackageFields" />
+			
+				<p:remoteCommand name="onRequestReloadDatatableLogPackages"
+								 action="#{logDialogMBean.onRequestReloadDatatable}"
+								 update="dataTableLogPackages" />
+			
+				<div class="ui-g">
+					<div class="ui-g-12">
+						<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
+							<p:outputLabel id="labelExecutionType" value="#{bundleLogDialog['label_field_execution_type']}" styleClass="bold-label" />
+							<p:outputLabel id="valueExecutionType" value="#{logDialogMBean.toExecutionLog.type.label}" styleClass="label-value" />
+						</div>
+						
+						<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
+							<p:outputLabel id="labelExecutionState" value="#{bundleLogDialog['label_field_execution_state']}" styleClass="bold-label" />
+							<p:outputLabel id="valueExecutionState" value="#{logDialogMBean.toExecutionLog.state.label}" styleClass="label-value" />
+						</div>
+						
+						<div class="ui-g-4 vertical-labeled-input ui-g-nopad" jsf:rendered="#{logDialogMBean.isVisibleUserEmail}">
+							<p:outputLabel id="labelUser" value="#{bundleLogDialog['label_field_user']}" styleClass="bold-label" />
+							<p:outputLabel id="valueUser" value="#{logDialogMBean.toExecutionLog.userEmail}" styleClass="label-value" />
+						</div>
+					</div>
+					
+					<div class="ui-g-12">
+						<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
+							<p:outputLabel id="labelEndPoint" value="#{bundleLogDialog['label_field_end_point']}" styleClass="bold-label" />
+							<p:outputLabel id="valueEndPoint" value="#{logDialogMBean.toExecutionLog.endpoint}" styleClass="label-value" />
+						</div>
+					
+						<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
+							<p:outputLabel id="labelMethodName" value="#{bundleLogDialog['label_field_method_name']}" styleClass="bold-label" />
+							<p:outputLabel id="valueMethodName" value="#{logDialogMBean.toExecutionLog.methodName}" styleClass="label-value" />
+						</div>
+					</div>
+					
+					<div class="ui-g-12">
+						<div class="ui-g-4 vertical-labeled-input ui-g-nopad" jsf:rendered="#{logDialogMBean.isVisiblePageSize}">
+							<p:outputLabel id="labelPageSize" 
+										   value="#{bundleLogDialog['label_field_page_size']}" 
+										   styleClass="bold-label" />
+										   
+							<p:outputLabel id="valuePageSize" 
+										   value="#{logDialogMBean.toExecutionLog.pageSize}" 
+										   styleClass="label-value"
+										   converter="jakarta.faces.Integer" />
+						</div>
+					
+						<div class="ui-g-4 vertical-labeled-input ui-g-nopad" jsf:rendered="#{logDialogMBean.isVisibleLastUpdateDate}">
+							<p:outputLabel id="labelLastUpdateDate" 
+										   value="#{bundleLogDialog['label_field_last_update_date']}" 
+										   styleClass="bold-label" />
+										   
+							<p:outputLabel id="valueLastUpdateDate" 
+										   value="#{logDialogMBean.toExecutionLog.lastUpdateDate}" 
+										   styleClass="label-value"
+										   converter="LocalDateTimeConverter" />
+						</div>
+					</div>
+
+					<div class="ui-g-12">
+						<p:dataTable id="dataTableLogPackages" var="package"
+							value="#{logDialogMBean.lazyModel}" rows="100"
+							paginator="true" paginatorPosition="both"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
+							rowsPerPageTemplate="25, 50, 100"
+							widgetVar="executionLogPackagesTableWV" selectionMode="single"
+							rowKey="${package.id}" scrollable="true">
+
+							<p:ajax event="rowSelect"
+									listener="#{logDialogMBean.onRowSelect}"
+									update=""
+									oncomplete="PF('packageDialogWV').show();" />
+
+							<f:facet name="paginatorTopLeft">
+								<p:commandButton icon="pi pi-refresh" oncomplete="onRequestReloadDatatableLogPackages();" />
+							</f:facet>
+							
+							<p:column field="#{EnumExecutionLogsPackageFields.SERVICE_EXECUTION_START.fieldName}" 
+									  headerText="#{bundleLogDialog['label_column_service_execution_start']}" 
+									  filterMatchMode="between" 
+									  sortBy="#{package.serviceExecutionStart}"
+									  sortOrder="desc">
+									  
+								<f:facet name="filter">
+									<p:datePicker id="filterRangeServiceExecutionStart" 
+												  selectionMode="range" 
+												  onchange="PF('executionLogsTableWV').filter()" 
+												  converter="LocalDateConverter" />
+								</f:facet>
+								
+								<h:outputText value="#{package.serviceExecutionStart}">
+									<f:converter converterId="LocalDateTimeConverter" />
+								</h:outputText>
+							</p:column>
+			
+							<p:column field="#{EnumExecutionLogsPackageFields.SERVICE_EXECUTION_END.fieldName}" 
+									  headerText="#{bundleLogDialog['label_column_service_execution_end']}" 
+									  filterMatchMode="between"
+									  sortBy="#{package.serviceExecutionEnd}">
+								<f:facet name="filter">
+									<p:datePicker id="filterRangeServiceExecutionEnd" 
+												  selectionMode="range" 
+												  onchange="PF('executionLogsTableWV').filter()" 
+												  converter="LocalDateConverter" />
+								</f:facet>
+								
+								<h:outputText value="#{package.serviceExecutionEnd}">
+									<f:converter converterId="LocalDateTimeConverter" />
+								</h:outputText>
+							</p:column>
+							
+							<p:column field="#{EnumExecutionLogsPackageFields.CLIENT_EXECUTION_START.fieldName}" 
+									  headerText="#{bundleLogDialog['label_column_client_execution_start']}" 
+									  filterMatchMode="between" 
+									  sortBy="#{package.clientExecutionStart}">
+								<f:facet name="filter">
+									<p:datePicker id="filterRangeClientExecutionStart" 
+												  selectionMode="range" 
+												  onchange="PF('executionLogsTableWV').filter()" 
+												  converter="LocalDateConverter" />
+								</f:facet>
+								
+								<h:outputText value="#{package.clientExecutionStart}">
+									<f:converter converterId="LocalDateTimeConverter" />
+								</h:outputText>
+							</p:column>
+			
+							<p:column field="#{EnumExecutionLogsPackageFields.CLIENT_EXECUTION_END.fieldName}" 
+									  headerText="#{bundleLogDialog['label_column_client_execution_end']}" 
+									  filterMatchMode="between"
+									  sortBy="#{package.clientExecutionEnd}">
+								<f:facet name="filter">
+									<p:datePicker id="filterRangeClientExecutionEnd" 
+												  selectionMode="range" 
+												  onchange="PF('executionLogsTableWV').filter()" 
+												  converter="LocalDateConverter" />
+								</f:facet>
+								
+								<h:outputText value="#{package.clientExecutionEnd}">
+									<f:converter converterId="LocalDateTimeConverter" />
+								</h:outputText>
+							</p:column>
+							
+							<p:column headerText="#{bundleLogDialog['label_column_inserted_items_count']}" 
+									  sortBy="#{package.insertedItemsCount}"
+									  field="#{EnumExecutionLogsPackageFields.INSERTED_ITEMS_COUNT.fieldName}">
+								<h:outputText value="#{package.insertedItemsCount}" converter="jakarta.faces.Integer" />
+							</p:column>				
+						
+							<p:column headerText="#{bundleLogDialog['label_column_updated_items_count']}" 
+									  sortBy="#{package.updatedItemsCount}"
+									  field="#{EnumExecutionLogsPackageFields.UPDATED_ITEMS_COUNT.fieldName}">
+								<h:outputText value="#{package.updatedItemsCount}" converter="jakarta.faces.Integer" />
+							</p:column>		
+							
+							<p:column headerText="#{bundleLogDialog['label_column_all_items_count']}"
+									  sortBy="#{package.allItemsCount}"
+									  field="#{EnumExecutionLogsPackageFields.ALL_ITEMS_COUNT.fieldName}">
+								<h:outputText value="#{package.allItemsCount}" converter="jakarta.faces.Integer" />
+							</p:column>					
+						</p:dataTable>
+					</div>
+				</div>
+			</h:form>
+		</p:dialog>
+		
+		<p:dialog id="logPackageDialog" 
+				  widgetVar="logPackageDialogWV" 
+				  modal="true"
+				  fitViewport="true"
+				  responsive="true"
+				  width="900px"
+				  resizable="false"
+				  dynamic="true"
+				  onHide="onRequestReloadDatatableLogPackages();">
+
+			<f:facet name="header">
+				<h:outputText id="dialogHeader" value="#{bundleLogPackageDialog['label_title']}" />
+			</f:facet>
+
+			<h:form id="logPackageDialogForm">
+				<div class="ui-g">
+					<div class="ui-g-12">
+						<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
+							<p:outputLabel id="labelServiceStart" value="#{bundleLogPackageDialog['label_field_service_start']}" styleClass="bold-label" />
+							<p:outputLabel id="valueServiceStart" 
+										   value="#{logPackageDialogMBean.toExecutionLogPackage.serviceExecutionStart}" 
+										   styleClass="label-value"
+										   converter="LocalDateTimeConverter" />
+						</div>
+					
+						<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
+							<p:outputLabel id="labelServiceEnd" value="#{bundleLogPackageDialog['label_field_service_end']}" styleClass="bold-label" />
+							<p:outputLabel id="valueServiceEnd" 
+										   value="#{logPackageDialogMBean.toExecutionLogPackage.serviceExecutionEnd}" 
+										   styleClass="label-value"
+										   converter="LocalDateTimeConverter" />
+						</div>
+					</div>
+					
+					<div class="ui-g-12">
+						<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
+							<p:outputLabel id="labelClientStart" value="#{bundleLogPackageDialog['label_field_client_start']}" styleClass="bold-label" />
+							<p:outputLabel id="valueClientStart" 
+										   value="#{logPackageDialogMBean.toExecutionLogPackage.clientExecutionStart}" 
+										   styleClass="label-value"
+										   converter="LocalDateTimeConverter" />
+						</div>
+					
+						<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
+							<p:outputLabel id="labelClientEnd" value="#{bundleLogPackageDialog['label_field_client_end']}" styleClass="bold-label" />
+							<p:outputLabel id="valueClientEnd" 
+										   value="#{logPackageDialogMBean.toExecutionLogPackage.clientExecutionEnd}" 
+										   styleClass="label-value"
+										   converter="LocalDateTimeConverter" />
+						</div>					
+					</div>
+					
+					<div class="ui-g-12" jsf:rendered="#{logPackageDialogMBean.isVisibleImportInfos}">
+						<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
+							<p:outputLabel id="labelInsertedItemsCount" value="#{bundleLogPackageDialog['label_field_inserted_items_count']}" styleClass="bold-label" />
+							<p:outputLabel id="valueInsertedItemsCount" 
+										   value="#{logPackageDialogMBean.toExecutionLogPackage.insertedItemsCount}" 
+										   styleClass="label-value"
+										   converter="javax.faces.Integer" />
+						</div>
+						
+						<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
+							<p:outputLabel id="labelUpdatedItemsCount" value="#{bundleLogPackageDialog['label_field_updated_items_count']}" styleClass="bold-label" />
+							<p:outputLabel id="valueUpdatedItemsCount" 
+										   value="#{logPackageDialogMBean.toExecutionLogPackage.updatedItemsCount}" 
+										   styleClass="label-value"
+										   converter="javax.faces.Integer" />
+						</div>
+					</div>
+					
+					<div class="ui-g-12" jsf:rendered="#{logPackageDialogMBean.isVisibleExportInfos}">
+						<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
+							<p:outputLabel id="labelAllItemsCount" value="#{bundleLogPackageDialog['label_field_all_items_count']}" styleClass="bold-label" />
+							<p:outputLabel id="valueAllItemsCount" 
+										   value="#{logPackageDialogMBean.toExecutionLogPackage.allItemsCount}" 
+										   styleClass="label-value"
+										   converter="javax.faces.Integer" />
+						</div>					
+					</div>
+					
+					<div class="ui-g-12 vertical-labeled-input">
+						<p:outputLabel id="labelRequestBody" for="requestBody" value="#{bundleLogPackageDialog['label_field_request_body']}" />
+						<p:inputTextarea id="requestBody" value="#{logPackageDialogMBean.toExecutionLogPackage.requestBody}" readonly="true" converter="JsonConverter" />
+					</div>
+					
+					<div class="ui-g-12 vertical-labeled-input">
+						<p:outputLabel id="labelError" for="error" value="#{bundleLogPackageDialog['label_field_error']}" />
+						<p:inputTextarea id="error" value="#{logPackageDialogMBean.toExecutionLogPackage.error}" readonly="true" />
+					</div>
+				</div>
+			</h:form>
+	</ui:define>
+</ui:composition>
+</html>

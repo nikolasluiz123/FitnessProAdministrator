@@ -18,6 +18,9 @@
 	
 	<ui:define name="content">
 		<h:form>
+			<p:importEnum type="br.com.fitnesspro.shared.communication.query.enums.EnumAcademyFields" 
+						  var="EnumAcademyFields" />
+		
 			<p:remoteCommand name="onRequestReloadDatatable"
 							 action="#{academySearchMBean.onRequestReloadDatatable}"
 							 update="dataTableAcademy" />
@@ -48,11 +51,16 @@
 						  sortBy="#{item.name}" 
 						  sortOrder="asc"
 						  filterBy="#{item.name}" 
-						  filterMatchMode="contains">
+						  filterMatchMode="contains"
+						  field="#{EnumAcademyFields.NAME.fieldName}">
 					<h:outputText value="#{item.name}" />
 				</p:column>
 
-				<p:column headerText="#{bundleAcademySearch['label_column_address']}" sortBy="#{item.address}" filterBy="#{item.address}" filterMatchMode="contains">
+				<p:column headerText="#{bundleAcademySearch['label_column_address']}" 
+						  sortBy="#{item.address}" 
+						  filterBy="#{item.address}"
+						   filterMatchMode="contains"
+						  field="#{EnumAcademyFields.ADDRESS.fieldName}">
 					<h:outputText value="#{item.address}" />
 				</p:column>
 
@@ -62,13 +70,17 @@
 					</h:outputText>
 				</p:column>
 				
-				<p:column headerText="#{bundleAcademySearch['label_column_creation_date']}" sortBy="#{item.creationDate}">
+				<p:column headerText="#{bundleAcademySearch['label_column_creation_date']}" 
+						  sortBy="#{item.creationDate}"
+						  field="#{EnumAcademyFields.CREATION_DATE.fieldName}">
 					<h:outputText value="#{item.creationDate}">
 						<f:converter converterId="LocalDateTimeConverter" />
 					</h:outputText>
 				</p:column>
 				
-				<p:column headerText="#{bundleAcademySearch['label_column_update_date']}" sortBy="#{item.updateDate}">
+				<p:column headerText="#{bundleAcademySearch['label_column_update_date']}" 
+						  sortBy="#{item.updateDate}"
+						  field="#{EnumAcademyFields.UPDATE_DATE.fieldName}">
 					<h:outputText value="#{item.updateDate}">
 						<f:converter converterId="LocalDateTimeConverter" />
 					</h:outputText>

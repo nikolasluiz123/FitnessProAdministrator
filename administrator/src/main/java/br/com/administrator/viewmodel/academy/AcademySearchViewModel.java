@@ -11,9 +11,10 @@ import org.primefaces.model.SortOrder;
 import br.com.administrator.service.webclient.AcademyWebClient;
 import br.com.administrator.to.TOAcademy;
 import br.com.fitnesspro.shared.communication.dtos.general.AcademyDTO;
-import br.com.fitnesspro.shared.communication.filter.AcademyFilter;
-import br.com.fitnesspro.shared.communication.filter.Sort;
 import br.com.fitnesspro.shared.communication.paging.CommonPageInfos;
+import br.com.fitnesspro.shared.communication.query.enums.EnumAcademyFields;
+import br.com.fitnesspro.shared.communication.query.filter.AcademyFilter;
+import br.com.fitnesspro.shared.communication.query.sort.Sort;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 
@@ -45,21 +46,22 @@ public class AcademySearchViewModel implements Serializable {
 	private AcademyFilter getAcademyFilter(Map<String, FilterMeta> filterBy, Map<String, SortMeta> sortBy) {
 		AcademyFilter filter = new AcademyFilter();
 		
-		if (filterBy.containsKey("name")) {
-			String filterValue = filterBy.get("name").getFilterValue().toString();
+		if (filterBy.containsKey(EnumAcademyFields.NAME.getFieldName())) {
+			String filterValue = filterBy.get(EnumAcademyFields.NAME.getFieldName()).getFilterValue().toString();
 			filter.setName(filterValue);
 		}
 		
-		if (filterBy.containsKey("address")) {
-			String filterValue = filterBy.get("address").getFilterValue().toString();
+		if (filterBy.containsKey(EnumAcademyFields.ADDRESS.getFieldName())) {
+			String filterValue = filterBy.get(EnumAcademyFields.ADDRESS.getFieldName()).getFilterValue().toString();
 			filter.setAddress(filterValue);
 		}
 		
 		if (sortBy != null && !sortBy.values().isEmpty()) {
 			SortMeta sortMeta = sortBy.values().stream().findFirst().get();
-			filter.setSort(new Sort(sortMeta.getField(), sortMeta.getOrder() == SortOrder.ASCENDING));
+			EnumAcademyFields field = EnumAcademyFields.getEntries().stream().filter(f -> f.getFieldName().equals(sortMeta.getField())).findFirst().get();
+			filter.setSort(new Sort(field, sortMeta.getOrder() == SortOrder.ASCENDING));
 		} else {
-			filter.setSort(new Sort("name", true));
+			filter.setSort(new Sort(EnumAcademyFields.NAME, true));
 		}
 		
 		return filter;

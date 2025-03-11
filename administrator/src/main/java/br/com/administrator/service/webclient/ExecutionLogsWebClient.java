@@ -9,8 +9,10 @@ import br.com.administrator.service.IExecutionLogsService;
 import br.com.administrator.service.exception.ServiceException;
 import br.com.administrator.service.gson.utils.GsonUtils;
 import br.com.fitnesspro.shared.communication.dtos.logs.ExecutionLogDTO;
-import br.com.fitnesspro.shared.communication.filter.ExecutionLogsFilter;
+import br.com.fitnesspro.shared.communication.dtos.logs.ExecutionLogPackageDTO;
 import br.com.fitnesspro.shared.communication.paging.CommonPageInfos;
+import br.com.fitnesspro.shared.communication.query.filter.ExecutionLogsFilter;
+import br.com.fitnesspro.shared.communication.query.filter.ExecutionLogsPackageFilter;
 import br.com.fitnesspro.shared.communication.responses.ReadServiceResponse;
 import br.com.fitnesspro.shared.communication.responses.SingleValueServiceResponse;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -58,6 +60,45 @@ public class ExecutionLogsWebClient extends AbstractWebClient {
 			Gson defaultGson = GsonUtils.getDefaultGson();
 			
 			Call<SingleValueServiceResponse<Integer>> serviceCall = service.getCountListExecutionLog(token, defaultGson.toJson(filter));
+			SingleValueServiceResponse<Integer> response = getSingleResponseBody(serviceCall, Integer.class);
+			
+			if (!response.getSuccess()) {
+				throw new ServiceException(response.getError());
+			}
+			
+			return response.getValue();
+		} catch (ConnectException exception) {
+			throw new ServiceException("Não foi possível se conectar ao servidor. Tente novamente mais tarde.", exception);
+		}
+	}
+	
+	public List<ExecutionLogPackageDTO> getListExecutionLogPackage(ExecutionLogsPackageFilter filter, CommonPageInfos pageInfos) throws Exception {
+		try {
+			String token = getFormatedToken();
+			Gson defaultGson = GsonUtils.getDefaultGson();
+			
+			Call<ReadServiceResponse<ExecutionLogPackageDTO>> serviceCall = service.getListExecutionLogPackage(token, 
+																											   defaultGson.toJson(filter), 
+																											   defaultGson.toJson(pageInfos));
+			
+			ReadServiceResponse<ExecutionLogPackageDTO> response = getReadResponseBody(serviceCall, ExecutionLogPackageDTO.class);
+			
+			if (!response.getSuccess()) {
+				throw new ServiceException(response.getError());
+			}
+			
+			return response.getValues();
+		} catch (ConnectException exception) {
+			throw new ServiceException("Não foi possível se conectar ao servidor. Tente novamente mais tarde.", exception);
+		}
+	}
+	
+	public Integer getCountListExecutionLogPackage(ExecutionLogsPackageFilter filter) throws Exception {
+		try {
+			String token = getFormatedToken();
+			Gson defaultGson = GsonUtils.getDefaultGson();
+			
+			Call<SingleValueServiceResponse<Integer>> serviceCall = service.getCountListExecutionLogPackage(token, defaultGson.toJson(filter));
 			SingleValueServiceResponse<Integer> response = getSingleResponseBody(serviceCall, Integer.class);
 			
 			if (!response.getSuccess()) {

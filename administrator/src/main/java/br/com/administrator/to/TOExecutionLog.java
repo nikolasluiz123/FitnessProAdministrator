@@ -13,14 +13,11 @@ public class TOExecutionLog extends AbstractModelTO {
 
 	private LabeledEnum<EnumExecutionType> type;
 	private LabeledEnum<EnumExecutionState> state;
-	private LocalDateTime serviceExecutionStart;
-	private LocalDateTime serviceExecutionEnd;
-	private LocalDateTime clientExecutionStart;
-	private LocalDateTime clientExecutionEnd;
 	private String endpoint;
-	private String requestBody;
-	private String error;
 	private String methodName;
+	private String userEmail;
+	private Integer pageSize;
+	private LocalDateTime lastUpdateDate;
 
 	public LabeledEnum<EnumExecutionType> getType() {
 		return type;
@@ -38,38 +35,6 @@ public class TOExecutionLog extends AbstractModelTO {
 		this.state = state;
 	}
 
-	public LocalDateTime getServiceExecutionStart() {
-		return serviceExecutionStart;
-	}
-
-	public void setServiceExecutionStart(LocalDateTime serviceExecutionStart) {
-		this.serviceExecutionStart = serviceExecutionStart;
-	}
-
-	public LocalDateTime getServiceExecutionEnd() {
-		return serviceExecutionEnd;
-	}
-
-	public void setServiceExecutionEnd(LocalDateTime serviceExecutionEnd) {
-		this.serviceExecutionEnd = serviceExecutionEnd;
-	}
-
-	public LocalDateTime getClientExecutionStart() {
-		return clientExecutionStart;
-	}
-
-	public void setClientExecutionStart(LocalDateTime clientExecutionStart) {
-		this.clientExecutionStart = clientExecutionStart;
-	}
-
-	public LocalDateTime getClientExecutionEnd() {
-		return clientExecutionEnd;
-	}
-
-	public void setClientExecutionEnd(LocalDateTime clientExecutionEnd) {
-		this.clientExecutionEnd = clientExecutionEnd;
-	}
-
 	public String getEndpoint() {
 		return endpoint;
 	}
@@ -78,28 +43,36 @@ public class TOExecutionLog extends AbstractModelTO {
 		this.endpoint = endpoint;
 	}
 
-	public String getRequestBody() {
-		return requestBody;
-	}
-
-	public void setRequestBody(String requestBody) {
-		this.requestBody = requestBody;
-	}
-
-	public String getError() {
-		return error;
-	}
-
-	public void setError(String error) {
-		this.error = error;
-	}
-
 	public String getMethodName() {
 		return methodName;
 	}
 
 	public void setMethodName(String methodName) {
 		this.methodName = methodName;
+	}
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+
+	public Integer getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	public LocalDateTime getLastUpdateDate() {
+		return lastUpdateDate;
+	}
+
+	public void setLastUpdateDate(LocalDateTime lastUpdateDate) {
+		this.lastUpdateDate = lastUpdateDate;
 	}
 
 }

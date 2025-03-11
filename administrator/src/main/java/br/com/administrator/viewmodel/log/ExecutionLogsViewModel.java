@@ -1,23 +1,29 @@
 package br.com.administrator.viewmodel.log;
 
+import static br.com.fitnesspro.shared.communication.query.enums.EnumExecutionLogsFields.END_POINT;
+import static br.com.fitnesspro.shared.communication.query.enums.EnumExecutionLogsFields.EXECUTION_STATE;
+import static br.com.fitnesspro.shared.communication.query.enums.EnumExecutionLogsFields.EXECUTION_TYPE;
+import static br.com.fitnesspro.shared.communication.query.enums.EnumExecutionLogsFields.METHOD_NAME;
+import static br.com.fitnesspro.shared.communication.query.enums.EnumExecutionLogsFields.USER_EMAIL;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
-import org.primefaces.model.SortOrder;
 
 import br.com.administrator.managedbean.common.labeledenum.LabeledEnum;
 import br.com.administrator.service.webclient.ExecutionLogsWebClient;
 import br.com.administrator.to.TOExecutionLog;
+import br.com.administrator.utils.FacesUtils;
 import br.com.administrator.utils.PrimefacesFiltersUtil;
 import br.com.fitnesspro.models.executions.enums.EnumExecutionType;
 import br.com.fitnesspro.shared.communication.dtos.logs.ExecutionLogDTO;
 import br.com.fitnesspro.shared.communication.enums.execution.EnumExecutionState;
-import br.com.fitnesspro.shared.communication.filter.ExecutionLogsFilter;
-import br.com.fitnesspro.shared.communication.filter.Sort;
 import br.com.fitnesspro.shared.communication.paging.CommonPageInfos;
+import br.com.fitnesspro.shared.communication.query.filter.ExecutionLogsFilter;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 
@@ -50,39 +56,24 @@ public class ExecutionLogsViewModel implements Serializable {
 		ExecutionLogsFilter filter = new ExecutionLogsFilter();
 		PrimefacesFiltersUtil filterUtils = new PrimefacesFiltersUtil(filterBy);
 		
-		if (filterBy.containsKey("type.value")) {
-			filter.setType(filterUtils.getEnumFilterValue("type.value", EnumExecutionType.class));
+		if (filterBy.containsKey(EXECUTION_TYPE.getFieldName())) {
+			filter.setType(filterUtils.getEnumFilterValue(EXECUTION_TYPE.getFieldName(), EnumExecutionType.class));
 		}
 		
-		if (filterBy.containsKey("state.value")) {
-			filter.setState(filterUtils.getEnumFilterValue("state.value", EnumExecutionState.class));
+		if (filterBy.containsKey(EXECUTION_STATE.getFieldName())) {
+			filter.setState(filterUtils.getEnumFilterValue(EXECUTION_STATE.getFieldName(), EnumExecutionState.class));
 		}
 		
-		if (filterBy.containsKey("serviceExecutionStart")) {
-			filter.setServiceExecutionStart(filterUtils.getDateTimeRangeFilter("serviceExecutionStart"));
+		if (filterBy.containsKey(END_POINT.getFieldName())) {
+			filter.setEndPoint(filterUtils.getStringFilterValue(END_POINT.getFieldName()));
 		}
 		
-		if (filterBy.containsKey("serviceExecutionEnd")) {
-			filter.setServiceExecutionEnd(filterUtils.getDateTimeRangeFilter("serviceExecutionEnd"));
+		if (filterBy.containsKey(METHOD_NAME.getFieldName())) {
+			filter.setEndPoint(filterUtils.getStringFilterValue(METHOD_NAME.getFieldName()));
 		}
 		
-		if (filterBy.containsKey("clientExecutionStart")) {
-			filter.setClientExecutionStart(filterUtils.getDateTimeRangeFilter("clientExecutionStart"));
-		}
-		
-		if (filterBy.containsKey("clientExecutionEnd")) {
-			filter.setClientExecutionEnd(filterUtils.getDateTimeRangeFilter("clientExecutionEnd"));
-		}
-		
-		if (filterBy.containsKey("endpoint")) {
-			filter.setEndPoint(filterUtils.getStringFilterValue("endpoint"));
-		}
-		
-		if (sortBy != null && !sortBy.values().isEmpty()) {
-			SortMeta sortMeta = sortBy.values().stream().findFirst().get();
-			filter.setSort(new Sort(sortMeta.getField(), sortMeta.getOrder() == SortOrder.ASCENDING));
-		} else {
-			filter.setSort(new Sort("serviceExecutionStart", true));
+		if (filterBy.containsKey(USER_EMAIL.getFieldName())) {
+			filter.setEndPoint(filterUtils.getStringFilterValue(USER_EMAIL.getFieldName()));
 		}
 		
 		return filter;
@@ -91,41 +82,39 @@ public class ExecutionLogsViewModel implements Serializable {
 	private TOExecutionLog getExecutionLogTO(ExecutionLogDTO dto) {
 		TOExecutionLog to = new TOExecutionLog();
 		to.setEndpoint(dto.getEndPoint());
-		to.setError(dto.getError());
-		to.setServiceExecutionEnd(dto.getServiceExecutionEnd());
-		to.setServiceExecutionStart(dto.getServiceExecutionStart());
-		to.setClientExecutionStart(dto.getClientExecutionStart());
-		to.setClientExecutionEnd(dto.getClientExecutionEnd());
 		to.setId(dto.getId());
-		to.setRequestBody(dto.getRequestBody());
 		to.setType(new LabeledEnum<EnumExecutionType>(dto.getType(), getLabelExecutionType(dto.getType())));
 		to.setState(new LabeledEnum<EnumExecutionState>(dto.getState(), getLabelExecutionState(dto.getState())));
 		to.setMethodName(dto.getMethodName());
+		to.setLastUpdateDate(dto.getLastUpdateDate());
+		to.setPageSize(dto.getPageSize());
+		to.setUserEmail(dto.getUserEmail());
 		
 		return to;
 	}
 	
 	public String getLabelExecutionType(EnumExecutionType type) {
+		ResourceBundle bundle = FacesUtils.getResourceBundle("execution_logs");
 		String label = null;
 		
 		switch(type) {
 		case DELETE:
-			label = "HTTP DELETE";
+			label = bundle.getString("label_execution_type_delete");
 			break;
 		case EXPORTATION:
-			label = "Exportação";
+			label = bundle.getString("label_execution_type_exportation");
 			break;
 		case GET:
-			label = "HTTP GET";
+			label = bundle.getString("label_execution_type_get");
 			break;
 		case IMPORTATION:
-			label = "Importação";
+			label = bundle.getString("label_execution_type_importation");
 			break;
 		case POST:
-			label = "HTTP POST";
+			label = bundle.getString("label_execution_type_post");
 			break;
 		case PUT:
-			label = "HTTP PUT";
+			label = bundle.getString("label_execution_type_put");
 			break;
 		default:
 			break;
@@ -135,20 +124,21 @@ public class ExecutionLogsViewModel implements Serializable {
 	}
 	
 	public String getLabelExecutionState(EnumExecutionState state) {
+		ResourceBundle bundle = FacesUtils.getResourceBundle("execution_logs");
 		String label = null;
 		
 		switch(state) {
 		case ERROR:
-			label = "Erro na Execução";
+			label = bundle.getString("label_execution_state_error");
 			break;
 		case FINISHED:
-			label = "Finalizado";
+			label = bundle.getString("label_execution_state_finished");
 			break;
 		case PENDING:
-			label = "Pendente";
+			label = bundle.getString("label_execution_state_pending");
 			break;
 		case RUNNING:
-			label = "Executando";
+			label = bundle.getString("label_execution_state_running");
 			break;
 		default:
 			break;
