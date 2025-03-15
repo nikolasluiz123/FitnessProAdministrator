@@ -79,8 +79,8 @@ jobs:
           ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} << EOF
             docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
             docker pull nikolasluiz123/fitnesspro-administrator
-            docker stop administrator-web-app || true
-            docker rm administrator-web-app || true        
-            docker run -d -p 8081:8081 --name web-app nikolasluiz123/fitnesspro-administrator
+            docker stop administrator-web-app
+            docker rm administrator-web-app        
+            docker run -d -p 8081:8081 --name administrator-web-app nikolasluiz123/fitnesspro-administrator
           EOF
           rm private_key.pem
