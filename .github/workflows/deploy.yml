@@ -57,7 +57,7 @@ jobs:
 
       - name: Copy WAR to Docker context
         run: |
-          cp docker-build/*.war docker/app.war
+          cp docker-build/*.war docker/administrator.war
 
       - name: Build Docker image
         run: |

@@ -17,7 +17,7 @@ RUN tar xf /tmp/wildfly-$WILDFLY_VERSION.tar.gz -C /opt && \
     mv /opt/wildfly-$WILDFLY_VERSION $WILDFLY_HOME && \
     rm /tmp/wildfly-$WILDFLY_VERSION.tar.gz
 
-COPY app.war $WILDFLY_HOME/standalone/deployments/
+COPY administrator.war $WILDFLY_HOME/standalone/deployments/
 
 EXPOSE 8080
 
