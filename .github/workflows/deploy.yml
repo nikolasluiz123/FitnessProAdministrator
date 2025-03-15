@@ -61,10 +61,6 @@ jobs:
 
       - name: Build Docker image
         run: |
-          cat <<EOF > docker/Dockerfile
-          FROM jboss/wildfly:30.0.1.Final
-          COPY app.war /opt/jboss/wildfly/standalone/deployments/
-          EOF
           docker build -t nikolasluiz123/fitnesspro-administrator:latest docker
 
       - name: Push Docker image to Docker Hub
