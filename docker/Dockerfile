@@ -19,6 +19,6 @@ RUN tar xf /tmp/wildfly-$WILDFLY_VERSION.tar.gz -C /opt && \
 
 COPY app.war $WILDFLY_HOME/standalone/deployments/
 
-EXPOSE 8081
+EXPOSE 8082
 
 CMD ["/opt/wildfly/bin/standalone.sh", "-b", "0.0.0.0"]
