@@ -30,6 +30,14 @@
 		<fitnesspro-shared-communication.version>0.0.1-SNAPSHOT</fitnesspro-shared-communication.version>
 	</properties>
 
+	<repositories>
+		<repository>
+			<id>github</id>
+			<name>GitHub Packages</name>
+			<url>https://maven.pkg.github.com/nikolasluiz123/FitnessProService</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.glassfish</groupId>
