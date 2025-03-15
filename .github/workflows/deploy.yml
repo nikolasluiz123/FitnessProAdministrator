@@ -81,7 +81,6 @@ jobs:
             docker pull nikolasluiz123/fitnesspro-administrator
             docker stop administrator-web-app
             docker rm administrator-web-app        
-            docker run -d -p 8081:8081 
-            --name administrator-web-app nikolasluiz123/fitnesspro-administrator
+            docker run -d -p 8081:8081 --name administrator-web-app nikolasluiz123/fitnesspro-administrator
           EOF
           rm private_key.pem
