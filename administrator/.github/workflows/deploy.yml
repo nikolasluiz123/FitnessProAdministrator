@@ -1,0 +1,75 @@
+name: Deploy Web App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'adopt'
+
+      - name: Grant execute permission for mvnw
+        run: chmod +x ./mvnw
+
+      - name: Build with Maven
+        run: ./mvnw clean package
+
+      - name: Upload WAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: webapp-war
+          path: target/*.war
+
+      - name: Download WAR artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: webapp-war
+          path: docker-build
+
+      - name: Create Docker context directory
+        run: mkdir -p docker
+
+      - name: Copy WAR to Docker context
+        run: |
+          cp docker-build/*.war docker/app.war
+
+      - name: Build Docker image
+        run: |
+          cat <<EOF > docker/Dockerfile
+          FROM jboss/wildfly:30.0.1.Final
+          COPY app.war /opt/jboss/wildfly/standalone/deployments/
+          EOF
+          docker build -t nikolasluiz123/fitnesspro-administrator:latest docker
+
+      - name: Push Docker image to Docker Hub
+        run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+          docker push nikolasluiz123/fitnesspro-administrator
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: SSH and deploy
+        run: |
+          echo "${{ secrets.SERVER_SSH_KEY }}" > private_key.pem
+          chmod 600 private_key.pem
+          ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} << EOF
+            docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
+            docker pull nikolasluiz123/fitnesspro-administrator
+            docker stop administrator-web-app || true
+            docker rm administrator-web-app || true        
+            docker run -d -p 8081:8081 --name web-app nikolasluiz123/fitnesspro-administrator
+          EOF
+          rm private_key.pem
