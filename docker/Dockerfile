@@ -6,6 +6,7 @@ RUN apt-get update && \
 
 ENV WILDFLY_VERSION=30.0.1.Final
 ENV WILDFLY_HOME=/opt/wildfly
+ENV JAVA_OPTS="-DFITNESS_PRO_ADMINISTRATOR_ENV=remote"
 
 RUN apt-get update && \
     apt-get install -y wget && \
