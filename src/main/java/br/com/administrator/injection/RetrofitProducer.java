@@ -11,6 +11,7 @@ import com.google.gson.GsonBuilder;
 import br.com.administrator.service.gson.adapter.LocalDateTimeTypeAdapter;
 import br.com.administrator.service.gson.adapter.LocalDateTypeAdapter;
 import br.com.administrator.service.gson.adapter.LocalTimeTypeAdapter;
+import br.com.administrator.utils.ConfigProperties;
 import br.com.fitnesspro.shared.communication.constants.Timeouts;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
@@ -23,14 +24,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitProducer {
 	
 	 @Produces
-     public Retrofit produceRetrofit(OkHttpClient client) {
-			Gson gson = new GsonBuilder()
-					.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter())
-					.registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
-					.registerTypeAdapter(LocalTime.class, new LocalTimeTypeAdapter()).create();
+     public Retrofit produceRetrofit(OkHttpClient client, ConfigProperties config) {
+		Gson gson = new GsonBuilder()
+				.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter())
+				.registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
+				.registerTypeAdapter(LocalTime.class, new LocalTimeTypeAdapter()).create();
 		 
-         return new Retrofit.Builder()
-             .baseUrl("http://192.168.155.19:8082/api/v1/")
+		String host = config.getPropertyValue("service.host");
+		String port = config.getPropertyValue("service.port");
+		
+        return new Retrofit.Builder()
+             .baseUrl(String.format("http://%s:%s/api/v1/", host, port))
              .addConverterFactory(GsonConverterFactory.create(gson))
              .client(client)
              .build();
@@ -50,6 +54,11 @@ public class RetrofitProducer {
 	            .readTimeout(Timeouts.OPERATION_MEDIUM_TIMEOUT, TimeUnit.SECONDS)
 	            .writeTimeout(Timeouts.OPERATION_HIGH_TIMEOUT, TimeUnit.SECONDS)
 	            .build();
+	}
+	
+	@Produces
+	public ConfigProperties produceConfigProperties() throws Exception {
+		return new ConfigProperties();
 	}
 
 }
