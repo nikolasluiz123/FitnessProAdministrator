@@ -83,7 +83,6 @@ jobs:
             docker image prune -a -f
             docker rm administrator-web-app        
             docker run -d -p 8080:8080 \
-            --env FITNESS_PRO_ADMINISTRATOR_ENV=remote \
             --name administrator-web-app nikolasluiz123/fitnesspro-administrator
           EOF
           rm private_key.pem
