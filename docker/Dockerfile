@@ -18,8 +18,8 @@ RUN tar xf /tmp/wildfly-$WILDFLY_VERSION.tar.gz -C /opt && \
     rm /tmp/wildfly-$WILDFLY_VERSION.tar.gz
 
 RUN rm -rf $WILDFLY_HOME/standalone/deployments/*
-
-ARG BUILD_TIMESTAMP
+RUN rm -rf $WILDFLY_HOME/standalone/tmp/*
+RUN rm -rf $WILDFLY_HOME/standalone/work/*
 
 COPY administrator.war $WILDFLY_HOME/standalone/deployments/
 

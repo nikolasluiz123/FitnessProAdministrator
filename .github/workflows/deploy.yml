@@ -61,7 +61,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t nikolasluiz123/fitnesspro-administrator:latest --build-arg BUILD_TIMESTAMP=$(date +%s) docker
+          docker build -t nikolasluiz123/fitnesspro-administrator:latest docker
 
       - name: Push Docker image to Docker Hub
         run: |
@@ -80,6 +80,7 @@ jobs:
             docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
             docker pull nikolasluiz123/fitnesspro-administrator
             docker stop administrator-web-app
+            docker image prune -a -f
             docker rm administrator-web-app        
             docker run -d -p 8080:8080 \
             --env FITNESS_PRO_ADMINISTRATOR_ENV=remote \
