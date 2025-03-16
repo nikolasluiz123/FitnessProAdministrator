@@ -16,7 +16,7 @@ public class ConfigProperties {
 	private Properties properties;
 
 	public ConfigProperties() throws Exception {
-		String env = System.getenv(ENVIRONMENT);
+		String env = System.getProperty(ENVIRONMENT);
 
 		if (StringUtils.isNullOrEmpty(env)) {
 			throw new IllegalArgumentException("Invalid value for environment variable named " + ENVIRONMENT);
