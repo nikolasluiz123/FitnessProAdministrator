@@ -19,6 +19,8 @@ RUN tar xf /tmp/wildfly-$WILDFLY_VERSION.tar.gz -C /opt && \
 
 RUN rm -rf $WILDFLY_HOME/standalone/deployments/*
 
+ARG BUILD_TIMESTAMP
+
 COPY administrator.war $WILDFLY_HOME/standalone/deployments/
 
 EXPOSE 8080

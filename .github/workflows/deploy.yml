@@ -61,7 +61,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t nikolasluiz123/fitnesspro-administrator:latest docker
+          docker build -t nikolasluiz123/fitnesspro-administrator:latest --build-arg BUILD_TIMESTAMP=$(date +%s) docker
 
       - name: Push Docker image to Docker Hub
         run: |
