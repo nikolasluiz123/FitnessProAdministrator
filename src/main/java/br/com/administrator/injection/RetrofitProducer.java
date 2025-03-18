@@ -31,10 +31,9 @@ public class RetrofitProducer {
 				.registerTypeAdapter(LocalTime.class, new LocalTimeTypeAdapter()).create();
 		 
 		String host = config.getPropertyValue("service.host");
-		String port = config.getPropertyValue("service.port");
 		
         return new Retrofit.Builder()
-             .baseUrl(String.format("http://%s:%s/api/v1/", host, port))
+             .baseUrl(host)
              .addConverterFactory(GsonConverterFactory.create(gson))
              .client(client)
              .build();
