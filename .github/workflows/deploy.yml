@@ -74,16 +74,13 @@ jobs:
     steps:
       - name: SSH and deploy
         run: |
-          echo "${{ secrets.SERVER_SSH_KEY }}" > private_key.pem
-          chmod 600 private_key.pem
-          ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} << EOF
-            docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
-            docker pull nikolasluiz123/fitnesspro-administrator
-            docker stop administrator-web-app
-            docker image prune -a -f
-            docker rm administrator-web-app        
-            docker run -d -p 8080:8080 \
-            -e JAVA_OPTS="-DFITNESS_PRO_ADMINISTRATOR_ENV=remote" \
-            --name administrator-web-app nikolasluiz123/fitnesspro-administrator
-          EOF
-          rm private_key.pem
+              echo "${{ secrets.SERVER_SSH_KEY }}" > private_key.pem
+              chmod 600 private_key.pem
+              ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} << EOF
+              docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
+              docker image prune -a -f
+              docker-compose down
+              docker-compose pull
+              docker-compose up -d
+              EOF
+              rm private_key.pem
