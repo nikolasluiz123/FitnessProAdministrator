@@ -58,10 +58,9 @@ public class AcademySearchViewModel implements Serializable {
 		
 		if (sortBy != null && !sortBy.values().isEmpty()) {
 			SortMeta sortMeta = sortBy.values().stream().findFirst().get();
-			EnumAcademyFields field = EnumAcademyFields.getEntries().stream().filter(f -> f.getFieldName().equals(sortMeta.getField())).findFirst().get();
-			filter.setSort(new Sort(field, sortMeta.getOrder() == SortOrder.ASCENDING));
+			filter.setSort(new Sort(sortMeta.getField(), sortMeta.getOrder() == SortOrder.ASCENDING));
 		} else {
-			filter.setSort(new Sort(EnumAcademyFields.NAME, true));
+			filter.setSort(new Sort(EnumAcademyFields.NAME.getFieldName(), true));
 		}
 		
 		return filter;

@@ -19,6 +19,7 @@ public class LazyExecutionLogPackageDataModel extends AbstractLazyDataModel<TOEx
 	private static final long serialVersionUID = 1L;
 	
 	private final LogDialogViewModel viewModel;
+	private String executionLogId;
 	
 	public LazyExecutionLogPackageDataModel() {
 		this.viewModel = null;
@@ -32,7 +33,7 @@ public class LazyExecutionLogPackageDataModel extends AbstractLazyDataModel<TOEx
 	@Override
 	public int count(Map<String, FilterMeta> filterBy) {
 		try {
-			return viewModel.getCountListExecutionLogPackage(filterBy);
+			return viewModel.getCountListExecutionLogPackage(filterBy, executionLogId);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return 0;
@@ -42,11 +43,19 @@ public class LazyExecutionLogPackageDataModel extends AbstractLazyDataModel<TOEx
 	@Override
 	public List<TOExecutionLogPackage> onLoad(int first, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
 		try {
-			return viewModel.getListExecutionLogPackage(first, pageSize, sortBy, filterBy);
+			return viewModel.getListExecutionLogPackage(first, pageSize, sortBy, filterBy, executionLogId);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ArrayList<>();
 		}
 	}
 
+	public String getExecutionLogId() {
+		return executionLogId;
+	}
+
+	public void setExecutionLogId(String executionLogId) {
+		this.executionLogId = executionLogId;
+	}
+	
 }

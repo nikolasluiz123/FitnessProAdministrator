@@ -42,6 +42,23 @@
 						update="formMessages:messages, logDialog"
 						oncomplete="PF('logDialogWV').show();" />
 
+				<p:column headerText="#{bundleExecutionLog['label_column_creation_date']}" 
+						  filterMatchMode="between" 
+						  sortBy="#{log.creationDate}"
+						  sortOrder="desc">
+						  
+					<f:facet name="filter">
+						<p:datePicker id="filterRangeCreationDate" 
+									  selectionMode="range" 
+									  onchange="PF('executionLogsTableWV').filter()" 
+									  converter="LocalDateConverter" />
+					</f:facet>
+					
+					<h:outputText value="#{log.creationDate}">
+						<f:converter converterId="LocalDateTimeConverter" />
+					</h:outputText>
+				</p:column>
+
 				<p:column headerText="#{bundleExecutionLog['label_column_type']}" 
 						  filterBy="#{log.type.value}" 
 						  filterMatchMode="exact"
@@ -111,10 +128,9 @@
 				  modal="true"
 				  fitViewport="true"
 				  responsive="true"
-				  width="900px"
+				  width="80vw"
 				  resizable="false"
-				  dynamic="true"
-				  onHide="onRequestReloadDatatableLogs();">
+				  dynamic="true">
 
 			<f:facet name="header">
 				<h:outputText value="#{bundleLogDialog['label_title']}" />
@@ -130,36 +146,34 @@
 			
 				<div class="ui-g">
 					<div class="ui-g-12">
-						<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
+						<div class="ui-g-2 vertical-labeled-input ui-g-nopad">
 							<p:outputLabel id="labelExecutionType" value="#{bundleLogDialog['label_field_execution_type']}" styleClass="bold-label" />
 							<p:outputLabel id="valueExecutionType" value="#{logDialogMBean.toExecutionLog.type.label}" styleClass="label-value" />
 						</div>
 						
-						<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
+						<div class="ui-g-2 vertical-labeled-input ui-g-nopad">
 							<p:outputLabel id="labelExecutionState" value="#{bundleLogDialog['label_field_execution_state']}" styleClass="bold-label" />
 							<p:outputLabel id="valueExecutionState" value="#{logDialogMBean.toExecutionLog.state.label}" styleClass="label-value" />
 						</div>
 						
-						<div class="ui-g-4 vertical-labeled-input ui-g-nopad" jsf:rendered="#{logDialogMBean.isVisibleUserEmail}">
+						<div class="ui-g-2 vertical-labeled-input ui-g-nopad" jsf:rendered="#{logDialogMBean.visibleUserEmail}">
 							<p:outputLabel id="labelUser" value="#{bundleLogDialog['label_field_user']}" styleClass="bold-label" />
 							<p:outputLabel id="valueUser" value="#{logDialogMBean.toExecutionLog.userEmail}" styleClass="label-value" />
 						</div>
-					</div>
-					
-					<div class="ui-g-12">
-						<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
+						
+						<div class="ui-g-2 vertical-labeled-input ui-g-nopad">
 							<p:outputLabel id="labelEndPoint" value="#{bundleLogDialog['label_field_end_point']}" styleClass="bold-label" />
 							<p:outputLabel id="valueEndPoint" value="#{logDialogMBean.toExecutionLog.endpoint}" styleClass="label-value" />
 						</div>
 					
-						<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
+						<div class="ui-g-2 vertical-labeled-input ui-g-nopad">
 							<p:outputLabel id="labelMethodName" value="#{bundleLogDialog['label_field_method_name']}" styleClass="bold-label" />
 							<p:outputLabel id="valueMethodName" value="#{logDialogMBean.toExecutionLog.methodName}" styleClass="label-value" />
 						</div>
 					</div>
 					
-					<div class="ui-g-12">
-						<div class="ui-g-4 vertical-labeled-input ui-g-nopad" jsf:rendered="#{logDialogMBean.isVisiblePageSize}">
+					<div class="ui-g-12" jsf:rendered="#{logDialogMBean.visibleImportExportInfos}">
+						<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
 							<p:outputLabel id="labelPageSize" 
 										   value="#{bundleLogDialog['label_field_page_size']}" 
 										   styleClass="bold-label" />
@@ -169,7 +183,7 @@
 										   styleClass="label-value" />
 						</div>
 					
-						<div class="ui-g-4 vertical-labeled-input ui-g-nopad" jsf:rendered="#{logDialogMBean.isVisibleLastUpdateDate}">
+						<div class="ui-g-4 vertical-labeled-input ui-g-nopad" jsf:rendered="#{logDialogMBean.visibleLastUpdateDate}">
 							<p:outputLabel id="labelLastUpdateDate" 
 										   value="#{bundleLogDialog['label_field_last_update_date']}" 
 										   styleClass="bold-label" />
@@ -193,8 +207,8 @@
 
 							<p:ajax event="rowSelect"
 									listener="#{logDialogMBean.onRowSelect}"
-									update=""
-									oncomplete="PF('packageDialogWV').show();" />
+									update="formMessages:messages, logPackageDialog"
+									oncomplete="PF('logPackageDialogWV').show();" />
 
 							<f:facet name="paginatorTopLeft">
 								<p:commandButton icon="pi pi-refresh" oncomplete="onRequestReloadDatatableLogPackages();" />
@@ -268,19 +282,22 @@
 							
 							<p:column headerText="#{bundleLogDialog['label_column_inserted_items_count']}" 
 									  sortBy="#{package.insertedItemsCount}"
-									  field="#{EnumExecutionLogsPackageFields.INSERTED_ITEMS_COUNT.fieldName}">
+									  field="#{EnumExecutionLogsPackageFields.INSERTED_ITEMS_COUNT.fieldName}"
+									  rendered="#{logDialogMBean.visibleImportExportInfos}">
 								<h:outputText value="#{package.insertedItemsCount}" />
 							</p:column>				
 						
 							<p:column headerText="#{bundleLogDialog['label_column_updated_items_count']}" 
 									  sortBy="#{package.updatedItemsCount}"
-									  field="#{EnumExecutionLogsPackageFields.UPDATED_ITEMS_COUNT.fieldName}">
+									  field="#{EnumExecutionLogsPackageFields.UPDATED_ITEMS_COUNT.fieldName}"
+									  rendered="#{logDialogMBean.visibleImportExportInfos}">
 								<h:outputText value="#{package.updatedItemsCount}" />
 							</p:column>		
 							
 							<p:column headerText="#{bundleLogDialog['label_column_all_items_count']}"
 									  sortBy="#{package.allItemsCount}"
-									  field="#{EnumExecutionLogsPackageFields.ALL_ITEMS_COUNT.fieldName}">
+									  field="#{EnumExecutionLogsPackageFields.ALL_ITEMS_COUNT.fieldName}"
+									  rendered="#{logDialogMBean.visibleImportExportInfos}">
 								<h:outputText value="#{package.allItemsCount}" />
 							</p:column>					
 						</p:dataTable>
@@ -296,8 +313,7 @@
 				  responsive="true"
 				  width="900px"
 				  resizable="false"
-				  dynamic="true"
-				  onHide="onRequestReloadDatatableLogPackages();">
+				  dynamic="true">
 
 			<f:facet name="header">
 				<h:outputText value="#{bundleLogPackageDialog['label_title']}" />
@@ -306,7 +322,7 @@
 			<h:form id="logPackageDialogForm">
 				<div class="ui-g">
 					<div class="ui-g-12">
-						<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
+						<div class="ui-g-3 vertical-labeled-input ui-g-nopad">
 							<p:outputLabel id="labelServiceStart" value="#{bundleLogPackageDialog['label_field_service_start']}" styleClass="bold-label" />
 							<p:outputLabel id="valueServiceStart" 
 										   value="#{logPackageDialogMBean.toExecutionLogPackage.serviceExecutionStart}" 
@@ -314,17 +330,15 @@
 										   converter="LocalDateTimeConverter" />
 						</div>
 					
-						<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
+						<div class="ui-g-3 vertical-labeled-input ui-g-nopad">
 							<p:outputLabel id="labelServiceEnd" value="#{bundleLogPackageDialog['label_field_service_end']}" styleClass="bold-label" />
 							<p:outputLabel id="valueServiceEnd" 
 										   value="#{logPackageDialogMBean.toExecutionLogPackage.serviceExecutionEnd}" 
 										   styleClass="label-value"
 										   converter="LocalDateTimeConverter" />
 						</div>
-					</div>
-					
-					<div class="ui-g-12">
-						<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
+						
+						<div class="ui-g-3 vertical-labeled-input ui-g-nopad">
 							<p:outputLabel id="labelClientStart" value="#{bundleLogPackageDialog['label_field_client_start']}" styleClass="bold-label" />
 							<p:outputLabel id="valueClientStart" 
 										   value="#{logPackageDialogMBean.toExecutionLogPackage.clientExecutionStart}" 
@@ -332,16 +346,16 @@
 										   converter="LocalDateTimeConverter" />
 						</div>
 					
-						<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
+						<div class="ui-g-3 vertical-labeled-input ui-g-nopad">
 							<p:outputLabel id="labelClientEnd" value="#{bundleLogPackageDialog['label_field_client_end']}" styleClass="bold-label" />
 							<p:outputLabel id="valueClientEnd" 
 										   value="#{logPackageDialogMBean.toExecutionLogPackage.clientExecutionEnd}" 
 										   styleClass="label-value"
 										   converter="LocalDateTimeConverter" />
-						</div>					
+						</div>	
 					</div>
 					
-					<div class="ui-g-12" jsf:rendered="#{logPackageDialogMBean.isVisibleImportInfos}">
+					<div class="ui-g-12" jsf:rendered="#{logPackageDialogMBean.visibleImportInfos}">
 						<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
 							<p:outputLabel id="labelInsertedItemsCount" value="#{bundleLogPackageDialog['label_field_inserted_items_count']}" styleClass="bold-label" />
 							<p:outputLabel id="valueInsertedItemsCount" 
@@ -357,7 +371,7 @@
 						</div>
 					</div>
 					
-					<div class="ui-g-12" jsf:rendered="#{logPackageDialogMBean.isVisibleExportInfos}">
+					<div class="ui-g-12" jsf:rendered="#{logPackageDialogMBean.visibleExportInfos}">
 						<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
 							<p:outputLabel id="labelAllItemsCount" value="#{bundleLogPackageDialog['label_field_all_items_count']}" styleClass="bold-label" />
 							<p:outputLabel id="valueAllItemsCount" 

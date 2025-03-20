@@ -18,7 +18,6 @@ import br.com.administrator.to.TOExecutionLogPackage;
 import br.com.administrator.utils.PrimefacesFiltersUtil;
 import br.com.fitnesspro.shared.communication.dtos.logs.ExecutionLogPackageDTO;
 import br.com.fitnesspro.shared.communication.paging.CommonPageInfos;
-import br.com.fitnesspro.shared.communication.query.enums.EnumExecutionLogsPackageFields;
 import br.com.fitnesspro.shared.communication.query.filter.ExecutionLogsPackageFilter;
 import br.com.fitnesspro.shared.communication.query.sort.Sort;
 import jakarta.enterprise.context.Dependent;
@@ -30,15 +29,20 @@ public class LogDialogViewModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private final ExecutionLogsWebClient webClient;
-
+	
 	@Inject
 	public LogDialogViewModel(ExecutionLogsWebClient executionLogsWebClient) {
         this.webClient = executionLogsWebClient;
 	}
 
-	public List<TOExecutionLogPackage> getListExecutionLogPackage(int first, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) throws Exception {
+	public List<TOExecutionLogPackage> getListExecutionLogPackage(int first, 
+																  int pageSize, 
+																  Map<String, SortMeta> sortBy,
+																  Map<String, FilterMeta> filterBy,
+																  String executionId) throws Exception {
 		CommonPageInfos pageInfos = new CommonPageInfos(pageSize, first / pageSize);
 		ExecutionLogsPackageFilter filter = getExecutionLogsPackageFilter(filterBy, sortBy);
+		filter.setExecutionLogId(executionId);
 		
 		List<ExecutionLogPackageDTO> result = webClient.getListExecutionLogPackage(filter, pageInfos);
 		
@@ -47,6 +51,7 @@ public class LogDialogViewModel implements Serializable {
 	
 	private ExecutionLogsPackageFilter getExecutionLogsPackageFilter(Map<String, FilterMeta> filterBy, Map<String, SortMeta> sortBy) {
 		ExecutionLogsPackageFilter filter = new ExecutionLogsPackageFilter();
+		
 		PrimefacesFiltersUtil filterUtils = new PrimefacesFiltersUtil(filterBy);
 		
 		if (filterBy.containsKey(SERVICE_EXECUTION_START.getFieldName())) {
@@ -67,10 +72,9 @@ public class LogDialogViewModel implements Serializable {
 		
 		if (sortBy != null && !sortBy.values().isEmpty()) {
 			SortMeta sortMeta = sortBy.values().stream().findFirst().get();
-			EnumExecutionLogsPackageFields field = EnumExecutionLogsPackageFields.getEntries().stream().filter(f -> f.getFieldName().equals(sortMeta.getField())).findFirst().get();
-			filter.setSort(new Sort(field, sortMeta.getOrder() == SortOrder.ASCENDING));
+			filter.setSort(new Sort(sortMeta.getField(), sortMeta.getOrder() == SortOrder.ASCENDING));
 		} else {
-			filter.setSort(new Sort(SERVICE_EXECUTION_START, false));
+			filter.setSort(new Sort(SERVICE_EXECUTION_START.getFieldName(), false));
 		}
 		
 		return filter;
@@ -93,7 +97,11 @@ public class LogDialogViewModel implements Serializable {
 	}
 	
 
-	public int getCountListExecutionLogPackage(Map<String, FilterMeta> filterBy) throws Exception {
-		return webClient.getCountListExecutionLogPackage(getExecutionLogsPackageFilter(filterBy, null));
+	public int getCountListExecutionLogPackage(Map<String, FilterMeta> filterBy, String executionId) throws Exception {
+		ExecutionLogsPackageFilter filter = getExecutionLogsPackageFilter(filterBy, null);
+		filter.setExecutionLogId(executionId);
+		
+		return webClient.getCountListExecutionLogPackage(filter);
 	}
+
 }

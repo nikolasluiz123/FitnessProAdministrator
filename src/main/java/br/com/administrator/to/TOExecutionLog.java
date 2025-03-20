@@ -18,6 +18,7 @@ public class TOExecutionLog extends AbstractModelTO {
 	private String userEmail;
 	private Integer pageSize;
 	private LocalDateTime lastUpdateDate;
+	private LocalDateTime creationDate;
 
 	public LabeledEnum<EnumExecutionType> getType() {
 		return type;
@@ -73,6 +74,14 @@ public class TOExecutionLog extends AbstractModelTO {
 
 	public void setLastUpdateDate(LocalDateTime lastUpdateDate) {
 		this.lastUpdateDate = lastUpdateDate;
+	}
+
+	public LocalDateTime getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(LocalDateTime creationDate) {
+		this.creationDate = creationDate;
 	}
 
 }

@@ -89,6 +89,7 @@ public class ExecutionLogsViewModel implements Serializable {
 		to.setLastUpdateDate(dto.getLastUpdateDate());
 		to.setPageSize(dto.getPageSize());
 		to.setUserEmail(dto.getUserEmail());
+		to.setCreationDate(dto.getCreationDate());
 		
 		return to;
 	}

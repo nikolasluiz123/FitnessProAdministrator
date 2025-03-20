@@ -1,10 +1,14 @@
 package br.com.administrator.managedbean.executionlogs;
 
+import static br.com.fitnesspro.models.executions.enums.EnumExecutionType.EXPORTATION;
+import static br.com.fitnesspro.models.executions.enums.EnumExecutionType.IMPORTATION;
+
 import org.primefaces.event.SelectEvent;
 
 import br.com.administrator.managedbean.common.beans.AbstractBaseMBean;
 import br.com.administrator.to.TOExecutionLog;
 import br.com.administrator.to.TOExecutionLogPackage;
+import br.com.fitnesspro.models.executions.enums.EnumExecutionType;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -19,7 +23,7 @@ public class LogDialogMBean extends AbstractBaseMBean {
 	private TOExecutionLog toExecutionLog;
 	
 	@Inject
-	private LazyExecutionLogDataModel lazyModel;
+	private LazyExecutionLogPackageDataModel lazyModel;
 	
 	@Inject
 	private LogPackageDialogMBean logPackageDialog;
@@ -31,6 +35,8 @@ public class LogDialogMBean extends AbstractBaseMBean {
 	
 	public void init(TOExecutionLog to) {
 		this.toExecutionLog = to;
+		
+		lazyModel.setExecutionLogId(to.getId());
 	}
 	
 	public void onRowSelect(SelectEvent<TOExecutionLogPackage> event) {
@@ -45,12 +51,15 @@ public class LogDialogMBean extends AbstractBaseMBean {
 		return this.toExecutionLog.getUserEmail() != null;
 	}
 
-	public boolean isVisiblePageSize() {
-		return this.toExecutionLog.getPageSize() != null;
-	}
 	
 	public boolean isVisibleLastUpdateDate() {
 		return this.toExecutionLog.getLastUpdateDate() != null;
+	}
+	
+	public boolean isVisibleImportExportInfos() {
+		EnumExecutionType executionType = this.toExecutionLog.getType().getValue();
+		
+		return executionType == EXPORTATION || executionType == IMPORTATION;
 	}
 
 	@Override
@@ -65,5 +74,10 @@ public class LogDialogMBean extends AbstractBaseMBean {
 	public void setToExecutionLog(TOExecutionLog toExecutionLog) {
 		this.toExecutionLog = toExecutionLog;
 	}
+
+	public LazyExecutionLogPackageDataModel getLazyModel() {
+		return lazyModel;
+	}
+	
 	
 }
