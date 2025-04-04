@@ -30,7 +30,7 @@ public class PrimefacesFiltersUtil {
 	}
 	
 	public <T extends Enum<T>> T getEnumFilterValue(String key, Class<T> enumType) {
-		String value = filterBy.get(key).toString();
+		String value = filterBy.get(key).getFilterValue().toString();
         return Enum.valueOf(enumType, value);
 	}
 	
