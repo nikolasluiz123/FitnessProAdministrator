@@ -2,6 +2,7 @@ package br.com.administrator.managedbean.executionlogs;
 
 import br.com.administrator.managedbean.common.beans.AbstractBaseMBean;
 import br.com.administrator.to.TOExecutionLogPackage;
+import br.com.administrator.utils.StringUtils;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
@@ -44,5 +45,12 @@ public class LogPackageDialogMBean extends AbstractBaseMBean {
 	public boolean isVisibleExportInfos() {
 		return this.toExecutionLogPackage.getAllItemsCount() != null;
 	}
+	
+	public boolean isVisibleRequestBody() {
+		return StringUtils.isNotNull(this.toExecutionLogPackage.getRequestBody()); 
+	}
 
+	public boolean isVisibleError() {
+		return StringUtils.isNotNull(this.toExecutionLogPackage.getError()); 
+	}
 }
