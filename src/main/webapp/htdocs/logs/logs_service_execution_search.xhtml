@@ -20,6 +20,8 @@
 	</ui:define>
 
 	<ui:define name="content">
+		<h:outputStylesheet name="css/logs_service_execution_search/log_package_dialog.css" />
+	
 		<h:form>
 			<p:importEnum type="br.com.fitnesspro.shared.communication.query.enums.EnumExecutionLogsFields" 
 						  var="EnumExecutionLogsFields" />
@@ -382,12 +384,21 @@
 					
 					<div class="ui-g-12 vertical-labeled-input">
 						<p:outputLabel id="labelRequestBody" for="requestBody" value="#{bundleLogPackageDialog['label_field_request_body']}" />
-						<p:inputTextarea id="requestBody" value="#{logPackageDialogMBean.toExecutionLogPackage.requestBody}" readonly="true" converter="JsonConverter" />
+						<p:inputTextarea id="requestBody" 
+										 value="#{logPackageDialogMBean.toExecutionLogPackage.requestBody}" 
+										 readonly="true" 
+										 converter="JsonConverter"
+										 autoResize="false"
+										 styleClass="text-area-log-infos" />
 					</div>
 					
 					<div class="ui-g-12 vertical-labeled-input">
 						<p:outputLabel id="labelError" for="error" value="#{bundleLogPackageDialog['label_field_error']}" />
-						<p:inputTextarea id="error" value="#{logPackageDialogMBean.toExecutionLogPackage.error}" readonly="true" />
+						<p:inputTextarea id="error"
+										 value="#{logPackageDialogMBean.toExecutionLogPackage.error}"
+										 readonly="true"
+										 autoResize="false"
+										 styleClass="text-area-log-infos" />
 					</div>
 				</div>
 			</h:form>

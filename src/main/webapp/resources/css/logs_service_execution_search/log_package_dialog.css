@@ -1,0 +1,5 @@
+.text-area-log-infos {
+	height: 40vh; 
+	overflow-y: auto; 
+	resize: none;
+}
