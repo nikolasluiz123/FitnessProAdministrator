@@ -45,12 +45,4 @@ public class LogPackageDialogMBean extends AbstractBaseMBean {
 	public boolean isVisibleExportInfos() {
 		return this.toExecutionLogPackage.getAllItemsCount() != null;
 	}
-	
-	public boolean isVisibleRequestBody() {
-		return StringUtils.isNotNull(this.toExecutionLogPackage.getRequestBody()); 
-	}
-
-	public boolean isVisibleError() {
-		return StringUtils.isNotNull(this.toExecutionLogPackage.getError()); 
-	}
 }
