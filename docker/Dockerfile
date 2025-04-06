@@ -4,9 +4,6 @@ RUN apt-get update && \
     apt-get install -y openjdk-21-jdk && \
     rm -rf /var/lib/apt/lists/*
 
-ENV WILDFLY_VERSION=30.0.1.Final
-ENV WILDFLY_HOME=/opt/wildfly
-
 RUN apt-get update && \
     apt-get install -y wget && \
     rm -rf /var/lib/apt/lists/*
@@ -20,6 +17,12 @@ RUN tar xf /tmp/wildfly-$WILDFLY_VERSION.tar.gz -C /opt && \
 RUN rm -rf $WILDFLY_HOME/standalone/deployments/*
 RUN rm -rf $WILDFLY_HOME/standalone/tmp/*
 RUN rm -rf $WILDFLY_HOME/standalone/work/*
+
+RUN apt-get update && apt-get install -y --no-install-recommends tzdata && rm -rf /var/lib/apt/lists/*
+
+ENV WILDFLY_VERSION=30.0.1.Final
+ENV WILDFLY_HOME=/opt/wildfly
+ENV TZ=America/Sao_Paulo
 
 COPY administrator.war $WILDFLY_HOME/standalone/deployments/
 
