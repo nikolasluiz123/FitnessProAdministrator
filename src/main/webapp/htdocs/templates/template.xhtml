@@ -33,7 +33,7 @@
 			<p:menu id="menuItems" class="menu-container">
 				<p:submenu label="#{menuBundle['label_submenu_monitoring']}">
 					<p:menuitem value="#{menuBundle['label_menu_item_execution_logs']}" action="#{menuMBean.onExecutionLogsClick}" />
-<!-- 					<p:menuitem value="#{menuBundle['label_menu_item_users']}" action="#{menuMBean.onUsersClick}" /> -->
+					<p:menuitem value="#{menuBundle['label_menu_item_caches']}" action="#{menuMBean.onCachesClick}" />
 				</p:submenu>
 				<p:submenu label="#{menuBundle['label_submenu_registers']}">
 					<p:menuitem value="#{menuBundle['label_menu_item_academies']}" action="#{menuMBean.onAcademiesClick}" />
@@ -44,7 +44,6 @@
 
 	<div class="main-content">
 		<ui:insert name="content" />
-		
 		
 		<h:form id="formDefaultDialogs">
 	        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="500">

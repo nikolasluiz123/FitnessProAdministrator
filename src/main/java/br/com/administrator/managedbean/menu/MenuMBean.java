@@ -36,6 +36,13 @@ public class MenuMBean extends AbstractBaseMBean {
 		}
 	}
 
+	public void onCachesClick() {
+		try {
+			FacesUtils.redirect(IScreensRedirect.CACHES_SEARCH);
+		} catch (Exception e) {
+			navigationExceptionHandler(e);
+		}
+	}
 
 	private void navigationExceptionHandler(Exception e) {
 		exceptionHandler(e, getBundle().getString("navigation_error_summary"));
