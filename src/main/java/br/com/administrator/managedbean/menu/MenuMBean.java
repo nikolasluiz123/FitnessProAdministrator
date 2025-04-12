@@ -3,7 +3,9 @@ package br.com.administrator.managedbean.menu;
 import br.com.administrator.managedbean.common.beans.AbstractBaseMBean;
 import br.com.administrator.managedbean.common.constants.IScreensRedirect;
 import br.com.administrator.utils.FacesUtils;
+import br.com.fitnesspro.shared.communication.exception.ExpiredTokenException;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
 @Named("menuMBean")
@@ -11,6 +13,9 @@ import jakarta.inject.Named;
 public class MenuMBean extends AbstractBaseMBean {
 
 	private static final long serialVersionUID = 1L;
+	
+	@Inject
+	private MenuViewModel viewModel;
 	
 	public void onExecutionLogsClick() {
 		try {
@@ -41,6 +46,17 @@ public class MenuMBean extends AbstractBaseMBean {
 			FacesUtils.redirect(IScreensRedirect.CACHES_SEARCH);
 		} catch (Exception e) {
 			navigationExceptionHandler(e);
+		}
+	}
+	
+	public void onLogout() {
+		try {
+			viewModel.logout();
+			FacesUtils.redirect(IScreensRedirect.LOGIN);
+		} catch (ExpiredTokenException e) {
+			// Ignorada pois vai deslogar
+		} catch (Exception e) {
+			exceptionHandler(e, getBundle().getString("logout_error_summary"));
 		}
 	}
 

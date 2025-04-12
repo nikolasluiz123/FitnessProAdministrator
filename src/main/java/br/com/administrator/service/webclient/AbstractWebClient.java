@@ -9,7 +9,7 @@ import com.google.gson.reflect.TypeToken;
 
 import br.com.administrator.service.exception.ServiceException;
 import br.com.administrator.service.gson.utils.GsonUtils;
-import br.com.administrator.utils.TokenUtil;
+import br.com.administrator.utils.AuthSessionUtils;
 import br.com.fitnesspro.shared.communication.enums.serviceauth.EnumErrorType;
 import br.com.fitnesspro.shared.communication.exception.ExpiredTokenException;
 import br.com.fitnesspro.shared.communication.responses.AuthenticationServiceResponse;
@@ -25,7 +25,7 @@ import retrofit2.Response;
 public abstract class AbstractWebClient {
 	
 	protected String getFormatedToken() {
-		return "Bearer " + TokenUtil.getToken();
+		return "Bearer " + AuthSessionUtils.getToken();
 	}
 	
 	protected String getApplicationJWTToken() {

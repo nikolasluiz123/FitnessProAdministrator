@@ -22,11 +22,15 @@
 		<p:growl id="messages" showDetail="true" autoUpdate="true" />
 	</h:form>
 
-    <p:toolbar styleClass="top-bar">
-        <p:toolbarGroup>
-        	<ui:insert name="title" />
-        </p:toolbarGroup>
-    </p:toolbar>
+	<p:toolbar styleClass="top-bar">
+		<p:toolbarGroup align="left">
+			<ui:insert name="title" />
+		</p:toolbarGroup>
+
+		<p:toolbarGroup align="right">
+			<p:commandButton icon="pi pi-sign-out" action="#{menuMBean.onLogout}" />
+		</p:toolbarGroup>
+	</p:toolbar>
 
 	<div class="sidebar-menu">
 		<h:form id="menuForm">

@@ -19,7 +19,7 @@ public interface IAuthenticationService {
 	Call<AuthenticationServiceResponse> authenticate(@Header("Authorization") @NotNull String applicationToken,
 													 @Body @NotNull AuthenticationDTO authenticationDTO);
 
-	@POST(AUTHENTICATE_END_POINT)
+	@POST(LOGOUT_END_POINT)
 	Call<AuthenticationServiceResponse> logout(@Header("Authorization") @NotNull String token, 
 											  @Body @NotNull AuthenticationDTO authenticationDTO);
 

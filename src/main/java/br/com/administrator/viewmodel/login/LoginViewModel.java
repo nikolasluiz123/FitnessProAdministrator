@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import br.com.administrator.service.webclient.AuthenticationWebClient;
 import br.com.administrator.to.TOLogin;
-import br.com.administrator.utils.TokenUtil;
+import br.com.administrator.utils.AuthSessionUtils;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 
@@ -22,6 +22,6 @@ public class LoginViewModel implements Serializable {
 
 	public void authenticate(TOLogin toLogin) throws Exception {
 		String token = authenticationWebClient.authenticate(toLogin.getEmail(), toLogin.getPassword());
-		TokenUtil.saveToken(token);
+		AuthSessionUtils.saveUserInfos(token, toLogin.getEmail(), toLogin.getPassword());
 	}
 }

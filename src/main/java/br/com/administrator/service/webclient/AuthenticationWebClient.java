@@ -47,4 +47,24 @@ public class AuthenticationWebClient extends AbstractWebClient {
 			throw new ServiceException("Não foi possível se conectar ao servidor. Tente novamente mais tarde.", exception);
 		}
 	}
+	
+	public void logout(@NotNull String email, @NotNull String password) throws Exception {
+		try {
+			String token = getFormatedToken();
+			
+			AuthenticationDTO authenticationDTO = new AuthenticationDTO();
+			authenticationDTO.setEmail(email);
+			authenticationDTO.setPassword(password);
+			
+			Call<AuthenticationServiceResponse> authenticationCall = service.logout(token, authenticationDTO);
+			AuthenticationServiceResponse response = getAuthResponseBody(authenticationCall);
+			
+			if (!response.getSuccess()) {
+				throw new ServiceException(response.getError());
+			}
+			
+		} catch (ConnectException exception) {
+			throw new ServiceException("Não foi possível se conectar ao servidor. Tente novamente mais tarde.", exception);
+		}
+	}
 }
