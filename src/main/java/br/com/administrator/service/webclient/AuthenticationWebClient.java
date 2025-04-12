@@ -10,6 +10,7 @@ import jakarta.annotation.Nullable;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.constraints.NotNull;
+import retrofit2.Call;
 
 @ApplicationScoped
 public class AuthenticationWebClient extends AbstractWebClient {
@@ -28,11 +29,14 @@ public class AuthenticationWebClient extends AbstractWebClient {
 	@Nullable
 	public String authenticate(@NotNull String email, @NotNull String password) throws Exception {
 		try {
+			String applicationToken = getApplicationJWTToken();
+			
 			AuthenticationDTO authenticationDTO = new AuthenticationDTO();
 			authenticationDTO.setEmail(email);
 			authenticationDTO.setPassword(password);
 			
-			AuthenticationServiceResponse response = getAuthResponseBody(service.authenticate(authenticationDTO));
+			Call<AuthenticationServiceResponse> authenticationCall = service.authenticate(applicationToken, authenticationDTO);
+			AuthenticationServiceResponse response = getAuthResponseBody(authenticationCall);
 			
 			if (!response.getSuccess()) {
 				throw new ServiceException(response.getError());

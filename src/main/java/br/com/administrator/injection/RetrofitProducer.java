@@ -30,7 +30,7 @@ public class RetrofitProducer {
 				.registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
 				.registerTypeAdapter(LocalTime.class, new LocalTimeTypeAdapter()).create();
 		 
-		String host = config.getPropertyValue("service.host");
+		String host = config.getEnvironmentPropertyValue("service.host");
 		
         return new Retrofit.Builder()
              .baseUrl(host)

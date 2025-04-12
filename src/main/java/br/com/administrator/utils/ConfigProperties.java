@@ -13,16 +13,20 @@ public class ConfigProperties {
 	private static String LOCAL_ENV = "local";
 	private static String REMOTE_ENV = "remote";
 
-	private Properties properties;
+	private Properties environmentProperties;
 
 	public ConfigProperties() throws Exception {
+		loadEnvironmentProperties();
+	}
+
+	private void loadEnvironmentProperties() throws Exception {
 		String env = System.getProperty(ENVIRONMENT);
 
 		if (StringUtils.isNullOrEmpty(env)) {
 			throw new IllegalArgumentException("Invalid value for environment variable named " + ENVIRONMENT);
 		}
 
-		Properties properties = new Properties();
+		Properties environmentProperties = new Properties();
 		InputStream input = null;
 
 		if (env.equals(LOCAL_ENV)) {
@@ -33,13 +37,13 @@ public class ConfigProperties {
 			throw new IllegalArgumentException("Invalid value for environment variable named " + ENVIRONMENT);
 		}
 
-		properties.load(input);
+		environmentProperties.load(input);
 
-		this.properties = properties;
+		this.environmentProperties = environmentProperties;
 	}
-
-	public String getPropertyValue(String key) {
-		return this.properties.getProperty(key);
+	
+	public String getEnvironmentPropertyValue(String key) {
+		return this.environmentProperties.getProperty(key);
 	}
-
+	
 }
