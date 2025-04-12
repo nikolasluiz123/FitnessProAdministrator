@@ -35,19 +35,14 @@ public class LazyAcademyDataModel extends AbstractLazyDataModel<TOAcademy> {
 		try {
 			return viewModel.getListAcademy(first, pageSize, sortBy, filterBy);
 		} catch (Exception e) {
-			e.printStackTrace();
+			this.callback.onException(e);
 			return new ArrayList<>();
 		}
 	}
 
 	@Override
-	public int count(Map<String, FilterMeta> filterBy) {
-		try {
-			return viewModel.getCountListAcademy(filterBy);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return 0;
-		}
+	protected int onCount(Map<String, FilterMeta> filterBy) throws Exception {
+		return viewModel.getCountListAcademy(filterBy);
 	}
 
 }

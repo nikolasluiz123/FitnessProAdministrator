@@ -34,10 +34,7 @@ public class CacheWebClient extends AbstractWebClient {
 
 			Call<ReadServiceResponse<CacheDTO>> serviceCall = service.getListCache(token);
 			ReadServiceResponse<CacheDTO> response = getReadResponseBody(serviceCall, CacheDTO.class);
-			
-			if (!response.getSuccess()) {
-				throw new ServiceException(response.getError());
-			}
+			validateResponse(response);
 			
 			return response.getValues();
 		} catch (ConnectException exception) {
@@ -51,10 +48,7 @@ public class CacheWebClient extends AbstractWebClient {
 
 			Call<ReadServiceResponse<CacheEntryDTO>> serviceCall = service.getListCacheEntries(token, cacheName);
 			ReadServiceResponse<CacheEntryDTO> response = getReadResponseBody(serviceCall, CacheEntryDTO.class);
-			
-			if (!response.getSuccess()) {
-				throw new ServiceException(response.getError());
-			}
+			validateResponse(response);
 			
 			return response.getValues();
 		} catch (ConnectException exception) {
@@ -68,10 +62,8 @@ public class CacheWebClient extends AbstractWebClient {
 
 			Call<FitnessProServiceResponse> serviceCall = service.clearCache(token, config);
 			FitnessProServiceResponse response = getResponseBody(serviceCall);
+			validateResponse(response);
 			
-			if (!response.getSuccess()) {
-				throw new ServiceException(response.getError());
-			}
 		} catch (ConnectException exception) {
 			throw new ServiceException("Não foi possível se conectar ao servidor. Tente novamente mais tarde.", exception);
 		}

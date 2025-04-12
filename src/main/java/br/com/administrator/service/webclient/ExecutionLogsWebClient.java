@@ -43,10 +43,7 @@ public class ExecutionLogsWebClient extends AbstractWebClient {
 																								 defaultGson.toJson(pageInfos));
 			
 			ReadServiceResponse<ExecutionLogDTO> response = getReadResponseBody(serviceCall, ExecutionLogDTO.class);
-			
-			if (!response.getSuccess()) {
-				throw new ServiceException(response.getError());
-			}
+			validateResponse(response);
 			
 			return response.getValues();
 		} catch (ConnectException exception) {
@@ -61,10 +58,7 @@ public class ExecutionLogsWebClient extends AbstractWebClient {
 			
 			Call<SingleValueServiceResponse<Integer>> serviceCall = service.getCountListExecutionLog(token, defaultGson.toJson(filter));
 			SingleValueServiceResponse<Integer> response = getSingleResponseBody(serviceCall, Integer.class);
-			
-			if (!response.getSuccess()) {
-				throw new ServiceException(response.getError());
-			}
+			validateResponse(response);
 			
 			return response.getValue();
 		} catch (ConnectException exception) {
@@ -82,10 +76,7 @@ public class ExecutionLogsWebClient extends AbstractWebClient {
 																											   defaultGson.toJson(pageInfos));
 			
 			ReadServiceResponse<ExecutionLogPackageDTO> response = getReadResponseBody(serviceCall, ExecutionLogPackageDTO.class);
-			
-			if (!response.getSuccess()) {
-				throw new ServiceException(response.getError());
-			}
+			validateResponse(response);
 			
 			return response.getValues();
 		} catch (ConnectException exception) {
@@ -100,10 +91,7 @@ public class ExecutionLogsWebClient extends AbstractWebClient {
 			
 			Call<SingleValueServiceResponse<Integer>> serviceCall = service.getCountListExecutionLogPackage(token, defaultGson.toJson(filter));
 			SingleValueServiceResponse<Integer> response = getSingleResponseBody(serviceCall, Integer.class);
-			
-			if (!response.getSuccess()) {
-				throw new ServiceException(response.getError());
-			}
+			validateResponse(response);
 			
 			return response.getValue();
 		} catch (ConnectException exception) {

@@ -31,6 +31,7 @@ public class LogDialogMBean extends AbstractBaseMBean {
 	@PostConstruct
 	public void init() {
 		this.toExecutionLog = new TOExecutionLog();
+		this.lazyModel.setCallback(new DefaultLazyDataModelCallback());
 	}
 	
 	public void init(TOExecutionLog to) {

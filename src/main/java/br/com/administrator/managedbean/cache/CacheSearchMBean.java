@@ -8,6 +8,7 @@ import org.primefaces.event.SelectEvent;
 import br.com.administrator.managedbean.common.beans.AbstractBaseMBean;
 import br.com.administrator.to.TOCache;
 import br.com.administrator.viewmodel.cache.CacheSearchViewModel;
+import br.com.fitnesspro.shared.communication.exception.ExpiredTokenException;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -37,6 +38,9 @@ public class CacheSearchMBean extends AbstractBaseMBean {
 	private void loadCacheList() {
 		try {
 			this.cacheList = viewModel.getListCache();
+		} catch(ExpiredTokenException exception) {
+			exceptionHandler(exception, getBundleString("load_cache_list_error_summary"));
+			showLoginDialog();
 		} catch (Exception e) {
 			this.exceptionHandler(e, getBundleString("load_cache_list_error_summary"));
 		}
@@ -53,6 +57,9 @@ public class CacheSearchMBean extends AbstractBaseMBean {
 	public void onInvalidateAllCachesClick() {
 		try {
 			viewModel.clearAllCaches();
+		} catch(ExpiredTokenException exception) {
+			exceptionHandler(exception, getBundleString("clear_all_caches_error_summary"));
+			showLoginDialog();
 		} catch (Exception e) {
 			this.exceptionHandler(e, getBundleString("clear_all_caches_error_summary"));
 		}
@@ -61,6 +68,9 @@ public class CacheSearchMBean extends AbstractBaseMBean {
 	public void onInvalidateCache(TOCache item) {
 		try {
 			viewModel.clearCacheWithName(item.getName());
+		} catch(ExpiredTokenException exception) {
+			exceptionHandler(exception, getBundleString("clear_cache_with_name_error_summary"));
+			showLoginDialog();
 		} catch (Exception e) {
 			this.exceptionHandler(e, getBundleString("clear_cache_with_name_error_summary"));
 		}

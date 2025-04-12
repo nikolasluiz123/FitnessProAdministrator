@@ -37,6 +37,7 @@ public class ExecutionLogsMBean extends AbstractBaseMBean {
 	public void init() {
 		this.executionTypes = EnumExecutionType.getEntries().stream().map(x -> getLabeledType(x)).toList();
 		this.executionStates = EnumExecutionState.getEntries().stream().map(x -> getLabeledState(x)).toList();
+		this.lazyModel.setCallback(new DefaultLazyDataModelCallback());
 	}
 
 	public void onRowSelect(SelectEvent<TOExecutionLog> event) {

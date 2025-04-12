@@ -1,6 +1,5 @@
 package br.com.administrator.managedbean.executionlogs;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -30,23 +29,13 @@ public class LazyExecutionLogDataModel extends AbstractLazyDataModel<TOExecution
 	}
 
 	@Override
-	public int count(Map<String, FilterMeta> filterBy) {
-		try {
-			return viewModel.getCountListExecutionLog(filterBy);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return 0;
-		}
+	public int onCount(Map<String, FilterMeta> filterBy) throws Exception {
+		return viewModel.getCountListExecutionLog(filterBy);
 	}
 
 	@Override
-	public List<TOExecutionLog> onLoad(int first, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
-		try {
-			return viewModel.getListExecutionLog(first, pageSize, sortBy, filterBy);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ArrayList<>();
-		}
+	public List<TOExecutionLog> onLoad(int first, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) throws Exception {
+		return viewModel.getListExecutionLog(first, pageSize, sortBy, filterBy);
 	}
 
 }

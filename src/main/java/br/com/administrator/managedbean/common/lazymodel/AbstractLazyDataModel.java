@@ -18,24 +18,43 @@ public abstract class AbstractLazyDataModel<T extends AbstractModelTO> extends L
 	private int first;
 	private Map<String, SortMeta> sortBy;
 	private Map<String, FilterMeta> filterBy;
+	
+	protected LazyDataModelCallback callback;
 
 	public AbstractLazyDataModel() {
 		super();
 		this.data = new ArrayList<>();
 	}
 	
-	protected abstract List<T> onLoad(int first, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy);
+	protected abstract List<T> onLoad(int first, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) throws Exception;
+	
+	protected abstract int onCount(Map<String, FilterMeta> filterBy) throws Exception;
 	
 	@Override
 	public List<T> load(int first, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
-		this.first = first;
-		this.sortBy = sortBy;
-		this.filterBy = filterBy;
-		
-		List<T> result = onLoad(first, pageSize, sortBy, filterBy);
-		this.data = result;
-		
-		return result;
+		try {
+			this.first = first;
+			this.sortBy = sortBy;
+			this.filterBy = filterBy;
+			
+			List<T> result = onLoad(first, pageSize, sortBy, filterBy);
+			this.data = result;
+			
+			return result;
+		} catch(Exception e) {
+			this.callback.onException(e);
+			return new ArrayList<>();
+		}
+	}
+	
+	@Override
+	public int count(Map<String, FilterMeta> filterBy) {
+		try {
+			return onCount(filterBy);
+		} catch (Exception e) {
+			this.callback.onException(e);
+			return 0;
+		}
 	}
 		
 	@Override
@@ -64,4 +83,12 @@ public abstract class AbstractLazyDataModel<T extends AbstractModelTO> extends L
 		this.data = data;
 	}
 
+	public LazyDataModelCallback getCallback() {
+		return callback;
+	}
+
+	public void setCallback(LazyDataModelCallback callback) {
+		this.callback = callback;
+	}
+	
 }

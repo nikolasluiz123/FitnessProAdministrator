@@ -42,10 +42,7 @@ public class AcademyWebClient extends AbstractWebClient {
 																					   defaultGson.toJson(pageInfos));
 			
 			ReadServiceResponse<AcademyDTO> response = getReadResponseBody(serviceCall, AcademyDTO.class);
-			
-			if (!response.getSuccess()) {
-				throw new ServiceException(response.getError());
-			}
+			validateResponse(response);
 			
 			return response.getValues();
 		} catch (ConnectException exception) {
@@ -60,10 +57,7 @@ public class AcademyWebClient extends AbstractWebClient {
 			
 			Call<SingleValueServiceResponse<Integer>> serviceCall = service.getCountAcademy(token, defaultGson.toJson(filter));
 			SingleValueServiceResponse<Integer> response = getSingleResponseBody(serviceCall, Integer.class);
-			
-			if (!response.getSuccess()) {
-				throw new ServiceException(response.getError());
-			}
+			validateResponse(response);
 			
 			return response.getValue();
 		} catch (ConnectException exception) {
@@ -77,10 +71,7 @@ public class AcademyWebClient extends AbstractWebClient {
 			
 			Call<PersistenceServiceResponse> serviceCall = service.saveAcademy(token, dto);
 			PersistenceServiceResponse response = getPersistenceResponseBody(serviceCall);
-			
-			if (!response.getSuccess()) {
-				throw new ServiceException(response.getError());
-			}
+			validateResponse(response);
 			
 			return response;
 			

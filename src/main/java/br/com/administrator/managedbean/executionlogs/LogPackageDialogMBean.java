@@ -2,7 +2,6 @@ package br.com.administrator.managedbean.executionlogs;
 
 import br.com.administrator.managedbean.common.beans.AbstractBaseMBean;
 import br.com.administrator.to.TOExecutionLogPackage;
-import br.com.administrator.utils.StringUtils;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;

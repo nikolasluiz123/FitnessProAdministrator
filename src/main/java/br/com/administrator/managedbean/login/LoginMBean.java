@@ -35,10 +35,6 @@ public class LoginMBean extends AbstractBaseMBean {
 		}
 	}
 	
-	public void register() {
-		
-	}
-	
 	public TOLogin getToLogin() {
 		return toLogin;
 	}

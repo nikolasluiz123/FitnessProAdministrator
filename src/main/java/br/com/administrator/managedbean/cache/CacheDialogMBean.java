@@ -8,6 +8,7 @@ import br.com.administrator.to.TOCache;
 import br.com.administrator.to.TOCacheEntry;
 import br.com.administrator.utils.StringUtils;
 import br.com.administrator.viewmodel.cache.CacheDialogViewModel;
+import br.com.fitnesspro.shared.communication.exception.ExpiredTokenException;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -42,6 +43,9 @@ public class CacheDialogMBean extends AbstractBaseMBean {
 		if (StringUtils.isNotNull(this.toCache.getName())) {
 			try {
 				this.entriesList = viewModel.getListCacheEntries(this.toCache.getName());
+			} catch(ExpiredTokenException exception) {
+				exceptionHandler(exception, getBundleString("load_cache_entries_list_error_summary"));
+				showLoginDialog();
 			} catch (Exception e) {
 				this.exceptionHandler(e, getBundleString("load_cache_entries_list_error_summary"));
 			}
@@ -59,6 +63,9 @@ public class CacheDialogMBean extends AbstractBaseMBean {
 	public void onInvalidateKey(TOCacheEntry item) {
 		try {
 			viewModel.clearCacheWithKey(this.toCache.getName(), item.getKey());
+		} catch(ExpiredTokenException exception) {
+			exceptionHandler(exception, getBundleString("invalidate_key_error_summary"));
+			showLoginDialog();
 		} catch (Exception e) {
 			this.exceptionHandler(e, getBundleString("invalidate_key_error_summary"));
 		}

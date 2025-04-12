@@ -1,5 +1,7 @@
 package br.com.administrator.utils;
 
+import java.time.Duration;
+
 import jakarta.faces.context.FacesContext;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,7 +14,7 @@ public class TokenUtil {
 	public static void saveToken(String token) {
 	    Cookie cookie = new Cookie(TOKEN_SERVICE_KEY, token);
 	    cookie.setPath("/");
-	    cookie.setMaxAge(Integer.MAX_VALUE);
+	    cookie.setMaxAge((int) Duration.ofHours(1).getSeconds());
 	    cookie.setHttpOnly(true);
 	    
 	    HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();

@@ -4,6 +4,7 @@ import org.primefaces.event.SelectEvent;
 
 import br.com.administrator.managedbean.common.beans.AbstractBaseMBean;
 import br.com.administrator.to.TOAcademy;
+import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -20,6 +21,11 @@ public class AcademySearchMBean extends AbstractBaseMBean {
 	@Inject
 	private AcademyDialogMBean academyDialogMBean;
 
+	@PostConstruct
+	public void init() {
+		this.lazyModel.setCallback(new DefaultLazyDataModelCallback());
+	}
+	
 	public LazyAcademyDataModel getLazyModel() {
 		return lazyModel;
 	}

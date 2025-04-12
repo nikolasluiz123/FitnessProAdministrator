@@ -10,8 +10,11 @@ import com.google.gson.reflect.TypeToken;
 import br.com.administrator.service.exception.ServiceException;
 import br.com.administrator.service.gson.utils.GsonUtils;
 import br.com.administrator.utils.TokenUtil;
+import br.com.fitnesspro.shared.communication.enums.serviceauth.EnumErrorType;
+import br.com.fitnesspro.shared.communication.exception.ExpiredTokenException;
 import br.com.fitnesspro.shared.communication.responses.AuthenticationServiceResponse;
 import br.com.fitnesspro.shared.communication.responses.FitnessProServiceResponse;
+import br.com.fitnesspro.shared.communication.responses.IFitnessProServiceResponse;
 import br.com.fitnesspro.shared.communication.responses.PersistenceServiceResponse;
 import br.com.fitnesspro.shared.communication.responses.ReadServiceResponse;
 import br.com.fitnesspro.shared.communication.responses.SingleValueServiceResponse;
@@ -27,6 +30,14 @@ public abstract class AbstractWebClient {
 	
 	protected String getApplicationJWTToken() {
 		return "Bearer " + System.getProperty("JWT_TOKEN");
+	}
+	
+	protected void validateResponse(IFitnessProServiceResponse response) throws Exception {
+		if (!response.getSuccess() && response.getErrorType() == EnumErrorType.EXPIRED_TOKEN) {
+			throw new ExpiredTokenException();
+		} else if (!response.getSuccess()) {
+			throw new ServiceException(response.getError());
+		}
 	}
 
 	protected PersistenceServiceResponse getPersistenceResponseBody(Call<PersistenceServiceResponse> call) throws Exception {

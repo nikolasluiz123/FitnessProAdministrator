@@ -4,6 +4,7 @@ import br.com.administrator.managedbean.common.beans.AbstractBaseMBean;
 import br.com.administrator.to.TOAcademy;
 import br.com.administrator.utils.FacesUtils;
 import br.com.administrator.viewmodel.academy.AcademyDialogViewModel;
+import br.com.fitnesspro.shared.communication.exception.ExpiredTokenException;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -35,6 +36,9 @@ public class AcademyDialogMBean extends AbstractBaseMBean {
 			
 			FacesUtils.addSucccessMessage(getBundleString("save_academy_success", toAcademy.getName()), 
 										  getBundleString("save_success_summary"));
+		} catch(ExpiredTokenException exception) {
+			exceptionHandler(exception, getBundleString("save_error_summary"));
+			showLoginDialog();
 		} catch (Exception exception) {
 			exceptionHandler(exception, getBundleString("save_error_summary"));
 		}
@@ -46,6 +50,9 @@ public class AcademyDialogMBean extends AbstractBaseMBean {
 			
 			FacesUtils.addSucccessMessage(getBundleString("inactivate_academy_success", toAcademy.getName()), 
 				  						  getBundleString("save_success_summary"));
+		} catch(ExpiredTokenException exception) {
+			exceptionHandler(exception, getBundleString("save_error_summary"));
+			// TODO - Abrir Dialog para Logar
 		} catch (Exception exception) {
 			exceptionHandler(exception, getBundleString("inactivation_error_summary"));
 		}
