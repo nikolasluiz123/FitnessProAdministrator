@@ -40,10 +40,6 @@ public class TokenSearchViewModel implements Serializable {
         this.webClient = webClient;
 	}
 	
-	public void invalidateToken(String tokenId) throws Exception {
-		webClient.invalidateToken(tokenId);
-	}
-	
 	public void invalidateAllTokens() throws Exception {
 		webClient.invalidateAllTokens();
 	}

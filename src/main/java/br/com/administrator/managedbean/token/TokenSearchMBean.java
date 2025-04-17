@@ -51,17 +51,6 @@ public class TokenSearchMBean extends AbstractSearchMBean {
 		}
 	}
 	
-	public void onInvalidateToken(String tokenId) {
-		try {
-			viewModel.invalidateToken(tokenId);
-		} catch(ExpiredTokenException | NotFoundTokenException exception) {
-			exceptionHandler(exception, getBundleString("invalidate_token_error_summary"));
-			showLoginDialog();
-		} catch (Exception e) {
-			this.exceptionHandler(e, getBundleString("invalidate_token_error_summary"));
-		}
-	}
-	
 	public void onGenerateNewSecretKey() {
 		try {
 			String key = viewModel.generateSecretKey();
