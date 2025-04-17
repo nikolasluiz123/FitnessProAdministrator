@@ -35,6 +35,14 @@ public class LoginMBean extends AbstractBaseMBean {
 		}
 	}
 	
+	public void authenticateAgain() {
+		try {
+			loginViewModel.authenticate(toLogin);
+		} catch (Exception e) {
+			exceptionHandler(e, getBundle().getString("error_summary"));
+		}
+	}
+	
 	public TOLogin getToLogin() {
 		return toLogin;
 	}

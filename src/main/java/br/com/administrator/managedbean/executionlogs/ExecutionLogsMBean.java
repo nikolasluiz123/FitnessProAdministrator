@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.primefaces.event.SelectEvent;
 
-import br.com.administrator.managedbean.common.beans.AbstractBaseMBean;
+import br.com.administrator.managedbean.common.beans.AbstractSearchMBean;
 import br.com.administrator.managedbean.common.labeledenum.LabeledEnum;
 import br.com.administrator.to.TOExecutionLog;
 import br.com.administrator.viewmodel.log.ExecutionLogsViewModel;
@@ -17,7 +17,7 @@ import jakarta.inject.Named;
 
 @Named("executionLogsMBean")
 @ViewScoped
-public class ExecutionLogsMBean extends AbstractBaseMBean {
+public class ExecutionLogsMBean extends AbstractSearchMBean {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -72,5 +72,4 @@ public class ExecutionLogsMBean extends AbstractBaseMBean {
 	protected String getBundleFileName() {
 		return "execution_logs";
 	}
-	
 }

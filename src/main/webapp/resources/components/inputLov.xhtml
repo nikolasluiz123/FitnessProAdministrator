@@ -1,0 +1,27 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite" xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+	<cc:interface>
+		<cc:attribute name="label" required="true" />
+		<cc:attribute name="value" required="true" />
+		<cc:attribute name="readonly" default="true" />
+		<cc:attribute name="onShowLov" required="true" />
+		<cc:attribute name="onActionClear" method-signature="void action()" required="true" />
+	</cc:interface>
+
+	<cc:implementation>
+		<div class="label-container">
+			<h:outputLabel for="#{cc.clientId}:lovInput" value="#{cc.attrs.label}" />
+		</div>
+		<div class="input-container">
+			<p:inputText id="lovInput" value="#{cc.attrs.value}" readonly="#{cc.attrs.readonly}" styleClass="lov-input-text" />
+
+			<p:commandButton icon="pi pi-search" styleClass="rounded-button ui-button-success ui-button-flat"
+				onclick="#{cc.attrs.onShowLov}" disabled="#{cc.attrs.readonly}" />
+
+			<p:commandButton icon="pi pi-times" styleClass="rounded-button ui-button-danger ui-button-flat"
+				action="#{cc.attrs.onActionClear}" disabled="#{cc.attrs.readonly}" />
+		</div>
+	</cc:implementation>
+</ui:component>

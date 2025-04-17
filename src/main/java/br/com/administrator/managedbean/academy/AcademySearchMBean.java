@@ -2,7 +2,7 @@ package br.com.administrator.managedbean.academy;
 
 import org.primefaces.event.SelectEvent;
 
-import br.com.administrator.managedbean.common.beans.AbstractBaseMBean;
+import br.com.administrator.managedbean.common.beans.AbstractSearchMBean;
 import br.com.administrator.to.TOAcademy;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
@@ -11,7 +11,7 @@ import jakarta.inject.Named;
 
 @Named("academySearchMBean")
 @ViewScoped
-public class AcademySearchMBean extends AbstractBaseMBean {
+public class AcademySearchMBean extends AbstractSearchMBean {
 
 	private static final long serialVersionUID = 1L;
 

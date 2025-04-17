@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
 	<title>Fitness Pro Administrator</title>
 
@@ -19,7 +16,7 @@
 	<ui:insert name="bundles" />
 
 	<h:form id="formMessages">
-		<p:growl id="messages" showDetail="true" autoUpdate="true" />
+		<p:growl id="messages" showDetail="true" autoUpdate="true" globalOnly="true" />
 	</h:form>
 
 	<p:toolbar styleClass="top-bar">
@@ -39,7 +36,14 @@
 					<p:menuitem value="#{menuBundle['label_menu_item_execution_logs']}" action="#{menuMBean.onExecutionLogsClick}" />
 					<p:menuitem value="#{menuBundle['label_menu_item_caches']}" action="#{menuMBean.onCachesClick}" />
 				</p:submenu>
-				<p:submenu label="#{menuBundle['label_submenu_registers']}">
+
+				<p:submenu label="#{menuBundle['label_submenu_auth']}">
+					<p:menuitem value="#{menuBundle['label_menu_item_application']}" action="#{menuMBean.onApplicationsClick}" />
+					<p:menuitem value="#{menuBundle['label_menu_item_device']}" action="#{menuMBean.onDevicesClick}" />
+					<p:menuitem value="#{menuBundle['label_menu_item_token']}" action="#{menuMBean.onTokensClick}" />
+				</p:submenu>
+
+				<p:submenu label="#{menuBundle['label_submenu_general']}">
 					<p:menuitem value="#{menuBundle['label_menu_item_academies']}" action="#{menuMBean.onAcademiesClick}" />
 				</p:submenu>
 			</p:menu>
@@ -48,22 +52,17 @@
 
 	<div class="main-content">
 		<ui:insert name="content" />
-		
+
 		<h:form id="formDefaultDialogs">
-	        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="500">
-	            <p:commandButton value="#{commonBundle['label_button_cancel']}" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
-	            <p:commandButton value="#{commonBundle['label_button_confirm']}" type="button" styleClass="ui-confirmdialog-yes" />
-	        </p:confirmDialog>
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="500">
+				<p:commandButton value="#{commonBundle['label_button_cancel']}" type="button"
+					styleClass="ui-confirmdialog-no ui-button-flat" />
+				<p:commandButton value="#{commonBundle['label_button_confirm']}" type="button" styleClass="ui-confirmdialog-yes" />
+			</p:confirmDialog>
 		</h:form>
-		
-		<p:dialog id="loginDialog" 
-				  widgetVar="loginDialogWV" 
-				  modal="true"
-				  fitViewport="true"
-				  responsive="true"
-				  width="30vw"
-				  resizable="false"
-				  dynamic="true">
+
+		<p:dialog id="loginDialog" widgetVar="loginDialogWV" modal="true" fitViewport="true" responsive="true" width="30vw"
+			resizable="false" dynamic="true">
 
 			<f:facet name="header">
 				<h:outputText id="loginDialogHeader" value="#{commonBundle['login_dialog_title']}" />
@@ -71,30 +70,27 @@
 
 			<h:form id="loginDialogForm">
 				<div class="ui-g">
-				<div class="ui-g-12">
-					<div class="vertical-labeled-input">
-						<p:outputLabel id="labelEmail" for="email" value="#{commonBundle['label_email_field']}" />
-						<p:inputText id="email" value="#{loginMBean.toLogin.email}" required="true" />
+					<div class="ui-g-12">
+						<div class="vertical-labeled-input">
+							<p:outputLabel id="labelEmail" for="email" value="#{commonBundle['label_email_field']}" />
+							<p:inputText id="email" value="#{loginMBean.toLogin.email}" required="true" />
+						</div>
+					</div>
+
+					<div class="ui-g-12">
+						<div class="vertical-labeled-input">
+							<p:outputLabel id="labelPassword" for="password" value="#{commonBundle['label_password_field']}" />
+							<p:password id="password" value="#{loginMBean.toLogin.password}" required="true" />
+						</div>
 					</div>
 				</div>
 
-				<div class="ui-g-12">
-					<div class="vertical-labeled-input">
-						<p:outputLabel id="labelPassword" for="password" value="#{commonBundle['label_password_field']}" />
-						<p:password id="password" value="#{loginMBean.toLogin.password}" required="true" />
-					</div>
-				</div>
-			</div>
-
-			<p:toolbar id="toolbar">
-				<f:facet name="right">
-					<p:commandButton id="loginButton" 
-									 value="#{commonBundle['label_login_button']}" 
-									 action="#{loginMBean.authenticate}" 
-									 oncomplete="PF('loginDialogWV').hide()"
-									 update="formMessages:messages" />
-				</f:facet>
-			</p:toolbar>
+				<p:toolbar id="toolbar">
+					<f:facet name="right">
+						<p:commandButton id="loginButton" value="#{commonBundle['label_login_button']}"
+							action="#{loginMBean.authenticateAgain}" oncomplete="PF('loginDialogWV').hide()" update="formMessages:messages" />
+					</f:facet>
+				</p:toolbar>
 			</h:form>
 		</p:dialog>
 	</div>

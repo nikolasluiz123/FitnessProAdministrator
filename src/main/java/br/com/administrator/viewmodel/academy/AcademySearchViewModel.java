@@ -6,15 +6,14 @@ import java.util.Map;
 
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
-import org.primefaces.model.SortOrder;
 
 import br.com.administrator.service.webclient.AcademyWebClient;
 import br.com.administrator.to.TOAcademy;
+import br.com.administrator.utils.PrimefacesFiltersUtil;
 import br.com.fitnesspro.shared.communication.dtos.general.AcademyDTO;
 import br.com.fitnesspro.shared.communication.paging.CommonPageInfos;
 import br.com.fitnesspro.shared.communication.query.enums.EnumAcademyFields;
 import br.com.fitnesspro.shared.communication.query.filter.AcademyFilter;
-import br.com.fitnesspro.shared.communication.query.sort.Sort;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 
@@ -45,22 +44,18 @@ public class AcademySearchViewModel implements Serializable {
 	
 	private AcademyFilter getAcademyFilter(Map<String, FilterMeta> filterBy, Map<String, SortMeta> sortBy) {
 		AcademyFilter filter = new AcademyFilter();
+		PrimefacesFiltersUtil filterUtil = new PrimefacesFiltersUtil(filterBy);
 		
 		if (filterBy.containsKey(EnumAcademyFields.NAME.getFieldName())) {
-			String filterValue = filterBy.get(EnumAcademyFields.NAME.getFieldName()).getFilterValue().toString();
-			filter.setName(filterValue);
+			filter.setName(filterUtil.getStringFilterValue(EnumAcademyFields.NAME.getFieldName()));
 		}
 		
 		if (filterBy.containsKey(EnumAcademyFields.ADDRESS.getFieldName())) {
-			String filterValue = filterBy.get(EnumAcademyFields.ADDRESS.getFieldName()).getFilterValue().toString();
-			filter.setAddress(filterValue);
+			filter.setAddress(filterUtil.getStringFilterValue(EnumAcademyFields.ADDRESS.getFieldName()));
 		}
 		
 		if (sortBy != null && !sortBy.values().isEmpty()) {
-			SortMeta sortMeta = sortBy.values().stream().findFirst().get();
-			filter.setSort(new Sort(sortMeta.getField(), sortMeta.getOrder() == SortOrder.ASCENDING));
-		} else {
-			filter.setSort(new Sort(EnumAcademyFields.NAME.getFieldName(), true));
+			filter.setSort(filterUtil.getSortFromField(sortBy, EnumAcademyFields.getEntries()));
 		}
 		
 		return filter;

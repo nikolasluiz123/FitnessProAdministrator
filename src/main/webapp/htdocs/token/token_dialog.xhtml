@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions" xmlns:fit="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+<h:outputStylesheet name="css/token_search/token_dialog.css" />
+
+<p:dialog id="tokenDialog" widgetVar="tokenDialogWV" modal="true" fitViewport="true" responsive="true" width="40vw"
+	resizable="false" dynamic="true">
+
+	<f:facet name="header">
+		<h:outputText id="tokenDialogHeader" value="#{bundleTokenDialog['title']}" />
+	</f:facet>
+
+	<h:form id="tokenDialogForm">
+		<p:remoteCommand name="onTokenTypeChange" action="#{tokenDialogMBean.onTokenTypeChange}" update="@form" />
+
+		<p:messages id="tokenDialogMessages" closable="true" showSummary="true" showDetail="true"
+			skipDetailIfEqualsSummary="true" />
+
+		<div class="ui-g">
+			<div class="ui-g-12 vertical-labeled-input">
+				<p:outputLabel id="labelTokenType" value="#{bundleTokenDialog['label_input_token_type']}" />
+				<p:selectOneMenu id="tokenType" onchange="onTokenTypeChange();"
+					value="#{tokenDialogMBean.toServiceTokenGeneration.type}" readonly="#{tokenDialogMBean.disabledDialog}">
+					<f:selectItems value="#{tokenDialogMBean.tokenTypes}" var="typeItem" itemValue="#{typeItem.value}"
+						itemLabel="#{typeItem.label}" />
+				</p:selectOneMenu>
+			</div>
+
+			<div class="ui-g-12" jsf:rendered="#{tokenDialogMBean.visibleDeviceLov}">
+				<fit:inputLov id="device" label="#{bundleTokenDialog['label_input_lov_device']}"
+					value="#{tokenDialogMBean.toServiceTokenGeneration.selectedDevice.id}" onShowLov="PF('devicesLovDialogWV').show()"
+					onActionClear="#{tokenDialogMBean.onClearDevice}" readonly="#{tokenDialogMBean.disabledDialog}" />
+			</div>
+
+			<div class="ui-g-12" jsf:rendered="#{tokenDialogMBean.visibleApplicationLov}">
+				<fit:inputLov id="application" label="#{bundleTokenDialog['label_input_lov_application']}"
+					value="#{tokenDialogMBean.toServiceTokenGeneration.selectedApplication.name}"
+					onShowLov="PF('applicationsLovDialogWV').show()" onActionClear="#{tokenDialogMBean.onClearApplication}"
+					readonly="#{tokenDialogMBean.disabledDialog}" />
+			</div>
+
+			<div class="ui-g-12" jsf:rendered="#{tokenDialogMBean.visiblePersonLov}">
+				<fit:inputLov id="user" label="#{bundleTokenDialog['label_input_lov_user']}"
+					value="#{tokenDialogMBean.toServiceTokenGeneration.selectedUser.email}" onShowLov="PF('personsLovDialogWV').show()"
+					onActionClear="#{tokenDialogMBean.onClearUser}" readonly="#{tokenDialogMBean.disabledDialog}" />
+			</div>
+		</div>
+
+		<p:toolbar id="toolbar" styleClass="dialog-toolbar">
+			<f:facet name="right">
+				<p:commandButton id="btnGenerateToken" value="#{bundleTokenDialog['label_button_generate_token']}"
+					action="#{tokenDialogMBean.onTokenGenerateClick}" update="tokenDialogMessages"
+					disabled="#{tokenDialogMBean.disabledDialog}" />
+			</f:facet>
+		</p:toolbar>
+	</h:form>
+</p:dialog>
+
+<ui:include src="/htdocs/lov/lov_devices.xhtml">
+	<ui:param name="mbean" value="#{tokenDialogMBean.lovDeviceMBean}" />
+</ui:include>
+
+<ui:include src="/htdocs/lov/lov_applications.xhtml">
+	<ui:param name="mbean" value="#{tokenDialogMBean.lovApplicationMBean}" />
+</ui:include>
+
+<ui:include src="/htdocs/lov/lov_person.xhtml">
+	<ui:param name="mbean" value="#{tokenDialogMBean.lovPersonMBean}" />
+</ui:include>
+</html>

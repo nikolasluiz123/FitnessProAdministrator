@@ -25,14 +25,6 @@ public class MenuMBean extends AbstractBaseMBean {
 		}
 	}
 	
-	public void onUsersClick() {
-		try {
-			
-		} catch (Exception e) {
-			navigationExceptionHandler(e);
-		}
-	}
-	
 	public void onAcademiesClick() {
 		try {
 			FacesUtils.redirect(IScreensRedirect.ACADEMY_SEARCH);
@@ -44,6 +36,30 @@ public class MenuMBean extends AbstractBaseMBean {
 	public void onCachesClick() {
 		try {
 			FacesUtils.redirect(IScreensRedirect.CACHES_SEARCH);
+		} catch (Exception e) {
+			navigationExceptionHandler(e);
+		}
+	}
+	
+	public void onApplicationsClick() {
+		try {
+			FacesUtils.redirect(IScreensRedirect.APPLICATIONS);
+		} catch (Exception e) {
+			navigationExceptionHandler(e);
+		}
+	}
+	
+	public void onDevicesClick() {
+		try {
+			FacesUtils.redirect(IScreensRedirect.DEVICES);
+		} catch (Exception e) {
+			navigationExceptionHandler(e);
+		}
+	}
+	
+	public void onTokensClick() {
+		try {
+			FacesUtils.redirect(IScreensRedirect.TOKENS);
 		} catch (Exception e) {
 			navigationExceptionHandler(e);
 		}

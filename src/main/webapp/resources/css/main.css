@@ -1,44 +1,50 @@
 .vertical-labeled-input {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
 }
 
 .ui-toolbar {
 	border: none !important;
 }
 
+.dialog-toolbar {
+	padding-top: 2rem !important;
+	padding-left: 0.5rem !important;
+	padding-right: 0.5rem !important;
+}
+
 .top-bar {
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    height: 4em;
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+	height: 4em;
 }
 
 .page-title {
 	padding-left: 9.2em;
-    font-size: 1.3em;
-    font-weight: bold;
+	font-size: 1.3em;
+	font-weight: bold;
 }
 
 .sidebar-menu {
-    width: 12.5em;
-    position: fixed;
-    left: 0;
-    padding-top: 3em;
-    background-color: #f4f4f4; 
+	width: 12.5em;
+	position: fixed;
+	left: 0;
+	padding-top: 3em;
+	background-color: #f4f4f4;
 }
 
 .menu-container {
 	height: 100vh;
-    overflow-y: auto;
+	overflow-y: auto;
 }
 
 .main-content {
-    margin-left: 12.5em; 
-    padding-top: 4em; 
+	margin-left: 12.5em;
+	padding-top: 4em;
 }
 
 .main-top-bar {
@@ -51,4 +57,21 @@
 
 .label-value {
 	font-weight: 300;
+}
+
+body .ui-dialog .ui-dialog-content {
+	padding-top: 0;
+	padding-bottom: 0;
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+.input-container {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.label-container {
+	margin-bottom: 8px;
 }

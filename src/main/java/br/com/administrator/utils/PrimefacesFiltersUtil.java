@@ -7,8 +7,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.primefaces.model.FilterMeta;
+import org.primefaces.model.SortMeta;
+import org.primefaces.model.SortOrder;
 
+import br.com.fitnesspro.shared.communication.query.sort.IEnumFields;
+import br.com.fitnesspro.shared.communication.query.sort.Sort;
 import kotlin.Pair;
+import kotlin.enums.EnumEntries;
 
 public class PrimefacesFiltersUtil {
 	
@@ -19,6 +24,33 @@ public class PrimefacesFiltersUtil {
 		this.filterBy = filterBy;
 	}
 
+	public <T extends Enum<T> & IEnumFields> List<Sort<T>> getSortFromFieldList(Map<String, SortMeta> sortBy, EnumEntries<T> entries) {
+		List<T> fields = getSortFieldList(sortBy, entries);
+		return sortBy.values().stream().map(m -> getSortWithMetaAndField(fields, m)).toList();
+	}
+
+	public <T extends Enum<T> & IEnumFields> Sort<T> getSortFromField(Map<String, SortMeta> sortBy, EnumEntries<T> entries) {
+		T sortField = getSortField(sortBy, entries);
+		SortMeta sortMeta = sortBy.values().stream().findFirst().get();
+		
+		return new Sort<T>(sortField, sortMeta.getOrder() == SortOrder.ASCENDING);
+	}
+	
+	private <T extends Enum<T> & IEnumFields> Sort<T> getSortWithMetaAndField(List<T> fields, SortMeta sortMeta) {
+		T field = fields.stream().filter(x -> x.getFieldName().equals(sortMeta.getField())).findFirst().get();
+		return new Sort<T>(field, sortMeta.getOrder() == SortOrder.ASCENDING);
+	}
+	
+	private <T extends Enum<T> & IEnumFields> T getSortField(Map<String, SortMeta> sortBy, EnumEntries<T> entries) {
+		SortMeta sortMeta = sortBy.values().stream().findFirst().get();
+		return entries.stream().filter(x -> x.getFieldName().equals(sortMeta.getField())).findFirst().get();
+	}
+	
+	private <T extends Enum<T> & IEnumFields> List<T> getSortFieldList(Map<String, SortMeta> sortBy, EnumEntries<T> entries) {
+		List<String> sortMetaStringFields = sortBy.values().stream().map(s -> s.getField()).toList();
+		return entries.stream().filter(x -> sortMetaStringFields.contains(x.getFieldName())).toList();
+	}
+	
 	@SuppressWarnings("unchecked")
 	public Pair<LocalDateTime, LocalDateTime> getDateTimeRangeFilter(String key) {
 		List<LocalDate> filterValue = (List<LocalDate>) filterBy.get(key).getFilterValue();

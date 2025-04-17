@@ -1,6 +1,7 @@
 package br.com.administrator.utils;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.faces.context.FacesContext;
@@ -23,7 +24,11 @@ public class AuthSessionUtils {
 	
 	public static String getCookieValue(String key) {
 	    HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-	    List<Cookie> cookies = List.of(request.getCookies());
+	    List<Cookie> cookies = new ArrayList<>();
+	    
+	    if (request.getCookies() != null) {
+	    	cookies = List.of(request.getCookies());
+	    }
 	    
 	    if (cookies != null && !cookies.isEmpty()) {
 	    	List<Cookie> result = cookies.stream().filter(c -> c.getName().equals(key)).toList();

@@ -6,9 +6,7 @@ import java.util.ResourceBundle;
 
 import org.primefaces.PrimeFaces;
 
-import br.com.administrator.managedbean.common.lazymodel.LazyDataModelCallback;
 import br.com.administrator.utils.FacesUtils;
-import br.com.fitnesspro.shared.communication.exception.ExpiredTokenException;
 
 @SuppressWarnings("serial")
 public abstract class AbstractBaseMBean implements Serializable {
@@ -28,24 +26,17 @@ public abstract class AbstractBaseMBean implements Serializable {
 		return FacesUtils.getResourceBundle(getBundleFileName());
 	}
 	
-	protected void exceptionHandler(Exception exception, String summary) {
-		FacesUtils.addErrorMessage(exception.getMessage(), summary);
+	protected void exceptionHandler(String clientId, Exception exception, String summary) {
+		FacesUtils.addErrorMessage(clientId, exception.getMessage(), summary);
 		exception.printStackTrace();
+	}
+	
+	protected void exceptionHandler(Exception exception, String summary) {
+		exceptionHandler(null, exception, summary);
 	}
 	
 	protected void showLoginDialog() {
 		PrimeFaces.current().executeScript("PF('loginDialogWV').show()");
 	}
 	
-	public class DefaultLazyDataModelCallback implements LazyDataModelCallback {
-		
-		@Override
-		public void onException(Exception exception) {
-			exceptionHandler(exception, getBundleString("lazy_data_model_error_summary"));
-			
-			if (exception instanceof ExpiredTokenException) {
-				showLoginDialog();
-			}
-		}
-	}
 }

@@ -11,15 +11,14 @@ import java.util.Map;
 
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
-import org.primefaces.model.SortOrder;
 
 import br.com.administrator.service.webclient.ExecutionLogsWebClient;
 import br.com.administrator.to.TOExecutionLogPackage;
 import br.com.administrator.utils.PrimefacesFiltersUtil;
 import br.com.fitnesspro.shared.communication.dtos.logs.ExecutionLogPackageDTO;
 import br.com.fitnesspro.shared.communication.paging.CommonPageInfos;
+import br.com.fitnesspro.shared.communication.query.enums.EnumExecutionLogsPackageFields;
 import br.com.fitnesspro.shared.communication.query.filter.ExecutionLogsPackageFilter;
-import br.com.fitnesspro.shared.communication.query.sort.Sort;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 
@@ -71,10 +70,7 @@ public class LogDialogViewModel implements Serializable {
 		}
 		
 		if (sortBy != null && !sortBy.values().isEmpty()) {
-			SortMeta sortMeta = sortBy.values().stream().findFirst().get();
-			filter.setSort(new Sort(sortMeta.getField(), sortMeta.getOrder() == SortOrder.ASCENDING));
-		} else {
-			filter.setSort(new Sort(SERVICE_EXECUTION_START.getFieldName(), false));
+			filter.setSort(filterUtils.getSortFromField(sortBy, EnumExecutionLogsPackageFields.getEntries()));
 		}
 		
 		return filter;

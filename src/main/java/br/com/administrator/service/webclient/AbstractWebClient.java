@@ -4,7 +4,6 @@ import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import br.com.administrator.service.exception.ServiceException;
@@ -12,6 +11,7 @@ import br.com.administrator.service.gson.utils.GsonUtils;
 import br.com.administrator.utils.AuthSessionUtils;
 import br.com.fitnesspro.shared.communication.enums.serviceauth.EnumErrorType;
 import br.com.fitnesspro.shared.communication.exception.ExpiredTokenException;
+import br.com.fitnesspro.shared.communication.exception.NotFoundTokenException;
 import br.com.fitnesspro.shared.communication.responses.AuthenticationServiceResponse;
 import br.com.fitnesspro.shared.communication.responses.FitnessProServiceResponse;
 import br.com.fitnesspro.shared.communication.responses.IFitnessProServiceResponse;
@@ -33,10 +33,14 @@ public abstract class AbstractWebClient {
 	}
 	
 	protected void validateResponse(IFitnessProServiceResponse response) throws Exception {
-		if (!response.getSuccess() && response.getErrorType() == EnumErrorType.EXPIRED_TOKEN) {
-			throw new ExpiredTokenException();
-		} else if (!response.getSuccess()) {
-			throw new ServiceException(response.getError());
+		if (!response.getSuccess()) {
+			if (response.getErrorType() == EnumErrorType.EXPIRED_TOKEN) {
+				throw new ExpiredTokenException();
+			} else if (response.getErrorType() == EnumErrorType.INVALID_TOKEN) {
+				throw new NotFoundTokenException();
+			} else {
+				throw new ServiceException(response.getError());
+			}
 		}
 	}
 
@@ -104,7 +108,7 @@ public abstract class AbstractWebClient {
 											   		authResponse.getErrorType());
 			} else {
 		        Type type = TypeToken.getParameterized(ReadServiceResponse.class, clazz).getType();
-		        return new Gson().fromJson(response.errorBody().charStream(), type);
+		        return GsonUtils.getDefaultGson().fromJson(response.errorBody().charStream(), type);
 			}
 			
 		} else {
@@ -130,7 +134,7 @@ public abstract class AbstractWebClient {
 												   		 authResponse.getErrorType());
 			} else {
 		        Type type = TypeToken.getParameterized(SingleValueServiceResponse.class, clazz).getType();
-		        return new Gson().fromJson(response.errorBody().charStream(), type);
+		        return GsonUtils.getDefaultGson().fromJson(response.errorBody().charStream(), type);
 			}
 			
 		} else {
