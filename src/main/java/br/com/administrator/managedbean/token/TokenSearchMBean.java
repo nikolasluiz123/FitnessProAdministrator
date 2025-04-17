@@ -74,10 +74,6 @@ public class TokenSearchMBean extends AbstractSearchMBean {
 		}
 	}
 	
-	public void onNewToken() {
-		
-	}
-	
 	public LazyTokenDataModel getLazyModel() {
 		return lazyModel;
 	}
