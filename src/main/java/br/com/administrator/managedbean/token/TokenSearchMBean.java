@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.primefaces.event.SelectEvent;
 
-import br.com.administrator.managedbean.common.beans.AbstractSearchMBean;
+import br.com.administrator.managedbean.common.beans.AbstractPagingSearchMBean;
 import br.com.administrator.managedbean.common.labeledenum.LabeledEnum;
 import br.com.administrator.to.TOServiceToken;
 import br.com.administrator.viewmodel.token.TokenSearchViewModel;
@@ -18,7 +18,7 @@ import jakarta.inject.Named;
 
 @Named("tokenSearchMBean")
 @ViewScoped
-public class TokenSearchMBean extends AbstractSearchMBean {
+public class TokenSearchMBean extends AbstractPagingSearchMBean {
 
 	private static final long serialVersionUID = 1L;
 

@@ -11,6 +11,7 @@ import br.com.administrator.service.gson.utils.GsonUtils;
 import br.com.fitnesspro.shared.communication.dtos.general.PersonDTO;
 import br.com.fitnesspro.shared.communication.paging.CommonPageInfos;
 import br.com.fitnesspro.shared.communication.query.filter.PersonFilter;
+import br.com.fitnesspro.shared.communication.responses.PersistenceServiceResponse;
 import br.com.fitnesspro.shared.communication.responses.ReadServiceResponse;
 import br.com.fitnesspro.shared.communication.responses.SingleValueServiceResponse;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -59,6 +60,21 @@ public class PersonWebClient extends AbstractWebClient {
 			validateResponse(response);
 			
 			return response.getValue();
+		} catch (ConnectException exception) {
+			throw new ServiceException("Não foi possível se conectar ao servidor. Tente novamente mais tarde.", exception);
+		}
+	}
+	
+	public PersistenceServiceResponse<PersonDTO> savePerson(PersonDTO dto) throws Exception {
+		try {
+			String token = getFormatedToken();
+			
+			Call<PersistenceServiceResponse<PersonDTO>> serviceCall = service.savePerson(token, dto);
+			PersistenceServiceResponse<PersonDTO> response = getPersistenceResponseBody(serviceCall, PersonDTO.class);
+			validateResponse(response);
+			
+			return response;
+			
 		} catch (ConnectException exception) {
 			throw new ServiceException("Não foi possível se conectar ao servidor. Tente novamente mais tarde.", exception);
 		}

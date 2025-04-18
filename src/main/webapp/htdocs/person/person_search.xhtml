@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="../templates/template.xhtml">
+
+	<ui:define name="bundles">
+		<f:loadBundle var="bundlePersonSearch" basename="messages.person_search" />
+	</ui:define>
+
+	<ui:define name="title">
+		<h:outputText value="#{bundlePersonSearch['title']}" styleClass="page-title" />
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form>
+			<p:importEnum type="br.com.fitnesspro.shared.communication.query.enums.EnumPersonFields" var="EnumPersonFields" />
+
+			<p:remoteCommand name="onRequestReloadDatatable" action="#{personSearchMBean.onRequestReloadDatatable}"
+				update="dataTablePersons" />
+
+			<p:toolbar id="topBar" styleClass="main-top-bar">
+				<f:facet name="right">
+					<p:commandButton id="btnNewPerson" value="#{bundlePersonSearch['label_button_new_person']}"
+						action="#{personSearchMBean.onNewPersonClick}" update="personDialog" oncomplete="PF('personDialogWV').show();" />
+				</f:facet>
+			</p:toolbar>
+
+			<p:dataTable id="dataTablePersons" var="item" value="#{personSearchMBean.lazyModel}" rows="100" paginator="true"
+				paginatorPosition="both"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros" rowsPerPageTemplate="25, 50, 100"
+				widgetVar="dataTablePersonsWV" selectionMode="single" rowKey="${item.id}" allowUnsorting="true" sortMode="multiple">
+
+				<p:ajax event="rowSelect" listener="#{personSearchMBean.onRowSelect}" update="formMessages:messages, personDialog"
+					oncomplete="PF('personDialogWV').show()" />
+
+				<f:facet name="paginatorTopLeft">
+					<p:commandButton icon="pi pi-refresh" oncomplete="onRequestReloadDatatable();" />
+				</f:facet>
+
+				<p:column headerText="#{bundlePersonSearch['label_column_name']}" sortBy="#{item.name}" sortOrder="asc"
+					filterBy="#{item.name}" filterMatchMode="contains" field="#{EnumPersonFields.NAME.fieldName}">
+					<h:outputText value="#{item.name}" />
+				</p:column>
+
+				<p:column headerText="#{bundlePersonSearch['label_column_email']}" sortBy="#{item.toUser.email}"
+					filterBy="#{item.toUser.email}" filterMatchMode="contains" field="#{EnumPersonFields.EMAIL.fieldName}">
+					<h:outputText value="#{item.toUser.email}" />
+				</p:column>
+
+				<p:column headerText="#{bundlePersonSearch['label_column_user_type']}" filterBy="#{item.toUser.type.value}"
+					filterMatchMode="exact" field="#{EnumPersonFields.USER_TYPE.fieldName}">
+					<f:facet name="filter">
+						<p:selectOneMenu id="filterType" onchange="PF('dataTablePersonsWV').filter()" styleClass="ui-full-width-filter">
+							<f:selectItem itemLabel="#{bundleExecutionLog['label_filter_all']}" itemValue="#{null}" noSelectionOption="true" />
+							<f:selectItems value="#{personSearchMBean.userTypes}" var="typeItem" itemValue="#{typeItem.value}"
+								itemLabel="#{typeItem.label}" />
+						</p:selectOneMenu>
+					</f:facet>
+
+					<h:outputText value="#{item.toUser.type.label}" />
+				</p:column>
+
+				<p:column headerText="#{bundlePersonSearch['label_column_creation_date']}" filterMatchMode="between"
+					sortBy="#{item.creationDate}" sortOrder="desc" filterBy="#{item.creationDate}">
+
+					<f:facet name="filter">
+						<p:datePicker id="filterRangeCreationDate" selectionMode="range" onchange="PF('dataTablePersonsWV').filter()"
+							converter="LocalDateConverter" styleClass="ui-full-width-filter" />
+					</f:facet>
+
+					<h:outputText value="#{item.creationDate}">
+						<f:converter converterId="LocalDateTimeConverter" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="#{bundlePersonSearch['label_column_update_date']}" filterMatchMode="between"
+					sortBy="#{item.updateDate}" filterBy="#{item.updateDate}">
+
+					<f:facet name="filter">
+						<p:datePicker id="filterRangeUpdateDate" selectionMode="range" onchange="PF('dataTablePersonsWV').filter()"
+							converter="LocalDateConverter" styleClass="ui-full-width-filter" />
+					</f:facet>
+
+					<h:outputText value="#{item.updateDate}">
+						<f:converter converterId="LocalDateTimeConverter" />
+					</h:outputText>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+
+		<ui:include src="/htdocs/person/person_dialog.xhtml" />
+	</ui:define>
+</ui:composition>
+</html>

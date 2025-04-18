@@ -10,12 +10,18 @@ public class TOPerson extends AbstractModelTO {
 	private static final long serialVersionUID = 1L;
 
 	private String name;
+	private String phone;
 	private LocalDateTime creationDate;
 	private LocalDateTime updateDate;
 	private LocalDate birthDate;
 	private TOUser toUser;
 	private Boolean active;
 
+	public TOPerson() {
+		this.toUser = new TOUser();
+		this.active = true;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -64,4 +70,12 @@ public class TOPerson extends AbstractModelTO {
 		this.active = active;
 	}
 
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	
 }

@@ -28,7 +28,7 @@ public interface IAcademyService {
 															  @Query("filter") @NotNull String filter);
 	
 	@POST(EndPointsV1.ACADEMY)
-	Call<PersistenceServiceResponse> saveAcademy(@Header("Authorization") String token, @Body @NotNull AcademyDTO academyDTO);
+	Call<PersistenceServiceResponse<AcademyDTO>> saveAcademy(@Header("Authorization") String token, @Body @NotNull AcademyDTO academyDTO);
 	
 	
 }

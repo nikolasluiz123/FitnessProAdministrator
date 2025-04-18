@@ -17,5 +17,5 @@ public interface IApplicationService {
 	Call<ReadServiceResponse<ApplicationDTO>> getListApplication(@Header("Authorization") String token);
 	
 	@POST(EndPointsV1.APPLICATION)
-	Call<PersistenceServiceResponse> saveApplication(@Header("Authorization") String token, @Body @NotNull ApplicationDTO applicationDTO);
+	Call<PersistenceServiceResponse<ApplicationDTO>> saveApplication(@Header("Authorization") String token, @Body @NotNull ApplicationDTO applicationDTO);
 }

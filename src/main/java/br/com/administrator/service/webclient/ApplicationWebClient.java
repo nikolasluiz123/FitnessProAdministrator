@@ -26,12 +26,12 @@ public class ApplicationWebClient extends AbstractWebClient {
 		this.service = service;
 	}
 	
-	public PersistenceServiceResponse saveApplication(ApplicationDTO dto) throws Exception {
+	public PersistenceServiceResponse<ApplicationDTO> saveApplication(ApplicationDTO dto) throws Exception {
 		try {
 			String token = getFormatedToken();
 			
-			Call<PersistenceServiceResponse> serviceCall = service.saveApplication(token, dto);
-			PersistenceServiceResponse response = getPersistenceResponseBody(serviceCall);
+			Call<PersistenceServiceResponse<ApplicationDTO>> serviceCall = service.saveApplication(token, dto);
+			PersistenceServiceResponse<ApplicationDTO> response = getPersistenceResponseBody(serviceCall, ApplicationDTO.class);
 			validateResponse(response);
 			
 			return response;

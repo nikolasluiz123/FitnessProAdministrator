@@ -9,6 +9,7 @@ import com.google.gson.reflect.TypeToken;
 import br.com.administrator.service.exception.ServiceException;
 import br.com.administrator.service.gson.utils.GsonUtils;
 import br.com.administrator.utils.AuthSessionUtils;
+import br.com.fitnesspro.shared.communication.dtos.common.BaseDTO;
 import br.com.fitnesspro.shared.communication.enums.serviceauth.EnumErrorType;
 import br.com.fitnesspro.shared.communication.exception.ExpiredTokenException;
 import br.com.fitnesspro.shared.communication.exception.NotFoundTokenException;
@@ -44,9 +45,8 @@ public abstract class AbstractWebClient {
 		}
 	}
 
-	protected PersistenceServiceResponse getPersistenceResponseBody(Call<PersistenceServiceResponse> call) throws Exception {
-//		Type type = new TypeToken<PersistenceServiceResponse>(){}.getType();
-		Response<PersistenceServiceResponse> response = call.execute();
+	protected <DTO extends BaseDTO> PersistenceServiceResponse<DTO> getPersistenceResponseBody(Call<PersistenceServiceResponse<DTO>> call, Class<DTO> clazz) throws Exception {
+		Response<PersistenceServiceResponse<DTO>> response = call.execute();
 		
 		if (response.body() != null) {
 			return response.body();
@@ -56,13 +56,14 @@ public abstract class AbstractWebClient {
 			if (response.code() == HttpServletResponse.SC_UNAUTHORIZED) {
 				AuthenticationServiceResponse authResponse = GsonUtils.getDefaultGson().fromJson(reader, AuthenticationServiceResponse.class);
 				
-				return new PersistenceServiceResponse(authResponse.getCode(), 
+				return new PersistenceServiceResponse<DTO>(authResponse.getCode(), 
 													  authResponse.getSuccess(), 
 													  authResponse.getError(), 
 													  authResponse.getErrorType(), 
 													  null);
 			} else {
-				throw new ServiceException("A resposta de erro não foi tratada");
+				Type type = TypeToken.getParameterized(PersistenceServiceResponse.class, clazz).getType();
+		        return GsonUtils.getDefaultGson().fromJson(response.errorBody().charStream(), type);
 			}
 			
 		} else {
@@ -71,20 +72,13 @@ public abstract class AbstractWebClient {
 	}
 
 	protected AuthenticationServiceResponse getAuthResponseBody(Call<AuthenticationServiceResponse> call) throws Exception {
-//		Type type = new TypeToken<AuthenticationServiceResponse>(){}.getType();
 		Response<AuthenticationServiceResponse> response = call.execute();
 		
 		if (response.body() != null) {
 			return response.body();
 		} else if (response.errorBody() != null) {
 			Reader reader = response.errorBody().charStream();
-			
-			if (response.code() == HttpServletResponse.SC_UNAUTHORIZED) {
-				return GsonUtils.getDefaultGson().fromJson(reader, AuthenticationServiceResponse.class);
-			} else {
-				throw new ServiceException("A resposta de erro não foi tratada");
-			}
-			
+			return GsonUtils.getDefaultGson().fromJson(reader, AuthenticationServiceResponse.class);
 		} else {
 			throw new ServiceException("Não foi encontrada uma resposta");
 		}
@@ -143,7 +137,6 @@ public abstract class AbstractWebClient {
 	}
 	
 	protected FitnessProServiceResponse getResponseBody(Call<FitnessProServiceResponse> call) throws Exception {
-//		Type type = new TypeToken<FitnessProServiceResponse>(){}.getType();
 		Response<FitnessProServiceResponse> response = call.execute();
 		
 		if (response.body() != null) {
@@ -159,7 +152,7 @@ public abstract class AbstractWebClient {
 											   		 authResponse.getError(), 
 											   		 authResponse.getErrorType());
 			} else {
-				throw new ServiceException("A resposta de erro não foi tratada");
+				return GsonUtils.getDefaultGson().fromJson(reader, FitnessProServiceResponse.class);
 			}
 			
 		} else {

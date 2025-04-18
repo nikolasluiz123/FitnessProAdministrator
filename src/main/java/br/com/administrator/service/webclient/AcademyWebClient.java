@@ -65,12 +65,12 @@ public class AcademyWebClient extends AbstractWebClient {
 		}
 	}
 	
-	public PersistenceServiceResponse saveAcademy(AcademyDTO dto) throws Exception {
+	public PersistenceServiceResponse<AcademyDTO> saveAcademy(AcademyDTO dto) throws Exception {
 		try {
 			String token = getFormatedToken();
 			
-			Call<PersistenceServiceResponse> serviceCall = service.saveAcademy(token, dto);
-			PersistenceServiceResponse response = getPersistenceResponseBody(serviceCall);
+			Call<PersistenceServiceResponse<AcademyDTO>> serviceCall = service.saveAcademy(token, dto);
+			PersistenceServiceResponse<AcademyDTO> response = getPersistenceResponseBody(serviceCall, AcademyDTO.class);
 			validateResponse(response);
 			
 			return response;

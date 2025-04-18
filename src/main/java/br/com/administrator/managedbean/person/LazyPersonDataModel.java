@@ -1,4 +1,4 @@
-package br.com.administrator.managedbean.user;
+package br.com.administrator.managedbean.person;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.primefaces.model.SortMeta;
 
 import br.com.administrator.managedbean.common.lazymodel.AbstractLazyDataModel;
 import br.com.administrator.to.TOPerson;
-import br.com.administrator.viewmodel.user.PersonSearchViewModel;
+import br.com.administrator.viewmodel.person.PersonSearchViewModel;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 

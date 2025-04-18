@@ -34,6 +34,7 @@ public class AuthenticationWebClient extends AbstractWebClient {
 			AuthenticationDTO authenticationDTO = new AuthenticationDTO();
 			authenticationDTO.setEmail(email);
 			authenticationDTO.setPassword(password);
+			authenticationDTO.setAdminAuth(true);
 			
 			Call<AuthenticationServiceResponse> authenticationCall = service.authenticate(applicationToken, authenticationDTO);
 			AuthenticationServiceResponse response = getAuthResponseBody(authenticationCall);

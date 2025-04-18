@@ -24,10 +24,10 @@ public class AcademyDialogViewModel implements Serializable {
 	public void saveAcademy(TOAcademy to) throws Exception {
 		AcademyDTO dto = getAcademyDTO(to);
 		
-		PersistenceServiceResponse response = webClient.saveAcademy(dto);
+		PersistenceServiceResponse<AcademyDTO> response = webClient.saveAcademy(dto);
 		
 		if (response.getSuccess()) {
-			to.setId(response.getId());
+			to.setId(response.getSavedDTO().getId());
 		}
 	}
 

@@ -65,6 +65,14 @@ public class MenuMBean extends AbstractBaseMBean {
 		}
 	}
 	
+	public void onPresonsClick() {
+		try {
+			FacesUtils.redirect(IScreensRedirect.PERSONS);
+		} catch (Exception e) {
+			navigationExceptionHandler(e);
+		}
+	}
+	
 	public void onLogout() {
 		try {
 			viewModel.logout();

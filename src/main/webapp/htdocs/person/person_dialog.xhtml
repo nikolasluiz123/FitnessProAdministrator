@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions" xmlns:fit="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+<p:dialog id="personDialog" widgetVar="personDialogWV" modal="true" fitViewport="true" responsive="true" width="60vw"
+	resizable="false" dynamic="true" onHide="onRequestReloadDatatable();">
+
+	<f:facet name="header">
+		<h:outputText id="personDialogHeader" value="#{personDialogMBean.title}" />
+	</f:facet>
+
+	<h:form id="personDialogForm">
+		<f:loadBundle var="bundlePersonDialog" basename="messages.person_dialog" />
+
+		<p:messages id="personDialogMessages" closable="true" showSummary="true" showDetail="true"
+			skipDetailIfEqualsSummary="true" />
+
+		<p:remoteCommand name="onUserTypeChange" update="@form" actionListener="#{personDialogMBean.onUserTypeChange}" />
+
+		<div class="ui-g">
+			<div class="ui-g-12">
+				<div class="ui-g-4 vertical-labeled-input">
+					<p:outputLabel id="labelName" value="#{bundlePersonDialog['label_input_name']}" for="inputName" />
+					<p:inputText id="inputName" value="#{personDialogMBean.toPerson.name}" required="true"
+						readonly="#{personDialogMBean.disabledDialog}" maxlength="512"
+						requiredMessage="#{personDialogMBean.getRequiredMessage(bundlePersonDialog['label_input_name'])}" />
+				</div>
+
+				<div class="ui-g-4 vertical-labeled-input">
+					<p:outputLabel id="labelEmail" value="#{bundlePersonDialog['label_input_email']}" for="inputEmail" />
+					<p:inputText id="inputEmail" value="#{personDialogMBean.toPerson.toUser.email}" required="true"
+						readonly="#{personDialogMBean.disabledDialog}" maxlength="64" validator="EmailValidator"
+						requiredMessage="#{personDialogMBean.getRequiredMessage(bundlePersonDialog['label_input_email'])}" />
+				</div>
+
+				<div class="ui-g-4 vertical-labeled-input">
+					<p:outputLabel id="labelPassword" value="#{bundlePersonDialog['label_input_password']}" for="inputPassword" />
+					<p:password id="inputPassword" value="#{personDialogMBean.toPerson.toUser.password}" feedback="true"
+						required="true" readonly="#{personDialogMBean.disabledDialog}" maxlength="1024"
+						requiredMessage="#{personDialogMBean.getRequiredMessage(bundlePersonDialog['label_input_password'])}" />
+				</div>
+			</div>
+
+			<div class="ui-g-12">
+				<div class="ui-g-4 vertical-labeled-input">
+					<p:outputLabel id="labelType" value="#{bundlePersonDialog['label_input_type']}" for="inputType" />
+
+					<p:selectOneMenu id="inputType" onchange="onUserTypeChange();" value="#{personDialogMBean.selectedUserType}"
+						disabled="#{tokenDialogMBean.disabledDialog}" required="true"
+						requiredMessage="#{personDialogMBean.getRequiredMessage(bundlePersonDialog['label_input_type'])}">
+
+						<f:selectItems value="#{personDialogMBean.userTypes}" var="typeItem" itemValue="#{typeItem.value}"
+							itemLabel="#{typeItem.label}" />
+					</p:selectOneMenu>
+				</div>
+
+				<div class="ui-g-4 vertical-labeled-input">
+					<p:outputLabel id="labelBirthDate" value="#{bundlePersonDialog['label_input_birthdate']}" for="inputBirthDate" />
+					<p:datePicker id="inputBirthDate" selectionMode="single" converter="LocalDateConverter"
+						value="#{personDialogMBean.toPerson.birthDate}" readonly="#{tokenDialogMBean.disabledDialog}"
+						styleClass="ui-full-width-input" />
+				</div>
+
+				<div class="ui-g-4 vertical-labeled-input" jsf:rendered="#{personDialogMBean.visiblePhoneInput}">
+					<p:outputLabel id="labelPhone" value="#{bundlePersonDialog['label_input_phone']}" />
+					<p:inputMask id="inputPhone" value="#{personDialogMBean.toPerson.phone}"
+						readonly="#{personDialogMBean.disabledDialog}" mask="(99) [9]9999-9999" />
+				</div>
+			</div>
+		</div>
+
+		<p:toolbar id="toolbar" styleClass="dialog-toolbar">
+			<f:facet name="left">
+				<p:commandButton id="btnInactivatePerson" value="#{bundlePersonDialog['label_button_inactivate']}"
+					action="#{personDialogMBean.onPersonInactivateClick}" update="@form"
+					disabled="#{personDialogMBean.disabledDialog}" styleClass="ui-button-danger" />
+			</f:facet>
+
+			<f:facet name="right">
+				<p:commandButton id="btnSavePerson" value="#{bundlePersonDialog['label_button_save']}"
+					action="#{personDialogMBean.onPersonSaveClick}" update="personDialogMessages, @form"
+					disabled="#{personDialogMBean.disabledDialog}" />
+			</f:facet>
+		</p:toolbar>
+	</h:form>
+</p:dialog>
+</html>

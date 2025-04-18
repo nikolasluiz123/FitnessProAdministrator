@@ -1,4 +1,4 @@
-package br.com.administrator.viewmodel.user;
+package br.com.administrator.viewmodel.person;
 
 import java.io.Serializable;
 import java.util.List;
@@ -95,10 +95,13 @@ public class PersonSearchViewModel implements Serializable {
 	private TOUser getTOUser(PersonDTO dto) {
 		UserDTO userDTO = dto.getUser();
 		TOUser toUser = new TOUser();
+		toUser.setId(userDTO.getId());
 		toUser.setCreationDate(userDTO.getCreationDate());
 		toUser.setEmail(userDTO.getEmail());
 		toUser.setPassword(userDTO.getPassword());
 		toUser.setType(new LabeledEnum<EnumUserType>(userDTO.getType(), getLabelUserType(userDTO.getType())));
+		toUser.setActive(userDTO.getActive());
+		
 		return toUser;
 	}
 	

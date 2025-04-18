@@ -5,7 +5,7 @@ import static br.com.fitnesspro.models.executions.enums.EnumExecutionType.IMPORT
 
 import org.primefaces.event.SelectEvent;
 
-import br.com.administrator.managedbean.common.beans.AbstractSearchMBean;
+import br.com.administrator.managedbean.common.beans.AbstractPagingSearchMBean;
 import br.com.administrator.to.TOExecutionLog;
 import br.com.administrator.to.TOExecutionLogPackage;
 import br.com.fitnesspro.models.executions.enums.EnumExecutionType;
@@ -16,7 +16,7 @@ import jakarta.inject.Named;
 
 @Named("logDialogMBean")
 @ViewScoped
-public class LogDialogMBean extends AbstractSearchMBean {
+public class LogDialogMBean extends AbstractPagingSearchMBean {
 
 	private static final long serialVersionUID = 1L;
 

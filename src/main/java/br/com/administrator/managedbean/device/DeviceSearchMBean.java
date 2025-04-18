@@ -1,6 +1,6 @@
 package br.com.administrator.managedbean.device;
 
-import br.com.administrator.managedbean.common.beans.AbstractSearchMBean;
+import br.com.administrator.managedbean.common.beans.AbstractPagingSearchMBean;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -8,7 +8,7 @@ import jakarta.inject.Named;
 
 @Named("deviceSearchMBean")
 @ViewScoped
-public class DeviceSearchMBean extends AbstractSearchMBean {
+public class DeviceSearchMBean extends AbstractPagingSearchMBean {
 
 	private static final long serialVersionUID = 1L;
 

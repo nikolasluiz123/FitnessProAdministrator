@@ -1,3 +1,7 @@
 .ui-full-width-filter {
 	width: 100% !important;
 }
+
+.ui-full-width-filter input {
+	width: 100% !important;
+}

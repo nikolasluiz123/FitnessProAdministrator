@@ -11,7 +11,12 @@ public class TOUser extends AbstractAuditableDTO {
 	private String email;
 	private String password;
 	private LabeledEnum<EnumUserType> type;
+	private Boolean active;
 
+	public TOUser() {
+		this.active = true;
+	}
+	
 	public String getEmail() {
 		return email;
 	}
@@ -36,4 +41,12 @@ public class TOUser extends AbstractAuditableDTO {
 		this.type = type;
 	}
 
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+	
 }

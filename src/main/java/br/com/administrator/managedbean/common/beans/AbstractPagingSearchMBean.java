@@ -5,7 +5,7 @@ import br.com.fitnesspro.shared.communication.exception.ExpiredTokenException;
 import br.com.fitnesspro.shared.communication.exception.NotFoundTokenException;
 
 @SuppressWarnings("serial")
-public abstract class AbstractSearchMBean extends AbstractBaseMBean {
+public abstract class AbstractPagingSearchMBean extends AbstractBaseMBean {
 
 	public class DefaultLazyDataModelCallback implements LazyDataModelCallback {
 

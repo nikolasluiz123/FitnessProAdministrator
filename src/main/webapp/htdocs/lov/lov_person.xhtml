@@ -60,7 +60,7 @@
 					</p:column>
 
 					<p:column headerText="#{bundlePersonsLovDialog['label_column_creation_date']}" filterMatchMode="between"
-						sortBy="#{log.creationDate}" sortOrder="desc">
+						sortBy="#{item.creationDate}" sortOrder="desc">
 
 						<f:facet name="filter">
 							<p:datePicker id="filterRangeCreationDate" selectionMode="range" onchange="PF('dataTablePersonsLovWV').filter()"

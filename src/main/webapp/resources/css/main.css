@@ -75,3 +75,7 @@ body .ui-dialog .ui-dialog-content {
 .label-container {
 	margin-bottom: 8px;
 }
+
+.ui-full-width-input input {
+	width: 100% !important;
+}

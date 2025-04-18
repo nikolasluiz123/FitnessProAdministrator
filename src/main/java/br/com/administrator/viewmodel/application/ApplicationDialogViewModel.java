@@ -20,14 +20,14 @@ public class ApplicationDialogViewModel implements Serializable {
 	public ApplicationDialogViewModel(ApplicationWebClient webClient) {
 		this.webClient = webClient;
 	}
-	
+
 	public void saveApplication(TOApplication to) throws Exception {
 		ApplicationDTO dto = getApplicationDTO(to);
-		
-		PersistenceServiceResponse response = webClient.saveApplication(dto);
-		
+
+		PersistenceServiceResponse<ApplicationDTO> response = webClient.saveApplication(dto);
+
 		if (response.getSuccess()) {
-			to.setId(response.getId());
+			to.setId(response.getSavedDTO().getId());
 		}
 	}
 
@@ -35,13 +35,13 @@ public class ApplicationDialogViewModel implements Serializable {
 		to.setActive(false);
 		webClient.saveApplication(getApplicationDTO(to));
 	}
-	
+
 	private ApplicationDTO getApplicationDTO(TOApplication to) {
 		ApplicationDTO dto = new ApplicationDTO();
 		dto.setId(to.getId());
 		dto.setActive(to.getActive());
 		dto.setName(to.getName());
-		
+
 		return dto;
 	}
 }
