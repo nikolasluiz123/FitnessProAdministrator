@@ -36,12 +36,12 @@ public class ApplicationDialogMBean extends AbstractBaseMBean {
 			viewModel.saveApplication(toApplication);
 			
 			FacesUtils.addSucccessMessage(getScreenBundleString("save_application_success", toApplication.getName()), 
-										  getScreenBundleString("save_success_summary"));
+										  getMaintenanceBundleString("save_success_summary"));
 		} catch(ExpiredTokenException | NotFoundTokenException exception) {
-			exceptionHandler(exception, getScreenBundleString("save_error_summary"));
+			exceptionHandler(exception, getMaintenanceBundleString("save_error_summary"));
 			showLoginDialog();
 		} catch (Exception exception) {
-			exceptionHandler(exception, getScreenBundleString("save_error_summary"));
+			exceptionHandler(exception, getMaintenanceBundleString("save_error_summary"));
 		}
 	}
 	
@@ -50,12 +50,12 @@ public class ApplicationDialogMBean extends AbstractBaseMBean {
 			viewModel.inactivateApplication(toApplication);
 			
 			FacesUtils.addSucccessMessage(getScreenBundleString("inactivate_application_success", toApplication.getName()), 
-				  						  getScreenBundleString("save_success_summary"));
+										  getMaintenanceBundleString("inactivation_success_summary"));
 		} catch(ExpiredTokenException | NotFoundTokenException exception) {
-			exceptionHandler(exception, getScreenBundleString("save_error_summary"));
+			exceptionHandler(exception, getMaintenanceBundleString("save_error_summary"));
 			showLoginDialog();
 		} catch (Exception exception) {
-			exceptionHandler(exception, getScreenBundleString("inactivation_error_summary"));
+			exceptionHandler(exception, getMaintenanceBundleString("inactivation_error_summary"));
 		}
 	}
 	
@@ -88,8 +88,8 @@ public class ApplicationDialogMBean extends AbstractBaseMBean {
 	}
 
 	@Override
-	protected String getScreenBundleFilePath() {
-		return "application_dialog";
+	public String getScreenBundleFilePath() {
+		return "messages.applicattion.application_dialog";
 	}
 
 }

@@ -48,7 +48,7 @@ public class LoginMBean extends AbstractBaseMBean {
 	}
 
 	@Override
-	protected String getScreenBundleFilePath() {
+	public String getScreenBundleFilePath() {
 		return "login";
 	}
 }

@@ -59,7 +59,7 @@ public class PersonSearchMBean extends AbstractPagingSearchMBean<TOPerson, LazyP
 	}
 
 	@Override
-	protected String getScreenBundleFilePath() {
+	public String getScreenBundleFilePath() {
 		return "person_search";
 	}
 	

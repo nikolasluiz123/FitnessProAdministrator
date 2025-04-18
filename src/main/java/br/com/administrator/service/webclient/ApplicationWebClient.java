@@ -37,7 +37,7 @@ public class ApplicationWebClient extends AbstractWebClient {
 			return response;
 			
 		} catch (ConnectException exception) {
-			throw new ServiceException("Não foi possível se conectar ao servidor. Tente novamente mais tarde.", exception);
+			throw new ServiceException(getServiceBundleString("service_connection_error_message"), exception);
 		}
 	}
 	
@@ -51,7 +51,7 @@ public class ApplicationWebClient extends AbstractWebClient {
 			
 			return response.getValues();
 		} catch (ConnectException exception) {
-			throw new ServiceException("Não foi possível se conectar ao servidor. Tente novamente mais tarde.", exception);
+			throw new ServiceException(getServiceBundleString("service_connection_error_message"), exception);
 		}
 	}
 	

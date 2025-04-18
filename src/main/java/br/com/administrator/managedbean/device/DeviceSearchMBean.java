@@ -21,7 +21,7 @@ public class DeviceSearchMBean extends AbstractPagingSearchMBean<TODevice, LazyD
 	}
 
 	@Override
-	protected String getScreenBundleFilePath() {
+	public String getScreenBundleFilePath() {
 		return "device_search";
 	}
 

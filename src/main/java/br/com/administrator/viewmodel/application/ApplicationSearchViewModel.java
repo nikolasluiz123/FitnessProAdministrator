@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import br.com.administrator.mappers.ApplicationMapper;
 import br.com.administrator.service.webclient.ApplicationWebClient;
 import br.com.administrator.to.TOApplication;
 import br.com.fitnesspro.shared.communication.dtos.serviceauth.ApplicationDTO;
@@ -16,37 +17,22 @@ public class ApplicationSearchViewModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private final ApplicationWebClient webClient;
+	private final ApplicationMapper mapper;
 
 	@Inject
-	public ApplicationSearchViewModel(ApplicationWebClient webClient) {
+	public ApplicationSearchViewModel(ApplicationWebClient webClient, ApplicationMapper mapper) {
         this.webClient = webClient;
+        this.mapper = mapper;
 	}
 	
 	public List<TOApplication> getListApplication() throws Exception {
 		List<ApplicationDTO> result = webClient.getListApplication();
-		return result.stream().map(this::getApplicationTO).collect(Collectors.toList());
+		return result.stream().map(a -> mapper.getTOApplicationFrom(a)).collect(Collectors.toList());
 	}
 	
 	public void inactivateApplication(TOApplication to) throws Exception {
 		to.setActive(false);
-		webClient.saveApplication(getApplicationDTO(to));
+		webClient.saveApplication(mapper.getApplicationDTOFrom(to));
 	}
 
-	private TOApplication getApplicationTO(ApplicationDTO dto) {
-		TOApplication to = new TOApplication();
-		to.setId(dto.getId());
-		to.setName(dto.getName());
-		to.setActive(dto.getActive());
-		
-		return to;
-	}
-	
-	private ApplicationDTO getApplicationDTO(TOApplication to) {
-		ApplicationDTO dto = new ApplicationDTO();
-		dto.setId(to.getId());
-		dto.setActive(to.getActive());
-		dto.setName(to.getName());
-		
-		return dto;
-	}
 }

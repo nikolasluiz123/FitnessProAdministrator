@@ -83,7 +83,7 @@ public class TokenSearchMBean extends AbstractPagingSearchMBean<TOServiceToken, 
 	}
 	
 	@Override
-	protected String getScreenBundleFilePath() {
+	public String getScreenBundleFilePath() {
 		return "token_search";
 	}
 

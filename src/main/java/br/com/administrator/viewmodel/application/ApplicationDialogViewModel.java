@@ -2,6 +2,7 @@ package br.com.administrator.viewmodel.application;
 
 import java.io.Serializable;
 
+import br.com.administrator.mappers.ApplicationMapper;
 import br.com.administrator.service.webclient.ApplicationWebClient;
 import br.com.administrator.to.TOApplication;
 import br.com.fitnesspro.shared.communication.dtos.serviceauth.ApplicationDTO;
@@ -15,14 +16,16 @@ public class ApplicationDialogViewModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private final ApplicationWebClient webClient;
+	private final ApplicationMapper mapper;
 
 	@Inject
-	public ApplicationDialogViewModel(ApplicationWebClient webClient) {
+	public ApplicationDialogViewModel(ApplicationWebClient webClient, ApplicationMapper mapper) {
 		this.webClient = webClient;
+		this.mapper = mapper;
 	}
 
 	public void saveApplication(TOApplication to) throws Exception {
-		ApplicationDTO dto = getApplicationDTO(to);
+		ApplicationDTO dto = mapper.getApplicationDTOFrom(to);
 
 		PersistenceServiceResponse<ApplicationDTO> response = webClient.saveApplication(dto);
 
@@ -33,15 +36,7 @@ public class ApplicationDialogViewModel implements Serializable {
 
 	public void inactivateApplication(TOApplication to) throws Exception {
 		to.setActive(false);
-		webClient.saveApplication(getApplicationDTO(to));
+		webClient.saveApplication(mapper.getApplicationDTOFrom(to));
 	}
 
-	private ApplicationDTO getApplicationDTO(TOApplication to) {
-		ApplicationDTO dto = new ApplicationDTO();
-		dto.setId(to.getId());
-		dto.setActive(to.getActive());
-		dto.setName(to.getName());
-
-		return dto;
-	}
 }

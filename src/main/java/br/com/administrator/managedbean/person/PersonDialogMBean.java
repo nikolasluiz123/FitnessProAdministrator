@@ -123,7 +123,7 @@ public class PersonDialogMBean extends AbstractBaseMBean {
 	}
 
 	@Override
-	protected String getScreenBundleFilePath() {
+	public String getScreenBundleFilePath() {
 		return "person_dialog";
 	}
 

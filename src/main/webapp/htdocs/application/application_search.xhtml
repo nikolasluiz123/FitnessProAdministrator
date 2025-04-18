@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:fit="http://xmlns.jcp.org/jsf/composite/components" xmlns:jsf="http://xmlns.jcp.org/jsf">
 
 <ui:composition template="../templates/template.xhtml">
 
 	<ui:define name="bundles">
-		<f:loadBundle var="bundleApplicationSearch" basename="messages.application_search" />
+		<f:loadBundle var="bundleApplicationSearch" basename="#{applicationSearchMBean.screenBundleFilePath}" />
 	</ui:define>
 
 	<ui:define name="title">
@@ -14,30 +15,25 @@
 	</ui:define>
 
 	<ui:define name="content">
-		<h:form>
+		<h:form id="applicationSearchForm">
 			<p:importEnum type="br.com.fitnesspro.shared.communication.query.enums.EnumApplicationFields"
 				var="EnumApplicationFields" />
 
 			<p:remoteCommand name="onRequestReloadDatatable" action="#{applicationSearchMBean.onRequestReloadDatatable}"
-				update="dataTableApplication" />
+				update="applicationSearchForm:dataTableApplication:dataTablePaging" />
 
 			<p:toolbar id="topBar" styleClass="main-top-bar">
-				<f:facet name="left">
+				<f:facet name="right">
 					<p:commandButton id="btnNewApplication" value="#{bundleApplicationSearch['label_button_new_application']}"
 						action="#{applicationSearchMBean.onNewApplicationClick}" update="applicationDialog"
 						oncomplete="PF('applicationDialogWV').show();" />
 				</f:facet>
 			</p:toolbar>
 
-			<p:dataTable id="dataTableApplication" var="item" value="#{applicationSearchMBean.applicationList}"
-				widgetVar="dataTableApplicationWV" selectionMode="single" rowKey="${item.id}" allowUnsorting="true">
-
-				<f:facet name="header">
-					<p:commandButton icon="pi pi-refresh" oncomplete="onRequestReloadDatatable();" />
-				</f:facet>
-
-				<p:ajax event="rowSelect" listener="#{applicationSearchMBean.onRowSelect}"
-					update="formMessages:messages, applicationDialog" oncomplete="PF('applicationDialogWV').show();" />
+			<fit:pagingTable id="dataTableApplication" mBean="#{applicationSearchMBean}"
+				updateOnRowSelect="formMessages:messages, applicationDialog"
+				updateOnRefresh="formMessages:messages, applicationSearchForm:dataTableApplication:dataTablePaging"
+				onCompleteOnRowSelect="PF('applicationDialogWV').show();">
 
 				<p:column headerText="#{bundleApplicationSearch['label_column_name']}" sortBy="#{item.name}" filterBy="#{item.name}"
 					filterMatchMode="contains" field="#{EnumApplicationFields.NAME.fieldName}" width="90%">
@@ -53,50 +49,10 @@
 							message="#{applicationSearchMBean.getMessageConfirmationInactivation(item)}" icon="pi pi-exclamation-triangle" />
 					</p:commandButton>
 				</p:column>
-			</p:dataTable>
+			</fit:pagingTable>
 		</h:form>
-
-		<p:dialog id="applicationDialog" widgetVar="applicationDialogWV" modal="true" fitViewport="true" responsive="true"
-			width="40vw" resizable="false" dynamic="true" onHide="onRequestReloadDatatable();">
-
-			<f:facet name="header">
-				<h:outputText id="dialogHeader" value="#{applicationDialogMBean.title}" />
-			</f:facet>
-
-			<h:form id="applicationDialogForm">
-				<f:loadBundle var="bundleApplicationDialog" basename="messages.application_dialog" />
-
-				<p:messages id="applicationDialogMessages" closable="true" showSummary="true" showDetail="true"
-					skipDetailIfEqualsSummary="true" />
-
-				<div class="ui-g">
-					<div class="ui-g-12 vertical-labeled-input">
-						<p:outputLabel id="labelName" for="name" value="#{bundleApplicationDialog['label_field_name']}" />
-						<p:inputText id="name" value="#{applicationDialogMBean.toApplication.name}"
-							disabled="${applicationDialogMBean.disabledDialog}" />
-					</div>
-				</div>
-
-				<p:toolbar id="toolbar" styleClass="dialog-toolbar">
-					<f:facet name="left">
-						<p:commandButton id="btnInactivateApplication" styleClass="ui-button-danger"
-							value="#{bundleApplicationDialog['label_button_inactivate']}"
-							action="#{applicationDialogMBean.onApplicationInactivateClick}" update="@form"
-							disabled="${applicationDialogMBean.disabledInactivateButton}">
-
-							<p:confirm header="#{bundleApplicationDialog['title_dialog_confirmation_inactivation']}"
-								message="#{applicationDialogMBean.messageConfirmationInactivation}" icon="pi pi-exclamation-triangle" />
-						</p:commandButton>
-					</f:facet>
-
-					<f:facet name="right">
-						<p:commandButton id="btnSaveApplication" value="#{bundleApplicationDialog['label_button_save']}"
-							action="#{applicationDialogMBean.onApplicationSaveClick}" update="dialogHeader, @form"
-							disabled="${applicationDialogMBean.disabledDialog}" />
-					</f:facet>
-				</p:toolbar>
-			</h:form>
-		</p:dialog>
+		
+		<ui:include src="/htdocs/application/application_dialog.xhtml" />
 	</ui:define>
 </ui:composition>
 </html>

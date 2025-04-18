@@ -7,7 +7,8 @@
 <ui:composition template="../templates/template.xhtml">
 
 	<ui:define name="bundles">
-		<f:loadBundle var="bundleAcademySearch" basename="messages.academy.academy_search" />
+		<f:loadBundle var="bundleAcademySearch" basename="#{academySearchMBean.screenBundleFilePath}" />
+		
 	</ui:define>
 
 	<ui:define name="title">

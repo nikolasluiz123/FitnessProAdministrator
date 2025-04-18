@@ -28,7 +28,7 @@ public class CacheDialogMBean extends AbstractBaseMBean {
 	private CacheDialogViewModel viewModel;
 	
 	@Override
-	protected String getScreenBundleFilePath() {
+	public String getScreenBundleFilePath() {
 		return "cache_dialog";
 	}
 

@@ -12,7 +12,7 @@ import br.com.administrator.utils.FacesUtils;
 @SuppressWarnings("serial")
 public abstract class AbstractBaseMBean implements Serializable {
 
-	protected abstract String getScreenBundleFilePath();
+	public abstract String getScreenBundleFilePath();
 	
 	protected String getScreenBundleString(String key, Object...replaces) {
 		String text = getScreenBundleString(key);

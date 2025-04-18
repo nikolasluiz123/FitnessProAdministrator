@@ -36,7 +36,7 @@ public class AcademySearchMBean extends AbstractPagingSearchMBean<TOAcademy, Laz
 	}
 
 	@Override
-	protected String getScreenBundleFilePath() {
+	public String getScreenBundleFilePath() {
 		return "messages.academy.academy_search";
 	}
 

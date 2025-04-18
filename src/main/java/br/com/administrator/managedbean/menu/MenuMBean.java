@@ -89,7 +89,7 @@ public class MenuMBean extends AbstractBaseMBean {
 	}
 	
 	@Override
-	protected String getScreenBundleFilePath() {
+	public String getScreenBundleFilePath() {
 		return "menu";
 	}
 

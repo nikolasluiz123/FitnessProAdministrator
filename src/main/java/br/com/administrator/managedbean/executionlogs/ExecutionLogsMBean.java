@@ -65,7 +65,7 @@ public class ExecutionLogsMBean extends AbstractPagingSearchMBean<TOExecutionLog
 	}
 	
 	@Override
-	protected String getScreenBundleFilePath() {
+	public String getScreenBundleFilePath() {
 		return "execution_logs";
 	}
 }

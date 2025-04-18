@@ -54,7 +54,7 @@ public class LovApplicationMBean extends AbstractLovMBean<TOApplication> {
 	}
 
 	@Override
-	protected String getScreenBundleFilePath() {
+	public String getScreenBundleFilePath() {
 		return "lov_application";
 	}
 

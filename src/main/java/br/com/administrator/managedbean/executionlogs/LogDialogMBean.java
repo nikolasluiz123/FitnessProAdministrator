@@ -58,7 +58,7 @@ public class LogDialogMBean extends AbstractPagingSearchMBean<TOExecutionLogPack
 	}
 
 	@Override
-	protected String getScreenBundleFilePath() {
+	public String getScreenBundleFilePath() {
 		return "log_dialog";
 	}
 

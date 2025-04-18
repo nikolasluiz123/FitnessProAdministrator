@@ -13,7 +13,7 @@
 	</f:facet>
 
 	<h:form id="academyDialogForm">
-		<f:loadBundle var="bundleAcademyDialog" basename="messages.academy.academy_dialog" />
+		<f:loadBundle var="bundleAcademyDialog" basename="#{academyDialogMBean.screenBundleFilePath}" />
 
 		<p:messages id="academyDialogMessages" closable="true" showSummary="true" showDetail="true"
 			skipDetailIfEqualsSummary="true" />
@@ -44,7 +44,8 @@
 					update="@form" disabled="${academyDialogMBean.disabledDialog}">
 
 					<p:confirm header="#{bundleAcademyDialog['title_dialog_confirmation_inactivation']}"
-						message="#{academyDialogMBean.messageConfirmationInactivation}" icon="pi pi-exclamation-triangle" />
+						message="#{academyDialogMBean.messageConfirmationInactivation}" icon="pi pi-exclamation-triangle"
+						disabled="${academyDialogMBean.disabledInactivateButton}" />
 				</p:commandButton>
 			</f:facet>
 

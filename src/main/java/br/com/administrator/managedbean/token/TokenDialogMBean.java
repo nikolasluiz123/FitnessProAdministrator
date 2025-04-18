@@ -177,7 +177,7 @@ public class TokenDialogMBean extends AbstractBaseMBean {
 	}
 
 	@Override
-	protected String getScreenBundleFilePath() {
+	public String getScreenBundleFilePath() {
 		return "token_dialog";
 	}
 

@@ -86,7 +86,7 @@ public class CacheSearchMBean extends AbstractBaseMBean {
 	}
 
 	@Override
-	protected String getScreenBundleFilePath() {
+	public String getScreenBundleFilePath() {
 		return "cache_search";
 	}
 

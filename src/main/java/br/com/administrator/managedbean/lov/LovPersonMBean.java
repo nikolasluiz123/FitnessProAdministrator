@@ -46,7 +46,7 @@ public class LovPersonMBean extends AbstractPagingLovMBean<TOPerson, LazyPersonD
 	}
 	
 	@Override
-	protected String getScreenBundleFilePath() {
+	public String getScreenBundleFilePath() {
 		return "lov_person";
 	}
 

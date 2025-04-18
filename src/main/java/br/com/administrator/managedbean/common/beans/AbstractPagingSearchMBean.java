@@ -10,7 +10,7 @@ import br.com.fitnesspro.shared.communication.exception.NotFoundTokenException;
 import jakarta.annotation.PostConstruct;
 
 @SuppressWarnings("serial")
-public abstract class AbstractPagingSearchMBean<TO extends AbstractModelTO, LazyModel extends AbstractLazyDataModel<TO>> extends AbstractBaseMBean {
+public abstract class AbstractPagingSearchMBean<TO extends AbstractModelTO, LazyModel extends AbstractLazyDataModel<TO>> extends AbstractBaseMBean implements ISearchMBean<TO> {
 
 	public abstract LazyModel getLazyModel();
 	
@@ -19,6 +19,7 @@ public abstract class AbstractPagingSearchMBean<TO extends AbstractModelTO, Lazy
 		getLazyModel().setCallback(new DefaultLazyDataModelCallback());
 	}
 	
+	@Override
 	public void onRowSelect(SelectEvent<TO> event) {
 		
 	}
@@ -32,6 +33,7 @@ public abstract class AbstractPagingSearchMBean<TO extends AbstractModelTO, Lazy
 		return getSearchBundleString("page_report_template", first, last, total);
 	}
 	
+	@Override
 	public void onRequestReloadDatatable() {
 		getLazyModel().reloadPreservingPagingState();
 	}
@@ -40,7 +42,7 @@ public abstract class AbstractPagingSearchMBean<TO extends AbstractModelTO, Lazy
 
 		@Override
 		public void onException(Exception exception) {
-			exceptionHandler(exception, getSearchBundleString("lazy_data_model_error_summary"));
+			exceptionHandler(exception, getSearchBundleString("search_error_summary"));
 
 			if (exception instanceof ExpiredTokenException || exception instanceof NotFoundTokenException) {
 				showLoginDialog();

@@ -79,12 +79,16 @@ public class AcademyDialogMBean extends AbstractBaseMBean {
 		this.toAcademy = toAcademy;
 	}
 	
+	public Boolean getDisabledInactivateButton() {
+		return getDisabledDialog() || this.toAcademy.getId() == null;
+	}
+	
 	public Boolean getDisabledDialog() {
 		return this.toAcademy.getId() != null && !this.toAcademy.getActive();
 	}
 
 	@Override
-	protected String getScreenBundleFilePath() {
+	public String getScreenBundleFilePath() {
 		return "messages.academy.academy_dialog";
 	}
 
