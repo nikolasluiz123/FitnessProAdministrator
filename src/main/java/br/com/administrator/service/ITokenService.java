@@ -22,6 +22,7 @@ public interface ITokenService {
 	public static final String TOKEN_SECRET_KEY_END_POINT = EndPointsV1.TOKEN + EndPointsV1.TOKEN_SECRET;
 	public static final String TOKEN_INVALIDATE_END_POINT = EndPointsV1.TOKEN + EndPointsV1.TOKEN_INVALIDATE;
 	public static final String TOKEN_INVALIDATE_ALL_END_POINT = EndPointsV1.TOKEN + EndPointsV1.TOKEN_INVALIDATE_ALL;
+	public static final String TOKEN_BY_ID_END_POINT = EndPointsV1.TOKEN + EndPointsV1.TOKEN_BY_ID;
 
 	
 	@GET(EndPointsV1.TOKEN)
@@ -43,5 +44,9 @@ public interface ITokenService {
 	
 	@GET(TOKEN_SECRET_KEY_END_POINT)
 	Call<SingleValueServiceResponse<String>> getSecretKey(@Header("Authorization") String token);
+	
+	@GET(TOKEN_BY_ID_END_POINT)
+	Call<SingleValueServiceResponse<ServiceTokenDTO>> getTokenService(@Header("Authorization") String token, @Path("id") @NotNull String tokenId);
+
 
 }

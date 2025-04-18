@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions" xmlns:fit="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+<h:outputStylesheet name="css/token_search/token_dialog_read.css" />
+
+<p:dialog id="tokenDialogRead" widgetVar="tokenDialogReadWV" modal="true" fitViewport="true" responsive="true"
+	width="60vw" resizable="false" dynamic="true" onHide="onRequestReloadDatatable();">
+
+	<f:facet name="header">
+		<h:outputText id="tokenDialogReadHeader" value="#{bundleTokenReadDialog['title']}" />
+	</f:facet>
+
+	<h:form id="tokenDialogReadForm">
+		<f:loadBundle var="bundleTokenDialogRead" basename="messages.token_dialog_read" />
+	
+		<p:messages id="tokenDialogReadMessages" closable="true" showSummary="true" showDetail="true"
+			skipDetailIfEqualsSummary="true" />
+
+		<div class="ui-g">
+			<div class="ui-g-12">
+				<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
+					<p:outputLabel id="labelType" value="#{bundleTokenDialogRead['label_field_token_type']}" styleClass="bold-label" />
+					<p:outputLabel id="valueType" value="#{tokenDialogReadMBean.toServiceToken.type.label}" styleClass="label-value" />
+				</div>
+
+				<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
+					<p:outputLabel id="labelCreation" value="#{bundleTokenDialogRead['label_field_creation']}" styleClass="bold-label" />
+					<p:outputLabel id="valueCreation" value="#{tokenDialogReadMBean.toServiceToken.creationDate}"
+						styleClass="label-value" converter="LocalDateTimeConverter" />
+				</div>
+
+				<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
+					<p:outputLabel id="labelExpiration" value="#{bundleTokenDialogRead['label_field_expiration']}"
+						styleClass="bold-label" />
+					<p:outputLabel id="valueExpiration" value="#{tokenDialogReadMBean.toServiceToken.expirationDate}"
+						styleClass="label-value" converter="LocalDateTimeConverter" />
+				</div>
+			</div>
+
+			<div class="ui-g-12">
+				<div class="ui-g-4 vertical-labeled-input ui-g-nopad" jsf:rendered="#{tokenDialogReadMBean.visibleUser}">
+					<p:outputLabel id="labelUser" value="#{bundleTokenDialogRead['label_field_user']}" styleClass="bold-label" />
+					<p:outputLabel id="valueUser" value="#{tokenDialogReadMBean.toServiceToken.toUser.email}" styleClass="label-value" />
+				</div>
+
+				<div class="ui-g-4 vertical-labeled-input ui-g-nopad" jsf:rendered="#{tokenDialogReadMBean.visibleApplication}">
+					<p:outputLabel id="labelApplication" value="#{bundleTokenDialogRead['label_field_application']}"
+						styleClass="bold-label" />
+					<p:outputLabel id="valueApplication" value="#{tokenDialogReadMBean.toServiceToken.toApplication.name}"
+						styleClass="label-value" />
+				</div>
+
+				<div class="ui-g-4 vertical-labeled-input ui-g-nopad" jsf:rendered="#{tokenDialogReadMBean.visibleDevice}">
+					<p:outputLabel id="labelDevice" value="#{bundleTokenDialogRead['label_field_device']}" styleClass="bold-label" />
+					<p:outputLabel id="valueDevice" value="#{tokenDialogReadMBean.toServiceToken.toDevice.id}" styleClass="label-value" />
+				</div>
+
+				<div class="ui-g-8 vertical-labeled-input ui-g-nopad">
+					<p:outputLabel id="labelToken" value="#{bundleTokenDialogRead['label_field_token']}" styleClass="bold-label" />
+					<p:outputLabel id="valueToken" value="#{tokenDialogReadMBean.toServiceToken.jwtToken}" styleClass="label-value label-break"  />
+				</div>
+			</div>
+		</div>
+
+		<p:toolbar id="toolbar" styleClass="dialog-toolbar">
+			<f:facet name="right">
+				<p:commandButton id="btnInvalidateToken" value="#{bundleTokenDialogRead['label_button_invalidate_token']}"
+					styleClass="ui-button-danger" action="#{tokenDialogReadMBean.onInvalidateToken}" update="tokenDialogReadMessages, @form"
+					disabled="#{tokenDialogReadMBean.disabledDialog}" />
+			</f:facet>
+		</p:toolbar>
+	</h:form>
+</p:dialog>
+</html>

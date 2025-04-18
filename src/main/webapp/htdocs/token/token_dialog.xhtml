@@ -8,13 +8,15 @@
 <h:outputStylesheet name="css/token_search/token_dialog.css" />
 
 <p:dialog id="tokenDialog" widgetVar="tokenDialogWV" modal="true" fitViewport="true" responsive="true" width="40vw"
-	resizable="false" dynamic="true">
+	resizable="false" dynamic="true" onHide="onRequestReloadDatatable();">
 
 	<f:facet name="header">
 		<h:outputText id="tokenDialogHeader" value="#{bundleTokenDialog['title']}" />
 	</f:facet>
 
 	<h:form id="tokenDialogForm">
+		<f:loadBundle var="bundleTokenDialog" basename="messages.token_dialog" />
+		
 		<p:remoteCommand name="onTokenTypeChange" action="#{tokenDialogMBean.onTokenTypeChange}" update="@form" />
 
 		<p:messages id="tokenDialogMessages" closable="true" showSummary="true" showDetail="true"

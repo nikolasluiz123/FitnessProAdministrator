@@ -118,4 +118,20 @@ public class TokenWebClient extends AbstractWebClient {
 			throw new ServiceException("Não foi possível se conectar ao servidor. Tente novamente mais tarde.", exception);
 		}
 	}
+	
+	public ServiceTokenDTO getTokenService(String tokenId) throws Exception {
+		try {
+			String token = getFormatedToken();
+			
+			Call<SingleValueServiceResponse<ServiceTokenDTO>> serviceCall = service.getTokenService(token, tokenId);
+			SingleValueServiceResponse<ServiceTokenDTO> response = getSingleResponseBody(serviceCall, ServiceTokenDTO.class);
+			validateResponse(response);
+			
+			return response.getValue();
+			
+		} catch (ConnectException exception) {
+			throw new ServiceException("Não foi possível se conectar ao servidor. Tente novamente mais tarde.", exception);
+		}
+	}
+	
 }

@@ -2,8 +2,11 @@ package br.com.administrator.managedbean.token;
 
 import java.util.List;
 
+import org.primefaces.event.SelectEvent;
+
 import br.com.administrator.managedbean.common.beans.AbstractSearchMBean;
 import br.com.administrator.managedbean.common.labeledenum.LabeledEnum;
+import br.com.administrator.to.TOServiceToken;
 import br.com.administrator.viewmodel.token.TokenSearchViewModel;
 import br.com.fitnesspro.shared.communication.enums.serviceauth.EnumTokenType;
 import br.com.fitnesspro.shared.communication.exception.ExpiredTokenException;
@@ -27,6 +30,9 @@ public class TokenSearchMBean extends AbstractSearchMBean {
 	
 	@Inject
 	private SecretKeyDialogMBean secretKeyDialogMBean;
+	
+	@Inject
+	private TokenDialogReadMBean tokenDialogReadMBean;
 	
 	private List<LabeledEnum<EnumTokenType>> tokenTypes;
 	
@@ -63,6 +69,10 @@ public class TokenSearchMBean extends AbstractSearchMBean {
 		}
 	}
 	
+	public void onRowSelect(SelectEvent<TOServiceToken> event) {
+		this.tokenDialogReadMBean.init(event.getObject());
+	}
+	
 	public LazyTokenDataModel getLazyModel() {
 		return lazyModel;
 	}
@@ -74,7 +84,7 @@ public class TokenSearchMBean extends AbstractSearchMBean {
 	public void onRequestReloadDatatable() {
 		lazyModel.reloadPreservingPagingState();
 	}
-
+	
 	@Override
 	protected String getBundleFileName() {
 		return "token_search";

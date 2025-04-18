@@ -8,8 +8,6 @@
 
 	<ui:define name="bundles">
 		<f:loadBundle var="bundleTokenSearch" basename="messages.token_search" />
-		<f:loadBundle var="bundleTokenDialog" basename="messages.token_dialog" />
-		<f:loadBundle var="bundleSecretKeyDialog" basename="messages.secret_key_dialog" />
 	</ui:define>
 
 	<ui:define name="title">
@@ -42,7 +40,6 @@
 
 				<f:facet name="right">
 					<p:commandButton id="btnNewToken" value="#{bundleTokenSearch['label_button_new_token']}"
-						action="#{tokenSearchMBean.onNewToken}"
 						oncomplete="PF('tokenDialogWV').show()" />
 				</f:facet>
 			</p:toolbar>
@@ -52,6 +49,9 @@
 				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros" rowsPerPageTemplate="25, 50, 100"
 				widgetVar="dataTableTokenWV" selectionMode="single" rowKey="${item.id}" allowUnsorting="true" sortMode="multiple">
+
+				<p:ajax event="rowSelect" listener="#{tokenSearchMBean.onRowSelect}" update="formMessages:messages, tokenDialogRead"
+					oncomplete="PF('tokenDialogReadWV').show();" />
 
 				<f:facet name="paginatorTopLeft">
 					<p:commandButton icon="pi pi-refresh" oncomplete="onRequestReloadDatatable();" />
@@ -116,6 +116,7 @@
 
 		<ui:include src="/htdocs/token/secret_key_dialog.xhtml" />
 		<ui:include src="/htdocs/token/token_dialog.xhtml" />
+		<ui:include src="/htdocs/token/token_dialog_read.xhtml" />
 	</ui:define>
 </ui:composition>
 </html>
