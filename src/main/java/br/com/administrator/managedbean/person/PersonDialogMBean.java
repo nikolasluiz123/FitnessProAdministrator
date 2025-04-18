@@ -45,13 +45,13 @@ public class PersonDialogMBean extends AbstractBaseMBean {
 		try {
 			this.toPerson = viewModel.savePerson(this.toPerson);
 			
-			FacesUtils.addSucccessMessage(getBundleString("save_person_success", this.toPerson.getName()), 
-										  getBundleString("save_success_summary"));
+			FacesUtils.addSucccessMessage(getScreenBundleString("save_person_success", this.toPerson.getName()), 
+										  getScreenBundleString("save_success_summary"));
 		} catch(ExpiredTokenException | NotFoundTokenException exception) {
-			exceptionHandler("personDialogMessages", exception, getBundleString("save_error_summary"));
+			exceptionHandler("personDialogMessages", exception, getScreenBundleString("save_error_summary"));
 			showLoginDialog();
 		} catch (Exception exception) {
-			exceptionHandler("personDialogMessages", exception, getBundleString("save_error_summary"));
+			exceptionHandler("personDialogMessages", exception, getScreenBundleString("save_error_summary"));
 		}
 	}
 	
@@ -59,13 +59,13 @@ public class PersonDialogMBean extends AbstractBaseMBean {
 		try {
 			viewModel.inactivatePerson(this.toPerson);
 			
-			FacesUtils.addSucccessMessage(getBundleString("inactivate_person_success", this.toPerson.getName()), 
-				  						  getBundleString("inactivation_success_summary"));
+			FacesUtils.addSucccessMessage(getScreenBundleString("inactivate_person_success", this.toPerson.getName()), 
+				  						  getScreenBundleString("inactivation_success_summary"));
 		} catch(ExpiredTokenException | NotFoundTokenException exception) {
-			exceptionHandler("personDialogMessages", exception, getBundleString("save_error_summary"));
+			exceptionHandler("personDialogMessages", exception, getScreenBundleString("save_error_summary"));
 			showLoginDialog();
 		} catch (Exception exception) {
-			exceptionHandler(exception, getBundleString("inactivation_error_summary"));
+			exceptionHandler(exception, getScreenBundleString("inactivation_error_summary"));
 		}
 	}
 	
@@ -73,12 +73,12 @@ public class PersonDialogMBean extends AbstractBaseMBean {
 		if (this.toPerson.getId() != null) {
 			return this.toPerson.getName();
 		} else {
-			return getBundleString("label_title_new_person");
+			return getScreenBundleString("label_title_new_person");
 		}
 	}
 	
 	public String getRequiredMessage(String fieldName) {
-		return getBundleString("message_required", fieldName);
+		return getScreenBundleString("message_required", fieldName);
 	}
 	
 	public void onUserTypeChange() {
@@ -91,7 +91,7 @@ public class PersonDialogMBean extends AbstractBaseMBean {
 	}
 	
 	public String getMessageConfirmationInactivation() {
-		return getBundleString("message_dialog_confirmation_inactivation", this.toPerson.getName());
+		return getScreenBundleString("message_dialog_confirmation_inactivation", this.toPerson.getName());
 	}
 
 	public TOPerson getToPerson() {
@@ -123,7 +123,7 @@ public class PersonDialogMBean extends AbstractBaseMBean {
 	}
 
 	@Override
-	protected String getBundleFileName() {
+	protected String getScreenBundleFilePath() {
 		return "person_dialog";
 	}
 

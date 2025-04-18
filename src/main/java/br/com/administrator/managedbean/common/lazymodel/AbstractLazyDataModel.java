@@ -16,6 +16,7 @@ public abstract class AbstractLazyDataModel<T extends AbstractModelTO> extends L
 
 	private List<T> data;
 	private int first;
+	private int totalCount;
 	private Map<String, SortMeta> sortBy;
 	private Map<String, FilterMeta> filterBy;
 	
@@ -50,7 +51,8 @@ public abstract class AbstractLazyDataModel<T extends AbstractModelTO> extends L
 	@Override
 	public int count(Map<String, FilterMeta> filterBy) {
 		try {
-			return onCount(filterBy);
+			this.totalCount = onCount(filterBy);
+			return this.totalCount;
 		} catch (Exception e) {
 			this.callback.onException(e);
 			return 0;
@@ -89,6 +91,14 @@ public abstract class AbstractLazyDataModel<T extends AbstractModelTO> extends L
 
 	public void setCallback(LazyDataModelCallback callback) {
 		this.callback = callback;
+	}
+
+	public int getFirst() {
+		return first;
+	}
+
+	public int getTotalCount() {
+		return totalCount;
 	}
 	
 }

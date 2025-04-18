@@ -2,13 +2,17 @@ package br.com.administrator.service.webclient;
 
 import java.io.Reader;
 import java.lang.reflect.Type;
+import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import com.google.gson.reflect.TypeToken;
 
+import br.com.administrator.managedbean.common.constants.ICommonBundlePaths;
 import br.com.administrator.service.exception.ServiceException;
 import br.com.administrator.service.gson.utils.GsonUtils;
 import br.com.administrator.utils.AuthSessionUtils;
+import br.com.administrator.utils.FacesUtils;
 import br.com.fitnesspro.shared.communication.dtos.common.BaseDTO;
 import br.com.fitnesspro.shared.communication.enums.serviceauth.EnumErrorType;
 import br.com.fitnesspro.shared.communication.exception.ExpiredTokenException;
@@ -67,7 +71,7 @@ public abstract class AbstractWebClient {
 			}
 			
 		} else {
-			throw new ServiceException("Não foi encontrada uma resposta");
+			throw new ServiceException(getServiceBundleString("fail_get_response_message"));
 		}
 	}
 
@@ -80,7 +84,7 @@ public abstract class AbstractWebClient {
 			Reader reader = response.errorBody().charStream();
 			return GsonUtils.getDefaultGson().fromJson(reader, AuthenticationServiceResponse.class);
 		} else {
-			throw new ServiceException("Não foi encontrada uma resposta");
+			throw new ServiceException(getServiceBundleString("fail_get_response_message"));
 		}
 	}
 	
@@ -106,7 +110,7 @@ public abstract class AbstractWebClient {
 			}
 			
 		} else {
-			throw new ServiceException("Não foi encontrada uma resposta");
+			throw new ServiceException(getServiceBundleString("fail_get_response_message"));
 		}
 	}
 	
@@ -132,7 +136,7 @@ public abstract class AbstractWebClient {
 			}
 			
 		} else {
-			throw new ServiceException("Não foi encontrada uma resposta");
+			throw new ServiceException(getServiceBundleString("fail_get_response_message"));
 		}
 	}
 	
@@ -156,7 +160,20 @@ public abstract class AbstractWebClient {
 			}
 			
 		} else {
-			throw new ServiceException("Não foi encontrada uma resposta");
+			throw new ServiceException(getServiceBundleString("fail_get_response_message"));
 		}
+	}
+	
+	protected ResourceBundle getServiceBundle() {
+		return FacesUtils.getResourceBundle(ICommonBundlePaths.SERVICE);
+	}
+	
+	protected String getServiceBundleString(String key, Object...replaces) {
+		String text = getServiceBundleString(key);
+		return MessageFormat.format(text, replaces);
+	}
+	
+	protected String getServiceBundleString(String key) {
+		return getServiceBundle().getString(key);
 	}
 }

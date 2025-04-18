@@ -35,13 +35,13 @@ public class AcademyDialogMBean extends AbstractBaseMBean {
 		try {
 			viewModel.saveAcademy(toAcademy);
 			
-			FacesUtils.addSucccessMessage(getBundleString("save_academy_success", toAcademy.getName()), 
-										  getBundleString("save_success_summary"));
+			FacesUtils.addSucccessMessage(getScreenBundleString("save_academy_success", toAcademy.getName()), 
+										  getMaintenanceBundleString("save_success_summary"));
 		} catch(ExpiredTokenException | NotFoundTokenException exception) {
-			exceptionHandler(exception, getBundleString("save_error_summary"));
+			exceptionHandler(exception, getMaintenanceBundleString("save_error_summary"));
 			showLoginDialog();
 		} catch (Exception exception) {
-			exceptionHandler(exception, getBundleString("save_error_summary"));
+			exceptionHandler(exception, getMaintenanceBundleString("save_error_summary"));
 		}
 	}
 	
@@ -49,26 +49,26 @@ public class AcademyDialogMBean extends AbstractBaseMBean {
 		try {
 			viewModel.inactivateAcademy(toAcademy);
 			
-			FacesUtils.addSucccessMessage(getBundleString("inactivate_academy_success", toAcademy.getName()), 
-				  						  getBundleString("save_success_summary"));
+			FacesUtils.addSucccessMessage(getScreenBundleString("inactivate_academy_success", toAcademy.getName()), 
+				  						  getMaintenanceBundleString("save_success_summary"));
 		} catch(ExpiredTokenException | NotFoundTokenException exception) {
-			exceptionHandler(exception, getBundleString("save_error_summary"));
+			exceptionHandler(exception, getMaintenanceBundleString("save_error_summary"));
 			showLoginDialog();
 		} catch (Exception exception) {
-			exceptionHandler(exception, getBundleString("inactivation_error_summary"));
+			exceptionHandler(exception, getMaintenanceBundleString("inactivation_error_summary"));
 		}
 	}
 	
 	public String getTitle() {
 		if (toAcademy.getId() != null) {
-			return getBundleString("label_title_academy", toAcademy.getName());
+			return getScreenBundleString("label_title_academy", toAcademy.getName());
 		} else {
-			return getBundleString("label_title_new_academy");
+			return getScreenBundleString("label_title_new_academy");
 		}
 	}
 	
 	public String getMessageConfirmationInactivation() {
-		return getBundleString("message_dialog_confirmation_inactivation", toAcademy.getName());
+		return getScreenBundleString("message_dialog_confirmation_inactivation", toAcademy.getName());
 	}
 
 	public TOAcademy getToAcademy() {
@@ -84,8 +84,8 @@ public class AcademyDialogMBean extends AbstractBaseMBean {
 	}
 
 	@Override
-	protected String getBundleFileName() {
-		return "academy_dialog";
+	protected String getScreenBundleFilePath() {
+		return "messages.academy.academy_dialog";
 	}
 
 }

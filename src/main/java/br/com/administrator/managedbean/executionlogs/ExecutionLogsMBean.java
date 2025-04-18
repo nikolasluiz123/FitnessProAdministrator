@@ -17,7 +17,7 @@ import jakarta.inject.Named;
 
 @Named("executionLogsMBean")
 @ViewScoped
-public class ExecutionLogsMBean extends AbstractPagingSearchMBean {
+public class ExecutionLogsMBean extends AbstractPagingSearchMBean<TOExecutionLog, LazyExecutionLogDataModel> {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -37,17 +37,12 @@ public class ExecutionLogsMBean extends AbstractPagingSearchMBean {
 	public void init() {
 		this.executionTypes = EnumExecutionType.getEntries().stream().map(x -> getLabeledType(x)).toList();
 		this.executionStates = EnumExecutionState.getEntries().stream().map(x -> getLabeledState(x)).toList();
-		this.lazyModel.setCallback(new DefaultLazyDataModelCallback());
 	}
 
 	public void onRowSelect(SelectEvent<TOExecutionLog> event) {
 		logDialogMBean.init(event.getObject());
 	}
 
-	public void onRequestReloadDatatable() {
-		lazyModel.reloadPreservingPagingState();
-	}
-	
 	private LabeledEnum<EnumExecutionType> getLabeledType(EnumExecutionType x) {
 		return new LabeledEnum<EnumExecutionType>(x, viewModel.getLabelExecutionType(x));
 	}
@@ -56,10 +51,6 @@ public class ExecutionLogsMBean extends AbstractPagingSearchMBean {
 		return new LabeledEnum<EnumExecutionState>(x, viewModel.getLabelExecutionState(x));
 	}
 	
-	public LazyExecutionLogDataModel getLazyModel() {
-		return lazyModel;
-	}
-
 	public List<LabeledEnum<EnumExecutionType>> getExecutionTypes() {
 		return executionTypes;
 	}
@@ -69,7 +60,12 @@ public class ExecutionLogsMBean extends AbstractPagingSearchMBean {
 	}
 	
 	@Override
-	protected String getBundleFileName() {
+	public LazyExecutionLogDataModel getLazyModel() {
+		return lazyModel;
+	}
+	
+	@Override
+	protected String getScreenBundleFilePath() {
 		return "execution_logs";
 	}
 }

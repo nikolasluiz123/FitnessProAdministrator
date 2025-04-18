@@ -40,10 +40,10 @@ public class CacheSearchMBean extends AbstractBaseMBean {
 		try {
 			this.cacheList = viewModel.getListCache();
 		} catch(ExpiredTokenException | NotFoundTokenException exception) {
-			exceptionHandler(exception, getBundleString("load_cache_list_error_summary"));
+			exceptionHandler(exception, getScreenBundleString("load_cache_list_error_summary"));
 			showLoginDialog();
 		} catch (Exception e) {
-			this.exceptionHandler(e, getBundleString("load_cache_list_error_summary"));
+			this.exceptionHandler(e, getScreenBundleString("load_cache_list_error_summary"));
 		}
 	}
 	
@@ -59,10 +59,10 @@ public class CacheSearchMBean extends AbstractBaseMBean {
 		try {
 			viewModel.clearAllCaches();
 		} catch(ExpiredTokenException | NotFoundTokenException exception) {
-			exceptionHandler(exception, getBundleString("clear_all_caches_error_summary"));
+			exceptionHandler(exception, getScreenBundleString("clear_all_caches_error_summary"));
 			showLoginDialog();
 		} catch (Exception e) {
-			this.exceptionHandler(e, getBundleString("clear_all_caches_error_summary"));
+			this.exceptionHandler(e, getScreenBundleString("clear_all_caches_error_summary"));
 		}
 	}
 	
@@ -70,10 +70,10 @@ public class CacheSearchMBean extends AbstractBaseMBean {
 		try {
 			viewModel.clearCacheWithName(item.getName());
 		} catch(ExpiredTokenException | NotFoundTokenException exception) {
-			exceptionHandler(exception, getBundleString("clear_cache_with_name_error_summary"));
+			exceptionHandler(exception, getScreenBundleString("clear_cache_with_name_error_summary"));
 			showLoginDialog();
 		} catch (Exception e) {
-			this.exceptionHandler(e, getBundleString("clear_cache_with_name_error_summary"));
+			this.exceptionHandler(e, getScreenBundleString("clear_cache_with_name_error_summary"));
 		}
 	}
 
@@ -86,7 +86,7 @@ public class CacheSearchMBean extends AbstractBaseMBean {
 	}
 
 	@Override
-	protected String getBundleFileName() {
+	protected String getScreenBundleFilePath() {
 		return "cache_search";
 	}
 

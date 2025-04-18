@@ -110,12 +110,12 @@ public class TokenDialogMBean extends AbstractBaseMBean {
 		try {
 			viewModel.generateToken(toServiceTokenGeneration);
 			
-			FacesUtils.addSucccessMessage(getBundleString("generation_token_success"), getBundleString("generation_token_success_summary"));
+			FacesUtils.addSucccessMessage(getScreenBundleString("generation_token_success"), getScreenBundleString("generation_token_success_summary"));
 		} catch(ExpiredTokenException | NotFoundTokenException exception) {
-			exceptionHandler("tokenDialogMessages", exception, getBundleString("generation_token_error_summary"));
+			exceptionHandler("tokenDialogMessages", exception, getScreenBundleString("generation_token_error_summary"));
 			showLoginDialog();
 		} catch (Exception exception) {
-			exceptionHandler("tokenDialogMessages", exception, getBundleString("generation_token_error_summary"));
+			exceptionHandler("tokenDialogMessages", exception, getScreenBundleString("generation_token_error_summary"));
 		}
 	}
 	
@@ -177,7 +177,7 @@ public class TokenDialogMBean extends AbstractBaseMBean {
 	}
 
 	@Override
-	protected String getBundleFileName() {
+	protected String getScreenBundleFilePath() {
 		return "token_dialog";
 	}
 

@@ -2,6 +2,7 @@ package br.com.administrator.viewmodel.academy;
 
 import java.io.Serializable;
 
+import br.com.administrator.mappers.AcademyMapper;
 import br.com.administrator.service.webclient.AcademyWebClient;
 import br.com.administrator.to.TOAcademy;
 import br.com.fitnesspro.shared.communication.dtos.general.AcademyDTO;
@@ -15,14 +16,16 @@ public class AcademyDialogViewModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private final AcademyWebClient webClient;
+	private final AcademyMapper academyMapper;
 
 	@Inject
-	public AcademyDialogViewModel(AcademyWebClient webClient) {
+	public AcademyDialogViewModel(AcademyWebClient webClient, AcademyMapper mapper) {
 		this.webClient = webClient;
+		this.academyMapper = mapper;
 	}
 	
 	public void saveAcademy(TOAcademy to) throws Exception {
-		AcademyDTO dto = getAcademyDTO(to);
+		AcademyDTO dto = academyMapper.getAcademyDTOFrom(to);
 		
 		PersistenceServiceResponse<AcademyDTO> response = webClient.saveAcademy(dto);
 		
@@ -33,17 +36,6 @@ public class AcademyDialogViewModel implements Serializable {
 
 	public void inactivateAcademy(TOAcademy to) throws Exception {
 		to.setActive(false);
-		webClient.saveAcademy(getAcademyDTO(to));
-	}
-	
-	private AcademyDTO getAcademyDTO(TOAcademy to) {
-		AcademyDTO dto = new AcademyDTO();
-		dto.setId(to.getId());
-		dto.setActive(to.getActive());
-		dto.setAddress(to.getAddress());
-		dto.setName(to.getName());
-		dto.setPhone(to.getPhone());
-		
-		return dto;
+		webClient.saveAcademy(academyMapper.getAcademyDTOFrom(to));
 	}
 }

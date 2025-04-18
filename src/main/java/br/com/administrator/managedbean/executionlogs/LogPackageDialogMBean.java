@@ -24,7 +24,7 @@ public class LogPackageDialogMBean extends AbstractBaseMBean {
 	}
 
 	@Override
-	protected String getBundleFileName() {
+	protected String getScreenBundleFilePath() {
 		return "log_package_dialog";
 	}
 

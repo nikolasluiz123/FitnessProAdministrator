@@ -35,13 +35,13 @@ public class ApplicationDialogMBean extends AbstractBaseMBean {
 		try {
 			viewModel.saveApplication(toApplication);
 			
-			FacesUtils.addSucccessMessage(getBundleString("save_application_success", toApplication.getName()), 
-										  getBundleString("save_success_summary"));
+			FacesUtils.addSucccessMessage(getScreenBundleString("save_application_success", toApplication.getName()), 
+										  getScreenBundleString("save_success_summary"));
 		} catch(ExpiredTokenException | NotFoundTokenException exception) {
-			exceptionHandler(exception, getBundleString("save_error_summary"));
+			exceptionHandler(exception, getScreenBundleString("save_error_summary"));
 			showLoginDialog();
 		} catch (Exception exception) {
-			exceptionHandler(exception, getBundleString("save_error_summary"));
+			exceptionHandler(exception, getScreenBundleString("save_error_summary"));
 		}
 	}
 	
@@ -49,26 +49,26 @@ public class ApplicationDialogMBean extends AbstractBaseMBean {
 		try {
 			viewModel.inactivateApplication(toApplication);
 			
-			FacesUtils.addSucccessMessage(getBundleString("inactivate_application_success", toApplication.getName()), 
-				  						  getBundleString("save_success_summary"));
+			FacesUtils.addSucccessMessage(getScreenBundleString("inactivate_application_success", toApplication.getName()), 
+				  						  getScreenBundleString("save_success_summary"));
 		} catch(ExpiredTokenException | NotFoundTokenException exception) {
-			exceptionHandler(exception, getBundleString("save_error_summary"));
+			exceptionHandler(exception, getScreenBundleString("save_error_summary"));
 			showLoginDialog();
 		} catch (Exception exception) {
-			exceptionHandler(exception, getBundleString("inactivation_error_summary"));
+			exceptionHandler(exception, getScreenBundleString("inactivation_error_summary"));
 		}
 	}
 	
 	public String getTitle() {
 		if (toApplication.getId() != null) {
-			return getBundleString("label_title_application", toApplication.getName());
+			return getScreenBundleString("label_title_application", toApplication.getName());
 		} else {
-			return getBundleString("label_title_new_application");
+			return getScreenBundleString("label_title_new_application");
 		}
 	}
 	
 	public String getMessageConfirmationInactivation() {
-		return getBundleString("message_dialog_confirmation_inactivation", toApplication.getName());
+		return getScreenBundleString("message_dialog_confirmation_inactivation", toApplication.getName());
 	}
 
 	public Boolean getDisabledInactivateButton() {
@@ -88,7 +88,7 @@ public class ApplicationDialogMBean extends AbstractBaseMBean {
 	}
 
 	@Override
-	protected String getBundleFileName() {
+	protected String getScreenBundleFilePath() {
 		return "application_dialog";
 	}
 

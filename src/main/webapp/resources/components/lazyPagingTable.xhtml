@@ -1,0 +1,44 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite" xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+	<cc:interface>
+		<cc:attribute name="mBean" required="true" type="br.com.administrator.managedbean.common.beans.AbstractPagingSearchMBean" />
+		<cc:attribute name="selectionMode" default="single" />
+		<cc:attribute name="allowUnsorting" default="true" type="java.lang.Boolean" />
+		
+		<cc:attribute name="updateOnRowSelect" />
+		<cc:attribute name="onCompleteOnRowSelect" />
+		<cc:attribute name="updateOnRefresh" />
+	</cc:interface>
+
+	<cc:implementation>
+		<p:dataTable 
+			id="dataTablePagingLazy" 
+			var="item" 
+			value="#{cc.attrs.mBean.lazyModel}" 
+			rows="10" 
+			paginator="true"
+			paginatorPosition="both"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			currentPageReportTemplate="#{cc.attrs.mBean.pageReportTemplate}" 
+			rowsPerPageTemplate="10, 20, 50"
+			widgetVar="#{cc.attrs.clientId}WV" 
+			selectionMode="#{cc.attrs.selectionMode}" 
+			rowKey="#{item.id}" 
+			allowUnsorting="#{cc.attrs.allowUnsorting}">
+
+			<p:ajax event="rowSelect" 
+					listener="#{cc.attrs.mBean.onRowSelect}" 
+					update="#{cc.attrs.updateOnRowSelect}" 
+					oncomplete="#{cc.attrs.onCompleteOnRowSelect}" />
+
+			<f:facet name="paginatorTopLeft">
+				<p:commandButton icon="pi pi-refresh" action="#{cc.attrs.mBean.onRequestReloadDatatable}" update="#{cc.attrs.updateOnRefresh}" />
+			</f:facet>
+
+			<cc:insertChildren />
+
+		</p:dataTable>
+	</cc:implementation>
+</ui:component>

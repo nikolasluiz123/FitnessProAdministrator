@@ -16,7 +16,7 @@ import jakarta.inject.Named;
 
 @Named("personSearchMBean")
 @ViewScoped
-public class PersonSearchMBean extends AbstractPagingSearchMBean {
+public class PersonSearchMBean extends AbstractPagingSearchMBean<TOPerson, LazyPersonDataModel> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -33,14 +33,9 @@ public class PersonSearchMBean extends AbstractPagingSearchMBean {
 	
 	@PostConstruct
 	public void init() {
-		this.lazyModel.setCallback(new DefaultLazyDataModelCallback());
 		this.userTypes = EnumUserType.getEntries().stream().map(x -> getLabeledType(x)).toList();
 	}
 	
-	public void onRowSelect(SelectEvent<TOPerson> event) {
-		this.personDialogMBean.init(event.getObject());
-	}
-
 	public void onNewPersonClick() {
 		this.personDialogMBean.init();
 	}
@@ -49,12 +44,14 @@ public class PersonSearchMBean extends AbstractPagingSearchMBean {
 		return new LabeledEnum<EnumUserType>(x, viewModel.getLabelUserType(x));
 	}
 
+	@Override
+	public void onRowSelect(SelectEvent<TOPerson> event) {
+		this.personDialogMBean.init(event.getObject());
+	}
+	
+	@Override
 	public LazyPersonDataModel getLazyModel() {
 		return lazyModel;
-	}
-
-	public void onRequestReloadDatatable() {
-		lazyModel.reloadPreservingPagingState();
 	}
 
 	public List<LabeledEnum<EnumUserType>> getUserTypes() {
@@ -62,7 +59,7 @@ public class PersonSearchMBean extends AbstractPagingSearchMBean {
 	}
 
 	@Override
-	protected String getBundleFileName() {
+	protected String getScreenBundleFilePath() {
 		return "person_search";
 	}
 	

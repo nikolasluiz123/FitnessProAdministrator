@@ -15,7 +15,7 @@ import jakarta.inject.Named;
 
 @Named("lovPersonMBean")
 @ViewScoped
-public class LovPersonMBean extends AbstractPagingLovMBean<TOPerson> {
+public class LovPersonMBean extends AbstractPagingLovMBean<TOPerson, LazyPersonDataModel> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -29,7 +29,6 @@ public class LovPersonMBean extends AbstractPagingLovMBean<TOPerson> {
 
 	@PostConstruct
 	public void init() {
-		this.lazyModel.setCallback(new DefaultLazyDataModelCallback());
 		this.userTypes = EnumUserType.getEntries().stream().map(x -> getLabeledType(x)).toList();
 	}
 
@@ -37,20 +36,17 @@ public class LovPersonMBean extends AbstractPagingLovMBean<TOPerson> {
 		return new LabeledEnum<EnumUserType>(x, viewModel.getLabelUserType(x));
 	}
 
-	public LazyPersonDataModel getLazyModel() {
-		return lazyModel;
-	}
-
-	public void onRequestReloadDatatable() {
-		lazyModel.reloadPreservingPagingState();
-	}
-
 	public List<LabeledEnum<EnumUserType>> getUserTypes() {
 		return userTypes;
 	}
 
 	@Override
-	protected String getBundleFileName() {
+	public LazyPersonDataModel getLazyModel() {
+		return lazyModel;
+	}
+	
+	@Override
+	protected String getScreenBundleFilePath() {
 		return "lov_person";
 	}
 

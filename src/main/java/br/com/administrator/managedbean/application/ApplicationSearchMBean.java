@@ -40,10 +40,10 @@ public class ApplicationSearchMBean extends AbstractBaseMBean {
 		try {
 			this.applicationList = viewModel.getListApplication();;
 		} catch(ExpiredTokenException | NotFoundTokenException exception) {
-			exceptionHandler(exception, getBundleString("load_application_list_error_summary"));
+			exceptionHandler(exception, getScreenBundleString("load_application_list_error_summary"));
 			showLoginDialog();
 		} catch (Exception e) {
-			this.exceptionHandler(e, getBundleString("load_application_list_error_summary"));
+			this.exceptionHandler(e, getScreenBundleString("load_application_list_error_summary"));
 		}
 	}
 	
@@ -62,17 +62,17 @@ public class ApplicationSearchMBean extends AbstractBaseMBean {
 	public void onApplicationInactivateClick(TOApplication to) {
 		try {
 			viewModel.inactivateApplication(to);
-			FacesUtils.addSucccessMessage(getBundleString("inactivate_application_success", to.getName()), getBundleString("save_success_summary"));
+			FacesUtils.addSucccessMessage(getScreenBundleString("inactivate_application_success", to.getName()), getScreenBundleString("save_success_summary"));
 		} catch(ExpiredTokenException | NotFoundTokenException exception) {
-			exceptionHandler(exception, getBundleString("save_error_summary"));
+			exceptionHandler(exception, getScreenBundleString("save_error_summary"));
 			showLoginDialog();
 		} catch (Exception exception) {
-			exceptionHandler(exception, getBundleString("inactivation_error_summary"));
+			exceptionHandler(exception, getScreenBundleString("inactivation_error_summary"));
 		}
 	}
 	
 	public String getMessageConfirmationInactivation(TOApplication to) {
-		return getBundleString("message_dialog_confirmation_inactivation", to.getName());
+		return getScreenBundleString("message_dialog_confirmation_inactivation", to.getName());
 	}
 
 	public List<TOApplication> getApplicationList() {
@@ -84,7 +84,7 @@ public class ApplicationSearchMBean extends AbstractBaseMBean {
 	}
 
 	@Override
-	protected String getBundleFileName() {
+	protected String getScreenBundleFilePath() {
 		return "application_search";
 	}
 

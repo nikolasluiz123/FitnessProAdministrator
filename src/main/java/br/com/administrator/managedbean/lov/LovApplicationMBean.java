@@ -34,10 +34,10 @@ public class LovApplicationMBean extends AbstractLovMBean<TOApplication> {
 		try {
 			this.applicationList = viewModel.getListApplication();;
 		} catch(ExpiredTokenException | NotFoundTokenException exception) {
-			exceptionHandler(exception, getBundleString("load_application_list_error_summary"));
+			exceptionHandler(exception, getScreenBundleString("load_application_list_error_summary"));
 			showLoginDialog();
 		} catch (Exception e) {
-			this.exceptionHandler(e, getBundleString("load_application_list_error_summary"));
+			this.exceptionHandler(e, getScreenBundleString("load_application_list_error_summary"));
 		}
 	}
 	
@@ -54,7 +54,7 @@ public class LovApplicationMBean extends AbstractLovMBean<TOApplication> {
 	}
 
 	@Override
-	protected String getBundleFileName() {
+	protected String getScreenBundleFilePath() {
 		return "lov_application";
 	}
 

@@ -2,27 +2,29 @@ package br.com.administrator.managedbean.common.beans;
 
 import org.primefaces.event.SelectEvent;
 
+import br.com.administrator.managedbean.common.lazymodel.AbstractLazyDataModel;
 import br.com.administrator.managedbean.lov.ILovCallbacks;
 import br.com.administrator.to.common.AbstractModelTO;
 
 @SuppressWarnings("serial")
-public abstract class AbstractPagingLovMBean<T extends AbstractModelTO> extends AbstractPagingSearchMBean implements ILovMBean<T> {
+public abstract class AbstractPagingLovMBean<TO extends AbstractModelTO, LazyModel extends AbstractLazyDataModel<TO>>
+		extends AbstractPagingSearchMBean<TO, LazyModel> implements ILovMBean<TO> {
 
-	private ILovCallbacks<T> callback;
+	private ILovCallbacks<TO> callback;
 
 	@Override
-	public ILovCallbacks<T> getCallback() {
+	public ILovCallbacks<TO> getCallback() {
 		return callback;
 	}
 
 	@Override
-	public void setCallback(ILovCallbacks<T> callback) {
+	public void setCallback(ILovCallbacks<TO> callback) {
 		this.callback = callback;
 	}
-	
+
 	@Override
-	public void onRowSelect(SelectEvent<T> event) {
+	public void onRowSelect(SelectEvent<TO> event) {
 		this.callback.onItemSelected(event.getObject());
 	}
-	
+
 }

@@ -80,16 +80,16 @@ public class MenuMBean extends AbstractBaseMBean {
 		} catch (ExpiredTokenException e) {
 			// Ignorada pois vai deslogar
 		} catch (Exception e) {
-			exceptionHandler(e, getBundle().getString("logout_error_summary"));
+			exceptionHandler(e, getScreenBundle().getString("logout_error_summary"));
 		}
 	}
 
 	private void navigationExceptionHandler(Exception e) {
-		exceptionHandler(e, getBundle().getString("navigation_error_summary"));
+		exceptionHandler(e, getScreenBundle().getString("navigation_error_summary"));
 	}
 	
 	@Override
-	protected String getBundleFileName() {
+	protected String getScreenBundleFilePath() {
 		return "menu";
 	}
 

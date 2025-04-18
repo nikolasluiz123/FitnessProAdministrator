@@ -6,24 +6,51 @@ import java.util.ResourceBundle;
 
 import org.primefaces.PrimeFaces;
 
+import br.com.administrator.managedbean.common.constants.ICommonBundlePaths;
 import br.com.administrator.utils.FacesUtils;
 
 @SuppressWarnings("serial")
 public abstract class AbstractBaseMBean implements Serializable {
 
-	protected abstract String getBundleFileName();
+	protected abstract String getScreenBundleFilePath();
 	
-	protected String getBundleString(String key, Object...replaces) {
-		String text = getBundleString(key);
+	protected String getScreenBundleString(String key, Object...replaces) {
+		String text = getScreenBundleString(key);
 		return MessageFormat.format(text, replaces);
 	}
 	
-	protected String getBundleString(String key) {
-		return getBundle().getString(key);
+	protected String getScreenBundleString(String key) {
+		return getScreenBundle().getString(key);
 	}
 	
-	protected ResourceBundle getBundle() {
-		return FacesUtils.getResourceBundle(getBundleFileName());
+	protected String getMaintenanceBundleString(String key, Object...replaces) {
+		String text = getMaintenanceBundleString(key);
+		return MessageFormat.format(text, replaces);
+	}
+	
+	protected String getMaintenanceBundleString(String key) {
+		return getMaintenanceBundle().getString(key);
+	}
+	
+	protected String getSearchBundleString(String key, Object...replaces) {
+		String text = getSearchBundleString(key);
+		return MessageFormat.format(text, replaces);
+	}
+	
+	protected String getSearchBundleString(String key) {
+		return getSearchBundle().getString(key);
+	}
+	
+	protected ResourceBundle getScreenBundle() {
+		return FacesUtils.getResourceBundle(getScreenBundleFilePath());
+	}
+	
+	protected ResourceBundle getMaintenanceBundle() {
+		return FacesUtils.getResourceBundle(ICommonBundlePaths.MAINTENANCE_BEAN);
+	}
+	
+	protected ResourceBundle getSearchBundle() {
+		return FacesUtils.getResourceBundle(ICommonBundlePaths.SEARCH_BEAN);
 	}
 	
 	protected void exceptionHandler(String clientId, Exception exception, String summary) {

@@ -7,6 +7,7 @@ import java.util.Map;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
 
+import br.com.administrator.mappers.AcademyMapper;
 import br.com.administrator.service.webclient.AcademyWebClient;
 import br.com.administrator.to.TOAcademy;
 import br.com.administrator.utils.PrimefacesFiltersUtil;
@@ -23,10 +24,12 @@ public class AcademySearchViewModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private final AcademyWebClient webClient;
+	private final AcademyMapper academyMapper;
 
 	@Inject
-	public AcademySearchViewModel(AcademyWebClient webClient) {
-        this.webClient = webClient;
+	public AcademySearchViewModel(AcademyWebClient webClient, AcademyMapper mapper) {
+		this.webClient = webClient;
+		this.academyMapper = mapper;
 	}
 	
 	public List<TOAcademy> getListAcademy(int first, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) throws Exception {
@@ -35,7 +38,7 @@ public class AcademySearchViewModel implements Serializable {
 		
 		List<AcademyDTO> result = webClient.getListAcademy(filter, pageInfos);
 		
-		return result.stream().map(this::getAcademyTO).toList();
+		return result.stream().map(a -> academyMapper.getTOAcademyFrom(a)).toList();
 	}
 
 	public int getCountListAcademy(Map<String, FilterMeta> filterBy) throws Exception {
@@ -54,23 +57,14 @@ public class AcademySearchViewModel implements Serializable {
 			filter.setAddress(filterUtil.getStringFilterValue(EnumAcademyFields.ADDRESS.getFieldName()));
 		}
 		
+		if (filterBy.containsKey(EnumAcademyFields.PHONE.getFieldName())) {
+			filter.setPhone(filterUtil.getStringFilterValue(EnumAcademyFields.PHONE.getFieldName()));
+		}
+		
 		if (sortBy != null && !sortBy.values().isEmpty()) {
 			filter.setSort(filterUtil.getSortFromField(sortBy, EnumAcademyFields.getEntries()));
 		}
 		
 		return filter;
-	}
-	
-	private TOAcademy getAcademyTO(AcademyDTO dto) {
-		TOAcademy to = new TOAcademy();
-		to.setId(dto.getId());
-		to.setAddress(dto.getAddress());
-		to.setCreationDate(dto.getCreationDate());
-		to.setName(dto.getName());
-		to.setPhone(dto.getPhone());
-		to.setUpdateDate(dto.getUpdateDate());
-		to.setActive(dto.getActive());
-		
-		return to;
 	}
 }

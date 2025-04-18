@@ -31,7 +31,7 @@ public class LoginMBean extends AbstractBaseMBean {
 			loginViewModel.authenticate(toLogin);
 			FacesUtils.redirect(IScreensRedirect.EXECUTION_LOGS);
 		} catch (Exception e) {
-			exceptionHandler(e, getBundle().getString("error_summary"));
+			exceptionHandler(e, getScreenBundle().getString("error_summary"));
 		}
 	}
 	
@@ -39,7 +39,7 @@ public class LoginMBean extends AbstractBaseMBean {
 		try {
 			loginViewModel.authenticate(toLogin);
 		} catch (Exception e) {
-			exceptionHandler(e, getBundle().getString("error_summary"));
+			exceptionHandler(e, getScreenBundle().getString("error_summary"));
 		}
 	}
 	
@@ -48,7 +48,7 @@ public class LoginMBean extends AbstractBaseMBean {
 	}
 
 	@Override
-	protected String getBundleFileName() {
+	protected String getScreenBundleFilePath() {
 		return "login";
 	}
 }

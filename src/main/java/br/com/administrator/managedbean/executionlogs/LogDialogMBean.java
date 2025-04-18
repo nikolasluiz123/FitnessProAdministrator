@@ -16,7 +16,7 @@ import jakarta.inject.Named;
 
 @Named("logDialogMBean")
 @ViewScoped
-public class LogDialogMBean extends AbstractPagingSearchMBean {
+public class LogDialogMBean extends AbstractPagingSearchMBean<TOExecutionLogPackage, LazyExecutionLogPackageDataModel> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -31,28 +31,22 @@ public class LogDialogMBean extends AbstractPagingSearchMBean {
 	@PostConstruct
 	public void init() {
 		this.toExecutionLog = new TOExecutionLog();
-		this.lazyModel.setCallback(new DefaultLazyDataModelCallback());
 	}
 	
 	public void init(TOExecutionLog to) {
 		this.toExecutionLog = to;
-		
 		lazyModel.setExecutionLogId(to.getId());
 	}
 	
+	@Override
 	public void onRowSelect(SelectEvent<TOExecutionLogPackage> event) {
 		logPackageDialog.init(event.getObject());
 	}
 
-	public void onRequestReloadDatatable() {
-		lazyModel.reloadPreservingPagingState();
-	}
-	
 	public boolean isVisibleUserEmail() {
 		return this.toExecutionLog.getUserEmail() != null;
 	}
 
-	
 	public boolean isVisibleLastUpdateDate() {
 		return this.toExecutionLog.getLastUpdateDate() != null;
 	}
@@ -64,8 +58,13 @@ public class LogDialogMBean extends AbstractPagingSearchMBean {
 	}
 
 	@Override
-	protected String getBundleFileName() {
+	protected String getScreenBundleFilePath() {
 		return "log_dialog";
+	}
+
+	@Override
+	public LazyExecutionLogPackageDataModel getLazyModel() {
+		return lazyModel;
 	}
 
 	public TOExecutionLog getToExecutionLog() {
@@ -74,10 +73,6 @@ public class LogDialogMBean extends AbstractPagingSearchMBean {
 
 	public void setToExecutionLog(TOExecutionLog toExecutionLog) {
 		this.toExecutionLog = toExecutionLog;
-	}
-
-	public LazyExecutionLogPackageDataModel getLazyModel() {
-		return lazyModel;
 	}
 
 }

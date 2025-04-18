@@ -28,7 +28,7 @@ public class CacheDialogMBean extends AbstractBaseMBean {
 	private CacheDialogViewModel viewModel;
 	
 	@Override
-	protected String getBundleFileName() {
+	protected String getScreenBundleFilePath() {
 		return "cache_dialog";
 	}
 
@@ -45,10 +45,10 @@ public class CacheDialogMBean extends AbstractBaseMBean {
 			try {
 				this.entriesList = viewModel.getListCacheEntries(this.toCache.getName());
 			} catch(ExpiredTokenException | NotFoundTokenException exception) {
-				exceptionHandler(exception, getBundleString("load_cache_entries_list_error_summary"));
+				exceptionHandler(exception, getScreenBundleString("load_cache_entries_list_error_summary"));
 				showLoginDialog();
 			} catch (Exception e) {
-				this.exceptionHandler(e, getBundleString("load_cache_entries_list_error_summary"));
+				this.exceptionHandler(e, getScreenBundleString("load_cache_entries_list_error_summary"));
 			}
 		}
 	}
@@ -65,10 +65,10 @@ public class CacheDialogMBean extends AbstractBaseMBean {
 		try {
 			viewModel.clearCacheWithKey(this.toCache.getName(), item.getKey());
 		} catch(ExpiredTokenException | NotFoundTokenException exception) {
-			exceptionHandler(exception, getBundleString("invalidate_key_error_summary"));
+			exceptionHandler(exception, getScreenBundleString("invalidate_key_error_summary"));
 			showLoginDialog();
 		} catch (Exception e) {
-			this.exceptionHandler(e, getBundleString("invalidate_key_error_summary"));
+			this.exceptionHandler(e, getScreenBundleString("invalidate_key_error_summary"));
 		}
 	}
 

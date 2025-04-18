@@ -39,9 +39,9 @@ public class FacesUtils {
         externalContext.redirect(url);
 	}
 	
-	public static ResourceBundle getResourceBundle(String fileName) {
+	public static ResourceBundle getResourceBundle(String path) {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
-		ResourceBundle bundle = ResourceBundle.getBundle("messages." + fileName, facesContext.getViewRoot().getLocale());
+		ResourceBundle bundle = ResourceBundle.getBundle(path, facesContext.getViewRoot().getLocale());
 		
 		return bundle;
 	}

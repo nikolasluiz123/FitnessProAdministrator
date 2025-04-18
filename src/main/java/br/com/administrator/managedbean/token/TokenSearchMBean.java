@@ -18,7 +18,7 @@ import jakarta.inject.Named;
 
 @Named("tokenSearchMBean")
 @ViewScoped
-public class TokenSearchMBean extends AbstractPagingSearchMBean {
+public class TokenSearchMBean extends AbstractPagingSearchMBean<TOServiceToken, LazyTokenDataModel> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -38,7 +38,6 @@ public class TokenSearchMBean extends AbstractPagingSearchMBean {
 	
 	@PostConstruct
 	public void init() {
-		this.lazyModel.setCallback(new DefaultLazyDataModelCallback());
 		this.tokenTypes = EnumTokenType.getEntries().stream().map(x -> getLabeledType(x)).toList();
 	}
 	
@@ -50,10 +49,10 @@ public class TokenSearchMBean extends AbstractPagingSearchMBean {
 		try {
 			viewModel.invalidateAllTokens();
 		} catch(ExpiredTokenException | NotFoundTokenException exception) {
-			exceptionHandler(exception, getBundleString("invalidate_token_error_summary"));
+			exceptionHandler(exception, getScreenBundleString("invalidate_token_error_summary"));
 			showLoginDialog();
 		} catch (Exception e) {
-			this.exceptionHandler(e, getBundleString("invalidate_token_error_summary"));
+			this.exceptionHandler(e, getScreenBundleString("invalidate_token_error_summary"));
 		}
 	}
 	
@@ -62,31 +61,29 @@ public class TokenSearchMBean extends AbstractPagingSearchMBean {
 			String key = viewModel.generateSecretKey();
 			secretKeyDialogMBean.init(key);
 		} catch(ExpiredTokenException | NotFoundTokenException exception) {
-			exceptionHandler(exception, getBundleString("secret_key_error_summary"));
+			exceptionHandler(exception, getScreenBundleString("secret_key_error_summary"));
 			showLoginDialog();
 		} catch (Exception e) {
-			this.exceptionHandler(e, getBundleString("secret_key_error_summary"));
+			this.exceptionHandler(e, getScreenBundleString("secret_key_error_summary"));
 		}
-	}
-	
-	public void onRowSelect(SelectEvent<TOServiceToken> event) {
-		this.tokenDialogReadMBean.init(event.getObject());
-	}
-	
-	public LazyTokenDataModel getLazyModel() {
-		return lazyModel;
 	}
 	
 	public List<LabeledEnum<EnumTokenType>> getTokenTypes() {
 		return tokenTypes;
 	}
 
-	public void onRequestReloadDatatable() {
-		lazyModel.reloadPreservingPagingState();
+	@Override
+	public void onRowSelect(SelectEvent<TOServiceToken> event) {
+		this.tokenDialogReadMBean.init(event.getObject());
 	}
 	
 	@Override
-	protected String getBundleFileName() {
+	public LazyTokenDataModel getLazyModel() {
+		return lazyModel;
+	}
+	
+	@Override
+	protected String getScreenBundleFilePath() {
 		return "token_search";
 	}
 

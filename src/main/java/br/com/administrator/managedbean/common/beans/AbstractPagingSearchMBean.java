@@ -1,22 +1,51 @@
 package br.com.administrator.managedbean.common.beans;
 
+import org.primefaces.event.SelectEvent;
+
+import br.com.administrator.managedbean.common.lazymodel.AbstractLazyDataModel;
 import br.com.administrator.managedbean.common.lazymodel.LazyDataModelCallback;
+import br.com.administrator.to.common.AbstractModelTO;
 import br.com.fitnesspro.shared.communication.exception.ExpiredTokenException;
 import br.com.fitnesspro.shared.communication.exception.NotFoundTokenException;
+import jakarta.annotation.PostConstruct;
 
 @SuppressWarnings("serial")
-public abstract class AbstractPagingSearchMBean extends AbstractBaseMBean {
+public abstract class AbstractPagingSearchMBean<TO extends AbstractModelTO, LazyModel extends AbstractLazyDataModel<TO>> extends AbstractBaseMBean {
 
+	public abstract LazyModel getLazyModel();
+	
+	@PostConstruct
+	public void init() {
+		getLazyModel().setCallback(new DefaultLazyDataModelCallback());
+	}
+	
+	public void onRowSelect(SelectEvent<TO> event) {
+		
+	}
+	
+	public String getPageReportTemplate() {
+		LazyModel lazyModel = getLazyModel();
+		int first = lazyModel.getFirst();
+		int last = lazyModel.getFirst() + lazyModel.getData().size();
+		int total = lazyModel.getTotalCount();
+		
+		return getSearchBundleString("page_report_template", first, last, total);
+	}
+	
+	public void onRequestReloadDatatable() {
+		getLazyModel().reloadPreservingPagingState();
+	}
+	
 	public class DefaultLazyDataModelCallback implements LazyDataModelCallback {
 
 		@Override
 		public void onException(Exception exception) {
-			exceptionHandler(exception, getBundleString("lazy_data_model_error_summary"));
+			exceptionHandler(exception, getSearchBundleString("lazy_data_model_error_summary"));
 
 			if (exception instanceof ExpiredTokenException || exception instanceof NotFoundTokenException) {
 				showLoginDialog();
 			}
 		}
 	}
-
+	
 }
