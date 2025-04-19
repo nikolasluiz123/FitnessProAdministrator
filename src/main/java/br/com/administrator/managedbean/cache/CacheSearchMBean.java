@@ -1,23 +1,20 @@
 package br.com.administrator.managedbean.cache;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.primefaces.event.SelectEvent;
 
-import br.com.administrator.managedbean.common.beans.AbstractBaseMBean;
+import br.com.administrator.managedbean.common.beans.AbstractSearchMBean;
 import br.com.administrator.to.TOCache;
+import br.com.administrator.utils.FacesUtils;
 import br.com.administrator.viewmodel.cache.CacheSearchViewModel;
 import br.com.fitnesspro.shared.communication.exception.ExpiredTokenException;
 import br.com.fitnesspro.shared.communication.exception.NotFoundTokenException;
-import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
 @Named("cacheSearchMBean")
 @ViewScoped
-public class CacheSearchMBean extends AbstractBaseMBean {
+public class CacheSearchMBean extends AbstractSearchMBean<TOCache> {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -27,30 +24,23 @@ public class CacheSearchMBean extends AbstractBaseMBean {
 	@Inject 
 	private CacheDialogMBean cacheDialogMBean;
 
-	private List<TOCache> cacheList;
-	
-	@PostConstruct
-	public void init() {
-		this.cacheList = new ArrayList<>();
-		
-		loadCacheList();
-	}
-
 	private void loadCacheList() {
 		try {
-			this.cacheList = viewModel.getListCache();
+			setData(viewModel.getListCache());
 		} catch(ExpiredTokenException | NotFoundTokenException exception) {
-			exceptionHandler(exception, getScreenBundleString("load_cache_list_error_summary"));
+			exceptionHandler(exception, getSearchBundleString("search_error_summary"));
 			showLoginDialog();
 		} catch (Exception e) {
-			this.exceptionHandler(e, getScreenBundleString("load_cache_list_error_summary"));
+			this.exceptionHandler(e, getSearchBundleString("search_error_summary"));
 		}
 	}
 	
+	@Override
 	public void onRowSelect(SelectEvent<TOCache> event) {
 		cacheDialogMBean.init(event.getObject());
 	}
 	
+	@Override
 	public void onRequestReloadDatatable() {
 		loadCacheList();
 	}
@@ -58,6 +48,10 @@ public class CacheSearchMBean extends AbstractBaseMBean {
 	public void onInvalidateAllCachesClick() {
 		try {
 			viewModel.clearAllCaches();
+			
+			FacesUtils.addSucccessMessage(getScreenBundleString("clear_all_caches_success_message"),
+										  getScreenBundleString("caches_success_summary"));
+			
 		} catch(ExpiredTokenException | NotFoundTokenException exception) {
 			exceptionHandler(exception, getScreenBundleString("clear_all_caches_error_summary"));
 			showLoginDialog();
@@ -69,6 +63,10 @@ public class CacheSearchMBean extends AbstractBaseMBean {
 	public void onInvalidateCache(TOCache item) {
 		try {
 			viewModel.clearCacheWithName(item.getName());
+			
+			FacesUtils.addSucccessMessage(getScreenBundleString("clear_cache_success_message", item.getName()),
+				  						  getScreenBundleString("caches_success_summary"));
+			
 		} catch(ExpiredTokenException | NotFoundTokenException exception) {
 			exceptionHandler(exception, getScreenBundleString("clear_cache_with_name_error_summary"));
 			showLoginDialog();
@@ -76,18 +74,14 @@ public class CacheSearchMBean extends AbstractBaseMBean {
 			this.exceptionHandler(e, getScreenBundleString("clear_cache_with_name_error_summary"));
 		}
 	}
-
-	public List<TOCache> getCacheList() {
-		return cacheList;
-	}
-
-	public void setCacheList(List<TOCache> cacheList) {
-		this.cacheList = cacheList;
+	
+	public String getMessageConfirmationCacheInvalidation(TOCache to) {
+		return getScreenBundleString("message_dialog_confirmation_invalidation_cache", to.getName());
 	}
 
 	@Override
 	public String getScreenBundleFilePath() {
-		return "cache_search";
+		return "messages.cache.cache_search";
 	}
 
 }

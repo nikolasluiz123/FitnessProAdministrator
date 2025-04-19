@@ -25,11 +25,15 @@ public class FacesUtils {
 		addErrorMessage(null, message, summary);
 	}
 	
-	public static void addSucccessMessage(String message, String summary) {
+	public static void addSucccessMessage(String clientId, String message, String summary) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, message);
 		
-		context.addMessage(null, facesMessage);
+		context.addMessage(clientId, facesMessage);
+	}
+	
+	public static void addSucccessMessage(String message, String summary) {
+		addSucccessMessage(null, message, summary);
 	}
 	
 	public static void redirect(String path) throws Exception {

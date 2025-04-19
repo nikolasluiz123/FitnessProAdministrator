@@ -3,6 +3,7 @@ package br.com.administrator.viewmodel.cache;
 import java.io.Serializable;
 import java.util.List;
 
+import br.com.administrator.mappers.CacheMapper;
 import br.com.administrator.service.webclient.CacheWebClient;
 import br.com.administrator.to.TOCache;
 import br.com.fitnesspro.shared.communication.dtos.cache.CacheClearConfigDTO;
@@ -16,15 +17,17 @@ public class CacheSearchViewModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private final CacheWebClient webClient;
+	private final CacheMapper mapper;
 
 	@Inject
-	public CacheSearchViewModel(CacheWebClient webClient) {
+	public CacheSearchViewModel(CacheWebClient webClient, CacheMapper mapper) {
 		this.webClient = webClient;
+		this.mapper = mapper;
 	}
 	
 	public List<TOCache> getListCache() throws Exception {
 		List<CacheDTO> caches = webClient.getListCache();
-		return caches.stream().map(this::getTOCache).toList();
+		return caches.stream().map(c -> mapper.getTOCacheFrom(c)).toList();
 	}
 	
 	public void clearAllCaches() throws Exception {
@@ -41,10 +44,4 @@ public class CacheSearchViewModel implements Serializable {
 		webClient.clearCache(config);
 	}
 	
-	private TOCache getTOCache(CacheDTO dto) {
-		TOCache to = new TOCache();
-		to.setName(dto.getCacheName());
-		
-		return to;
-	}
 }

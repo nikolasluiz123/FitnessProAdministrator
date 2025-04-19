@@ -1,8 +1,8 @@
 package br.com.administrator.to;
 
-import java.io.Serializable;
+import br.com.administrator.to.common.AbstractModelTO;
 
-public class TOCacheEntry implements Serializable {
+public class TOCacheEntry extends AbstractModelTO {
 
 	private static final long serialVersionUID = 1L;
 
@@ -15,5 +15,9 @@ public class TOCacheEntry implements Serializable {
 	public void setKey(String key) {
 		this.key = key;
 	}
-
+	
+	@Override
+	public String getId() {
+		return this.key;
+	}
 }

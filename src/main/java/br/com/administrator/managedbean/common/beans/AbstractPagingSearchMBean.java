@@ -16,11 +16,17 @@ public abstract class AbstractPagingSearchMBean<TO extends AbstractModelTO, Lazy
 	
 	@PostConstruct
 	public void init() {
+		onInit();
 		getLazyModel().setCallback(new DefaultLazyDataModelCallback());
 	}
 	
 	@Override
 	public void onRowSelect(SelectEvent<TO> event) {
+		
+	}
+	
+	@Override
+	public void onInit() {
 		
 	}
 	

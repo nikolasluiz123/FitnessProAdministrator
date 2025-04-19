@@ -9,4 +9,6 @@ public interface ISearchMBean<TO extends AbstractModelTO> {
 	public void onRowSelect(SelectEvent<TO> event);
 	
 	public void onRequestReloadDatatable();
+	
+	public void onInit();
 }

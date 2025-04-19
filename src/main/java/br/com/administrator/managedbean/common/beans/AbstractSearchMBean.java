@@ -14,12 +14,18 @@ public abstract class AbstractSearchMBean<TO extends AbstractModelTO> extends Ab
 	
 	@PostConstruct
 	public void init() {
+		onInit();
 		onRequestReloadDatatable();
 	}
 	
 	@Override
 	public void onRowSelect(SelectEvent<TO> event) {
 
+	}
+	
+	@Override
+	public void onInit() {
+		
 	}
 
 	public List<TO> getData() {

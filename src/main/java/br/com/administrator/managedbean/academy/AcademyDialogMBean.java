@@ -35,7 +35,8 @@ public class AcademyDialogMBean extends AbstractBaseMBean {
 		try {
 			viewModel.saveAcademy(toAcademy);
 			
-			FacesUtils.addSucccessMessage(getScreenBundleString("save_academy_success", toAcademy.getName()), 
+			FacesUtils.addSucccessMessage("academyDialogMessages",
+										  getScreenBundleString("save_academy_success", toAcademy.getName()), 
 										  getMaintenanceBundleString("save_success_summary"));
 		} catch(ExpiredTokenException | NotFoundTokenException exception) {
 			exceptionHandler(exception, getMaintenanceBundleString("save_error_summary"));

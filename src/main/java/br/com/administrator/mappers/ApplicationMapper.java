@@ -13,7 +13,7 @@ public final class ApplicationMapper {
 		return modelMapper.map(toApplication, ApplicationDTO.class);
 	}
 	
-	public TOApplication getTOApplicationFrom(ApplicationDTO ApplicationDTO) {
-		return modelMapper.map(ApplicationDTO, TOApplication.class);
+	public TOApplication getTOApplicationFrom(ApplicationDTO applicationDTO) {
+		return modelMapper.map(applicationDTO, TOApplication.class);
 	}
 }

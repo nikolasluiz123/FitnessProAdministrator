@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:fit="http://xmlns.jcp.org/jsf/composite/components" xmlns:jsf="http://xmlns.jcp.org/jsf">
 
 <ui:composition template="../templates/template.xhtml">
 
 	<ui:define name="bundles">
-		<f:loadBundle var="bundleCacheSearch" basename="messages.cache_search" />
+		<f:loadBundle var="bundleCacheSearch" basename="#{cacheSearchMBean.screenBundleFilePath}" />
 	</ui:define>
 
 	<ui:define name="title">
@@ -14,25 +15,27 @@
 	</ui:define>
 
 	<ui:define name="content">
-		<h:form>
+		<h:form id="cacheSearchForm">
 			<p:remoteCommand name="onRequestReloadDatatable" action="#{cacheSearchMBean.onRequestReloadDatatable}"
-				update="dataTableCaches" />
+				update="formMessages:messages, cacheSearchForm:dataTableCache:dataTablePaging" />
 
 			<p:toolbar id="topBar" styleClass="main-top-bar">
-				<f:facet name="left">
+				<f:facet name="right">
 					<p:commandButton id="btnInvalidateAllCaches" value="#{bundleCacheSearch['label_button_invalidate_all_caches']}"
-						action="#{cacheSearchMBean.onInvalidateAllCachesClick}" />
+						action="#{cacheSearchMBean.onInvalidateAllCachesClick}" styleClass="ui-button-danger"
+						update="formMessages:messages">
+
+						<p:confirm header="#{bundleCacheSearch['title_dialog_confirmation_invalidation_all_caches']}"
+							message="#{bundleCacheSearch['message_dialog_confirmation_invalidation_all_caches']}"
+							icon="pi pi-exclamation-triangle" escape="false" />
+					</p:commandButton>
 				</f:facet>
 			</p:toolbar>
 
-			<p:dataTable id="dataTableCaches" var="item" value="#{cacheSearchMBean.cacheList}" rows="100" paginator="true"
-				paginatorPosition="both"
-				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-				currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros" rowsPerPageTemplate="25, 50, 100"
-				widgetVar="dataTableCachesWV" selectionMode="single" rowKey="#{item.name}">
-
-				<p:ajax event="rowSelect" listener="#{cacheSearchMBean.onRowSelect}" update="formMessages:messages, cacheDialog"
-					oncomplete="PF('cacheDialogWV').show();" />
+			<fit:pagingTable id="dataTableCache" mBean="#{cacheSearchMBean}"
+				updateOnRowSelect="formMessages:messages, cacheDialog"
+				updateOnRefresh="formMessages:messages, cacheSearchForm:dataTableCache:dataTablePaging"
+				onCompleteOnRowSelect="PF('cacheDialogWV').show();">
 
 				<p:column headerText="#{bundleCacheSearch['label_column_name']}" width="90%">
 					<h:outputText value="#{item.name}" />
@@ -40,58 +43,17 @@
 
 				<p:column>
 					<p:commandButton id="btnInvalidateCache" styleClass="rounded-button ui-button-danger" icon="pi pi-trash"
-						action="#{cacheSearchMBean.onInvalidateCache(item)}" update="formMessages:messages" />
+						action="#{cacheSearchMBean.onInvalidateCache(item)}" update="formMessages:messages">
+
+						<p:confirm header="#{bundleCacheSearch['title_dialog_confirmation_invalidation_cache']}"
+							message="#{cacheSearchMBean.getMessageConfirmationCacheInvalidation(item)}" icon="pi pi-exclamation-triangle"
+							escape="false" />
+
+					</p:commandButton>
 				</p:column>
-
-				<f:facet name="paginatorTopLeft">
-					<p:commandButton icon="pi pi-refresh" oncomplete="onRequestReloadDatatable();" />
-				</f:facet>
-
-			</p:dataTable>
+			</fit:pagingTable>
 		</h:form>
-
-		<p:dialog id="cacheDialog" widgetVar="cacheDialogWV" modal="true" fitViewport="true" responsive="true" width="60vw"
-			resizable="false" dynamic="true">
-
-			<f:facet name="header">
-				<h:outputText id="dialogHeader" value="#{cacheDialogMBean.title}" />
-			</f:facet>
-
-			<h:form id="cacheDialogForm">
-				<p:remoteCommand name="onRequestReloadDatatableEntries" action="#{cacheDialogMBean.onRequestReloadDatatable}"
-					update="dataTableEntries" />
-
-				<f:loadBundle var="bundleCacheDialog" basename="messages.cache_dialog" />
-
-				<p:messages id="cacheDialogMessages" closable="true" showSummary="true" showDetail="true"
-					skipDetailIfEqualsSummary="true" />
-
-				<div class="ui-g">
-					<div class="ui-g-12">
-						<p:dataTable id="dataTableEntries" var="item" value="#{cacheDialogMBean.entriesList}" rows="100" paginator="true"
-							paginatorPosition="both"
-							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-							currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} registros"
-							rowsPerPageTemplate="25, 50, 100" widgetVar="dataTableEntriesWV" scrollable="true">
-
-							<f:facet name="paginatorTopLeft">
-								<p:commandButton icon="pi pi-refresh" oncomplete="onRequestReloadDatatableEntries();" />
-							</f:facet>
-
-							<p:column headerText="#{bundleCacheDialog['label_column_key']}" width="90%">
-								<h:outputText value="#{item.key}" />
-							</p:column>
-
-							<p:column>
-								<p:commandButton id="btnInvalidateKey" action="#{cacheDialogMBean.onInvalidateKey(item)}"
-									styleClass="rounded-button ui-button-danger" icon="pi pi-trash" oncomplete="onRequestReloadDatatableEntries();"
-									update="cacheDialogForm:cacheDialogMessages" />
-							</p:column>
-						</p:dataTable>
-					</div>
-				</div>
-			</h:form>
-		</p:dialog>
+		<ui:include src="/htdocs/cache/cache_dialog.xhtml" />
 	</ui:define>
 </ui:composition>
 </html>

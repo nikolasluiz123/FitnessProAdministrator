@@ -18,7 +18,7 @@ public abstract class AbstractModelTO implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(getId());
 	}
 
 	@Override
@@ -33,6 +33,6 @@ public abstract class AbstractModelTO implements Serializable {
 			return false;
 		
 		AbstractModelTO other = (AbstractModelTO) obj;
-		return Objects.equals(id, other.id);
+		return Objects.equals(getId(), other.getId());
 	}
 }
