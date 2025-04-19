@@ -3,6 +3,7 @@ package br.com.administrator.injection;
 import br.com.administrator.mappers.AcademyMapper;
 import br.com.administrator.mappers.ApplicationMapper;
 import br.com.administrator.mappers.CacheMapper;
+import br.com.administrator.mappers.DeviceMapper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 
@@ -22,5 +23,10 @@ public class MapperProducer {
 	@Produces
 	public CacheMapper producesCacheMapper() {
 		return new CacheMapper();
+	}
+	
+	@Produces
+	public DeviceMapper producesDeviceMapper() {
+		return new DeviceMapper();
 	}
 }

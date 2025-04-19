@@ -7,6 +7,7 @@ import java.util.Map;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
 
+import br.com.administrator.mappers.DeviceMapper;
 import br.com.administrator.service.webclient.DeviceWebClient;
 import br.com.administrator.to.TODevice;
 import br.com.administrator.utils.PrimefacesFiltersUtil;
@@ -23,10 +24,12 @@ public class DeviceSearchViewModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private final DeviceWebClient webClient;
+	private final DeviceMapper mapper;
 
 	@Inject
-	public DeviceSearchViewModel(DeviceWebClient webClient) {
+	public DeviceSearchViewModel(DeviceWebClient webClient, DeviceMapper mapper) {
         this.webClient = webClient;
+        this.mapper = mapper;
 	}
 	
 	public List<TODevice> getListDevice(int first, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) throws Exception {
@@ -35,7 +38,7 @@ public class DeviceSearchViewModel implements Serializable {
 		
 		List<DeviceDTO> result = webClient.getListDevice(filter, pageInfos);
 		
-		return result.stream().map(this::getDeviceTO).toList();
+		return result.stream().map(d -> mapper.getTODeviceFrom(d)).toList();
 	}
 
 	public int getCountListDevice(Map<String, FilterMeta> filterBy) throws Exception {
@@ -67,16 +70,5 @@ public class DeviceSearchViewModel implements Serializable {
 		}
 		
 		return filter;
-	}
-	
-	private TODevice getDeviceTO(DeviceDTO dto) {
-		TODevice to = new TODevice();
-		to.setId(dto.getId());
-		to.setModel(dto.getModel());
-		to.setCreationDate(dto.getCreationDate());
-		to.setUpdateDate(dto.getUpdateDate());
-		to.setActive(dto.getActive());
-		
-		return to;
 	}
 }

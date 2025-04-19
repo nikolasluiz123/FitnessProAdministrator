@@ -1,18 +1,15 @@
 package br.com.administrator.to;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
-import br.com.administrator.to.common.AbstractModelTO;
+import br.com.administrator.to.common.AbstractAuditableDTO;
 
-public class TOPerson extends AbstractModelTO {
+public class TOPerson extends AbstractAuditableDTO {
 
 	private static final long serialVersionUID = 1L;
 
 	private String name;
 	private String phone;
-	private LocalDateTime creationDate;
-	private LocalDateTime updateDate;
 	private LocalDate birthDate;
 	private TOUser toUser;
 	private Boolean active;
@@ -28,22 +25,6 @@ public class TOPerson extends AbstractModelTO {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public LocalDateTime getCreationDate() {
-		return creationDate;
-	}
-
-	public void setCreationDate(LocalDateTime creationDate) {
-		this.creationDate = creationDate;
-	}
-
-	public LocalDateTime getUpdateDate() {
-		return updateDate;
-	}
-
-	public void setUpdateDate(LocalDateTime updateDate) {
-		this.updateDate = updateDate;
 	}
 
 	public LocalDate getBirthDate() {

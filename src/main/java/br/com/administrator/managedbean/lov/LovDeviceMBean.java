@@ -1,7 +1,7 @@
 package br.com.administrator.managedbean.lov;
 
 import br.com.administrator.managedbean.common.beans.AbstractPagingLovMBean;
-import br.com.administrator.managedbean.device.LazyDeviceDataModel;
+import br.com.administrator.managedbean.device.lazymodel.LazyDeviceDataModel;
 import br.com.administrator.to.TODevice;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;

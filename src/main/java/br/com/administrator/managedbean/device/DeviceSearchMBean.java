@@ -1,6 +1,7 @@
 package br.com.administrator.managedbean.device;
 
 import br.com.administrator.managedbean.common.beans.AbstractPagingSearchMBean;
+import br.com.administrator.managedbean.device.lazymodel.LazyDeviceDataModel;
 import br.com.administrator.to.TODevice;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -22,7 +23,7 @@ public class DeviceSearchMBean extends AbstractPagingSearchMBean<TODevice, LazyD
 
 	@Override
 	public String getScreenBundleFilePath() {
-		return "device_search";
+		return "messages.device.device_search";
 	}
 
 }
