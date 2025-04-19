@@ -2,23 +2,22 @@ package br.com.administrator.mappers.person;
 
 import org.modelmapper.ModelMapper;
 
-import br.com.administrator.mappers.common.converters.LabeledEnumToEnumConverter;
 import br.com.administrator.mappers.person.converters.EnumUserTypeConverter;
+import br.com.administrator.mappers.person.converters.LabeledUserTypeEnumToEnumConverter;
 import br.com.administrator.to.TOPerson;
 import br.com.administrator.to.TOUser;
 import br.com.fitnesspro.shared.communication.dtos.general.PersonDTO;
 import br.com.fitnesspro.shared.communication.dtos.general.UserDTO;
-import br.com.fitnesspro.shared.communication.enums.general.EnumUserType;
 
 public final class PersonMapper {
 
 	private final ModelMapper modelMapper;
 
-	public PersonMapper(EnumUserTypeConverter userTypeConverter, LabeledEnumToEnumConverter<EnumUserType> labeledEnumConverter) {
+	public PersonMapper(EnumUserTypeConverter userTypeConverter, LabeledUserTypeEnumToEnumConverter labeledEnumConverter) {
 		this.modelMapper = new ModelMapper();
 
-		modelMapper.addConverter(userTypeConverter);
 		modelMapper.addConverter(labeledEnumConverter);
+		modelMapper.addConverter(userTypeConverter);
 	}
 	
 	public PersonDTO getPersonDTOFrom(TOPerson toPerson) {

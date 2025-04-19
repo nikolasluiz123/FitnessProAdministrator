@@ -6,6 +6,7 @@ import org.primefaces.event.SelectEvent;
 
 import br.com.administrator.managedbean.common.beans.AbstractPagingSearchMBean;
 import br.com.administrator.managedbean.common.labeledenum.LabeledEnum;
+import br.com.administrator.managedbean.person.lazymodel.LazyPersonDataModel;
 import br.com.administrator.to.TOPerson;
 import br.com.administrator.viewmodel.person.PersonSearchViewModel;
 import br.com.fitnesspro.shared.communication.enums.general.EnumUserType;
@@ -60,7 +61,7 @@ public class PersonSearchMBean extends AbstractPagingSearchMBean<TOPerson, LazyP
 
 	@Override
 	public String getScreenBundleFilePath() {
-		return "person_search";
+		return "messages.person.person_search";
 	}
 	
 }

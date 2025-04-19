@@ -1,4 +1,4 @@
-package br.com.administrator.managedbean.person;
+package br.com.administrator.managedbean.person.lazymodel;
 
 import java.util.ArrayList;
 import java.util.List;

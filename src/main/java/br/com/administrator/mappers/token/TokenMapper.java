@@ -2,19 +2,18 @@ package br.com.administrator.mappers.token;
 
 import org.modelmapper.ModelMapper;
 
-import br.com.administrator.mappers.common.converters.LabeledEnumToEnumConverter;
 import br.com.administrator.mappers.token.converters.EnumTokenTypeConverter;
+import br.com.administrator.mappers.token.converters.LabeledTokenTypeEnumToEnumConverter;
 import br.com.administrator.to.TOServiceToken;
 import br.com.administrator.to.TOServiceTokenGeneration;
 import br.com.fitnesspro.shared.communication.dtos.serviceauth.ServiceTokenDTO;
 import br.com.fitnesspro.shared.communication.dtos.serviceauth.ServiceTokenGenerationDTO;
-import br.com.fitnesspro.shared.communication.enums.serviceauth.EnumTokenType;
 
 public final class TokenMapper {
 
 	private final ModelMapper modelMapper;
 
-	public TokenMapper(EnumTokenTypeConverter tokenTypeConverter, LabeledEnumToEnumConverter<EnumTokenType> labeledEnumConverter) {
+	public TokenMapper(EnumTokenTypeConverter tokenTypeConverter, LabeledTokenTypeEnumToEnumConverter labeledEnumConverter) {
 		this.modelMapper = new ModelMapper();
 
 		modelMapper.addConverter(tokenTypeConverter);

@@ -2,15 +2,14 @@ package br.com.administrator.mappers.log;
 
 import org.modelmapper.ModelMapper;
 
-import br.com.administrator.mappers.common.converters.LabeledEnumToEnumConverter;
 import br.com.administrator.mappers.log.converters.EnumExecutionStateConverter;
 import br.com.administrator.mappers.log.converters.EnumExecutionTypeConverter;
+import br.com.administrator.mappers.log.converters.LabeledExecutionStateEnumToEnumConverter;
+import br.com.administrator.mappers.log.converters.LabeledExecutionTypeEnumToEnumConverter;
 import br.com.administrator.to.TOExecutionLog;
 import br.com.administrator.to.TOExecutionLogPackage;
-import br.com.fitnesspro.models.executions.enums.EnumExecutionType;
 import br.com.fitnesspro.shared.communication.dtos.logs.ExecutionLogDTO;
 import br.com.fitnesspro.shared.communication.dtos.logs.ExecutionLogPackageDTO;
-import br.com.fitnesspro.shared.communication.enums.execution.EnumExecutionState;
 
 public final class LogMapper {
 
@@ -18,8 +17,8 @@ public final class LogMapper {
 	
 	public LogMapper(EnumExecutionStateConverter enumStateConverter, 
 					 EnumExecutionTypeConverter enumTypeConverter, 
-					 LabeledEnumToEnumConverter<EnumExecutionType> labeledEnumTypeConverter, 
-					 LabeledEnumToEnumConverter<EnumExecutionState> labeledEnumStateConverter) {
+					 LabeledExecutionTypeEnumToEnumConverter labeledEnumTypeConverter, 
+					 LabeledExecutionStateEnumToEnumConverter labeledEnumStateConverter) {
 		this.modelMapper = new ModelMapper();
 		
 		modelMapper.addConverter(enumStateConverter);

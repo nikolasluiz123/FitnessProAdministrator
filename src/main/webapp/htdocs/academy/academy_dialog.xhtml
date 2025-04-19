@@ -41,11 +41,10 @@
 			<f:facet name="left">
 				<p:commandButton id="btnInactivateAcademy" styleClass="ui-button-danger"
 					value="#{bundleAcademyDialog['label_button_inactivate']}" action="#{academyDialogMBean.onAcademyInactivateClick}"
-					update="@form" disabled="${academyDialogMBean.disabledDialog}">
+					update="@form" disabled="${academyDialogMBean.disabledInactivateButton}">
 
 					<p:confirm header="#{bundleAcademyDialog['title_dialog_confirmation_inactivation']}"
-						message="#{academyDialogMBean.messageConfirmationInactivation}" icon="pi pi-exclamation-triangle"
-						disabled="${academyDialogMBean.disabledInactivateButton}" />
+						message="#{academyDialogMBean.messageConfirmationInactivation}" icon="pi pi-exclamation-triangle" />
 				</p:commandButton>
 			</f:facet>
 

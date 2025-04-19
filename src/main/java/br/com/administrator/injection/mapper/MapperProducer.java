@@ -4,18 +4,17 @@ import br.com.administrator.mappers.AcademyMapper;
 import br.com.administrator.mappers.ApplicationMapper;
 import br.com.administrator.mappers.CacheMapper;
 import br.com.administrator.mappers.DeviceMapper;
-import br.com.administrator.mappers.common.converters.LabeledEnumToEnumConverter;
 import br.com.administrator.mappers.log.LogMapper;
 import br.com.administrator.mappers.log.converters.EnumExecutionStateConverter;
 import br.com.administrator.mappers.log.converters.EnumExecutionTypeConverter;
+import br.com.administrator.mappers.log.converters.LabeledExecutionStateEnumToEnumConverter;
+import br.com.administrator.mappers.log.converters.LabeledExecutionTypeEnumToEnumConverter;
 import br.com.administrator.mappers.person.PersonMapper;
 import br.com.administrator.mappers.person.converters.EnumUserTypeConverter;
+import br.com.administrator.mappers.person.converters.LabeledUserTypeEnumToEnumConverter;
 import br.com.administrator.mappers.token.TokenMapper;
 import br.com.administrator.mappers.token.converters.EnumTokenTypeConverter;
-import br.com.fitnesspro.models.executions.enums.EnumExecutionType;
-import br.com.fitnesspro.shared.communication.enums.execution.EnumExecutionState;
-import br.com.fitnesspro.shared.communication.enums.general.EnumUserType;
-import br.com.fitnesspro.shared.communication.enums.serviceauth.EnumTokenType;
+import br.com.administrator.mappers.token.converters.LabeledTokenTypeEnumToEnumConverter;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 
@@ -43,20 +42,20 @@ public class MapperProducer {
 	}
 	
 	@Produces
-	public PersonMapper producesPersonMapper(EnumUserTypeConverter userTypeConverter) {
-		return new PersonMapper(userTypeConverter, new LabeledEnumToEnumConverter<EnumUserType>());
+	public PersonMapper producesPersonMapper(EnumUserTypeConverter userTypeConverter, LabeledUserTypeEnumToEnumConverter enumTypeConverter) {
+		return new PersonMapper(userTypeConverter, enumTypeConverter);
 	}
 	
 	@Produces
-	public TokenMapper producesTokenMapper(EnumTokenTypeConverter tokenTypeConverter) {
-		return new TokenMapper(tokenTypeConverter, new LabeledEnumToEnumConverter<EnumTokenType>());
+	public TokenMapper producesTokenMapper(EnumTokenTypeConverter tokenTypeConverter, LabeledTokenTypeEnumToEnumConverter enumTypeConverter) {
+		return new TokenMapper(tokenTypeConverter, enumTypeConverter);
 	}
 	
 	@Produces
-	public LogMapper producesLogMapper(EnumExecutionStateConverter enumStateConverter, EnumExecutionTypeConverter enumTypeConverter) {
-		return new LogMapper(enumStateConverter, 
-							 enumTypeConverter, 
-							 new LabeledEnumToEnumConverter<EnumExecutionType>(), 
-							 new LabeledEnumToEnumConverter<EnumExecutionState>());
+	public LogMapper producesLogMapper(EnumExecutionStateConverter enumStateConverter, 
+									   EnumExecutionTypeConverter enumTypeConverter, 
+									   LabeledExecutionTypeEnumToEnumConverter executionTypeEnumToEnumConverter, 
+									   LabeledExecutionStateEnumToEnumConverter executionStateEnumToEnumConverter) {
+		return new LogMapper(enumStateConverter, enumTypeConverter, executionTypeEnumToEnumConverter, executionStateEnumToEnumConverter);
 	}
 }

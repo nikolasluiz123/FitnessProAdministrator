@@ -46,12 +46,12 @@ public class PersonDialogMBean extends AbstractBaseMBean {
 			this.toPerson = viewModel.savePerson(this.toPerson);
 			
 			FacesUtils.addSucccessMessage(getScreenBundleString("save_person_success", this.toPerson.getName()), 
-										  getScreenBundleString("save_success_summary"));
+										  getMaintenanceBundleString("save_success_summary"));
 		} catch(ExpiredTokenException | NotFoundTokenException exception) {
-			exceptionHandler("personDialogMessages", exception, getScreenBundleString("save_error_summary"));
+			exceptionHandler("personDialogMessages", exception, getMaintenanceBundleString("save_error_summary"));
 			showLoginDialog();
 		} catch (Exception exception) {
-			exceptionHandler("personDialogMessages", exception, getScreenBundleString("save_error_summary"));
+			exceptionHandler("personDialogMessages", exception, getMaintenanceBundleString("save_error_summary"));
 		}
 	}
 	
@@ -60,12 +60,12 @@ public class PersonDialogMBean extends AbstractBaseMBean {
 			viewModel.inactivatePerson(this.toPerson);
 			
 			FacesUtils.addSucccessMessage(getScreenBundleString("inactivate_person_success", this.toPerson.getName()), 
-				  						  getScreenBundleString("inactivation_success_summary"));
+				  						  getMaintenanceBundleString("inactivation_success_summary"));
 		} catch(ExpiredTokenException | NotFoundTokenException exception) {
-			exceptionHandler("personDialogMessages", exception, getScreenBundleString("save_error_summary"));
+			exceptionHandler("personDialogMessages", exception, getMaintenanceBundleString("save_error_summary"));
 			showLoginDialog();
 		} catch (Exception exception) {
-			exceptionHandler(exception, getScreenBundleString("inactivation_error_summary"));
+			exceptionHandler(exception, getMaintenanceBundleString("inactivation_error_summary"));
 		}
 	}
 	
@@ -106,6 +106,10 @@ public class PersonDialogMBean extends AbstractBaseMBean {
 		return this.toPerson.getId() != null && !this.toPerson.getActive();
 	}
 	
+	public Boolean getDisabledInactivateButton() {
+		return getDisabledDialog() || this.toPerson.getId() == null;
+	}
+	
 	public boolean isVisiblePhoneInput() {
 		return this.toPerson.getUser().getType().getValue() != EnumUserType.ACADEMY_MEMBER;
 	}
@@ -124,7 +128,7 @@ public class PersonDialogMBean extends AbstractBaseMBean {
 
 	@Override
 	public String getScreenBundleFilePath() {
-		return "person_dialog";
+		return "messages.person.person_dialog";
 	}
 
 }

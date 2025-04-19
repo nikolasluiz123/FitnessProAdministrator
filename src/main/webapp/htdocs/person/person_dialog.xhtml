@@ -13,7 +13,7 @@
 	</f:facet>
 
 	<h:form id="personDialogForm">
-		<f:loadBundle var="bundlePersonDialog" basename="messages.person_dialog" />
+		<f:loadBundle var="bundlePersonDialog" basename="#{personDialogMBean.screenBundleFilePath}" />
 
 		<p:messages id="personDialogMessages" closable="true" showSummary="true" showDetail="true"
 			skipDetailIfEqualsSummary="true" />
@@ -31,14 +31,14 @@
 
 				<div class="ui-g-4 vertical-labeled-input">
 					<p:outputLabel id="labelEmail" value="#{bundlePersonDialog['label_input_email']}" for="inputEmail" />
-					<p:inputText id="inputEmail" value="#{personDialogMBean.toPerson.toUser.email}" required="true"
+					<p:inputText id="inputEmail" value="#{personDialogMBean.toPerson.user.email}" required="true"
 						readonly="#{personDialogMBean.disabledDialog}" maxlength="64" validator="EmailValidator"
 						requiredMessage="#{personDialogMBean.getRequiredMessage(bundlePersonDialog['label_input_email'])}" />
 				</div>
 
 				<div class="ui-g-4 vertical-labeled-input">
 					<p:outputLabel id="labelPassword" value="#{bundlePersonDialog['label_input_password']}" for="inputPassword" />
-					<p:password id="inputPassword" value="#{personDialogMBean.toPerson.toUser.password}" feedback="true"
+					<p:password id="inputPassword" value="#{personDialogMBean.toPerson.user.password}" feedback="true"
 						required="true" readonly="#{personDialogMBean.disabledDialog}" maxlength="1024"
 						requiredMessage="#{personDialogMBean.getRequiredMessage(bundlePersonDialog['label_input_password'])}" />
 				</div>
@@ -75,8 +75,13 @@
 		<p:toolbar id="toolbar" styleClass="dialog-toolbar">
 			<f:facet name="left">
 				<p:commandButton id="btnInactivatePerson" value="#{bundlePersonDialog['label_button_inactivate']}"
-					action="#{personDialogMBean.onPersonInactivateClick}" update="@form"
-					disabled="#{personDialogMBean.disabledDialog}" styleClass="ui-button-danger" />
+					action="#{personDialogMBean.onPersonInactivateClick}" update="@form" disabled="#{personDialogMBean.disabledDialog}"
+					styleClass="ui-button-danger">
+
+					<p:confirm header="#{bundlePersonDialog['title_dialog_confirmation_inactivation']}"
+						message="#{personDialogMBean.messageConfirmationInactivation}" icon="pi pi-exclamation-triangle"
+						disabled="${personDialogMBean.disabledInactivateButton}" />
+				</p:commandButton>
 			</f:facet>
 
 			<f:facet name="right">
