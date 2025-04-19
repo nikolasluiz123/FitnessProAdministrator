@@ -77,7 +77,7 @@ public class TokenDialogMBean extends AbstractBaseMBean {
 			
 			@Override
 			public void onItemSelected(TOPerson value) {
-				toServiceTokenGeneration.setSelectedUser(value.getToUser());		
+				toServiceTokenGeneration.setSelectedUser(value.getUser());		
 				updatePersonLov();
 			}
 		});
@@ -110,7 +110,7 @@ public class TokenDialogMBean extends AbstractBaseMBean {
 		try {
 			viewModel.generateToken(toServiceTokenGeneration);
 			
-			FacesUtils.addSucccessMessage(getScreenBundleString("generation_token_success"), getScreenBundleString("generation_token_success_summary"));
+			FacesUtils.addSucccessMessage(getScreenBundleString("generation_token_success"), getMaintenanceBundleString("save_success_summary"));
 		} catch(ExpiredTokenException | NotFoundTokenException exception) {
 			exceptionHandler("tokenDialogMessages", exception, getScreenBundleString("generation_token_error_summary"));
 			showLoginDialog();
@@ -178,7 +178,7 @@ public class TokenDialogMBean extends AbstractBaseMBean {
 
 	@Override
 	public String getScreenBundleFilePath() {
-		return "token_dialog";
+		return "messages.token.token_dialog";
 	}
 
 }

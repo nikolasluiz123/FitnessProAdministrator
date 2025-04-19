@@ -7,7 +7,7 @@
 <ui:composition template="../templates/template.xhtml">
 
 	<ui:define name="bundles">
-		<f:loadBundle var="bundleTokenSearch" basename="messages.token_search" />
+		<f:loadBundle var="bundleTokenSearch" basename="#{tokenSearchMBean.screenBundleFilePath}" />
 	</ui:define>
 
 	<ui:define name="title">
@@ -96,20 +96,20 @@
 					</h:outputText>
 				</p:column>
 
-				<p:column headerText="#{bundleTokenSearch['label_column_user']}" sortBy="#{item.toUser.email}"
-					filterBy="#{item.toUser.email}" filterMatchMode="contains" field="#{EnumServiceTokenFields.USER_EMAIL.fieldName}">
-					<h:outputText value="#{item.toUser.email}" />
+				<p:column headerText="#{bundleTokenSearch['label_column_user']}" sortBy="#{item.user.email}"
+					filterBy="#{item.user.email}" filterMatchMode="contains" field="#{EnumServiceTokenFields.USER_EMAIL.fieldName}">
+					<h:outputText value="#{item.user.email}" />
 				</p:column>
 
-				<p:column headerText="#{bundleTokenSearch['label_column_device']}" sortBy="#{item.toDevice.id}"
-					filterBy="#{item.toDevice.id}" filterMatchMode="contains" field="#{EnumServiceTokenFields.DEVICE_ID.fieldName}">
-					<h:outputText value="#{item.toDevice.id}" />
+				<p:column headerText="#{bundleTokenSearch['label_column_device']}" sortBy="#{item.device.id}"
+					filterBy="#{item.device.id}" filterMatchMode="contains" field="#{EnumServiceTokenFields.DEVICE_ID.fieldName}">
+					<h:outputText value="#{item.device.id}" />
 				</p:column>
 
-				<p:column headerText="#{bundleTokenSearch['label_column_application']}" sortBy="#{item.toApplication.name}"
-					filterBy="#{item.toApplication.name}" filterMatchMode="contains"
+				<p:column headerText="#{bundleTokenSearch['label_column_application']}" sortBy="#{item.application.name}"
+					filterBy="#{item.application.name}" filterMatchMode="contains"
 					field="#{EnumServiceTokenFields.APPLICATION_NAME.fieldName}">
-					<h:outputText value="#{item.toApplication.name}" />
+					<h:outputText value="#{item.application.name}" />
 				</p:column>
 			</p:dataTable>
 		</h:form>

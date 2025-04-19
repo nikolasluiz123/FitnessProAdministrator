@@ -6,12 +6,12 @@ import org.primefaces.event.SelectEvent;
 
 import br.com.administrator.managedbean.common.beans.AbstractPagingSearchMBean;
 import br.com.administrator.managedbean.common.labeledenum.LabeledEnum;
+import br.com.administrator.managedbean.token.lazymodel.LazyTokenDataModel;
 import br.com.administrator.to.TOServiceToken;
 import br.com.administrator.viewmodel.token.TokenSearchViewModel;
 import br.com.fitnesspro.shared.communication.enums.serviceauth.EnumTokenType;
 import br.com.fitnesspro.shared.communication.exception.ExpiredTokenException;
 import br.com.fitnesspro.shared.communication.exception.NotFoundTokenException;
-import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -36,8 +36,8 @@ public class TokenSearchMBean extends AbstractPagingSearchMBean<TOServiceToken, 
 	
 	private List<LabeledEnum<EnumTokenType>> tokenTypes;
 	
-	@PostConstruct
-	public void init() {
+	@Override
+	public void onInit() {
 		this.tokenTypes = EnumTokenType.getEntries().stream().map(x -> getLabeledType(x)).toList();
 	}
 	
@@ -84,7 +84,7 @@ public class TokenSearchMBean extends AbstractPagingSearchMBean<TOServiceToken, 
 	
 	@Override
 	public String getScreenBundleFilePath() {
-		return "token_search";
+		return "messages.token.token_search";
 	}
 
 }

@@ -32,7 +32,7 @@ public class TokenDialogReadMBean extends AbstractBaseMBean {
 			viewModel.invalidateToken(this.toServiceToken.getId());
 			this.toServiceToken = viewModel.getTokenService(this.toServiceToken.getId());
 			
-			FacesUtils.addSucccessMessage(getScreenBundleString("invalidate_token_success"), getScreenBundleString("success_summary"));
+			FacesUtils.addSucccessMessage(getScreenBundleString("invalidate_token_success"), getMaintenanceBundleString("save_success_summary"));
 		} catch(ExpiredTokenException | NotFoundTokenException exception) {
 			exceptionHandler("tokenDialogReadMessages", exception, getScreenBundleString("token_invalidation_error_summary"));
 			showLoginDialog();
@@ -50,15 +50,15 @@ public class TokenDialogReadMBean extends AbstractBaseMBean {
 	}
 	
 	public boolean isVisibleUser() {
-		return this.toServiceToken.getToUser() != null;
+		return this.toServiceToken.getUser() != null;
 	}
 	
 	public boolean isVisibleDevice() {
-		return this.toServiceToken.getToDevice() != null;
+		return this.toServiceToken.getDevice() != null;
 	}
 	
 	public boolean isVisibleApplication() {
-		return this.toServiceToken.getToApplication() != null;
+		return this.toServiceToken.getApplication() != null;
 	}
 	
 	public TOServiceToken getToServiceToken() {
@@ -71,7 +71,7 @@ public class TokenDialogReadMBean extends AbstractBaseMBean {
 
 	@Override
 	public String getScreenBundleFilePath() {
-		return "token_dialog_read";
+		return "messages.token.token_dialog_read";
 	}
 
 }

@@ -1,4 +1,4 @@
-package br.com.administrator.managedbean.token;
+package br.com.administrator.managedbean.token.lazymodel;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -11,14 +11,14 @@ public class TOPerson extends AbstractAuditableDTO {
 	private String name;
 	private String phone;
 	private LocalDate birthDate;
-	private TOUser toUser;
+	private TOUser user;
 	private Boolean active;
 
 	public TOPerson() {
-		this.toUser = new TOUser();
+		this.user = new TOUser();
 		this.active = true;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -35,12 +35,12 @@ public class TOPerson extends AbstractAuditableDTO {
 		this.birthDate = birthDate;
 	}
 
-	public TOUser getToUser() {
-		return toUser;
+	public TOUser getUser() {
+		return user;
 	}
 
-	public void setToUser(TOUser toUser) {
-		this.toUser = toUser;
+	public void setUser(TOUser user) {
+		this.user = user;
 	}
 
 	public Boolean getActive() {
@@ -58,5 +58,5 @@ public class TOPerson extends AbstractAuditableDTO {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	
+
 }

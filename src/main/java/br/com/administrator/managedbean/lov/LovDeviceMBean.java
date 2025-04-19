@@ -23,7 +23,7 @@ public class LovDeviceMBean extends AbstractPagingLovMBean<TODevice, LazyDeviceD
 
 	@Override
 	public String getScreenBundleFilePath() {
-		return "lov_device";
+		return "messages.lovs.lov_device";
 	}
 
 }

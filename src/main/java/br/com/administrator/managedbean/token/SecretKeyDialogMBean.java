@@ -18,7 +18,7 @@ public class SecretKeyDialogMBean extends AbstractBaseMBean {
 	
 	@Override
 	public String getScreenBundleFilePath() {
-		return "secret_key_dialog";
+		return "messages.token.secret_key_dialog";
 	}
 
 	public String getKey() {

@@ -15,7 +15,7 @@
 	</f:facet>
 
 	<h:form id="tokenDialogForm">
-		<f:loadBundle var="bundleTokenDialog" basename="messages.token_dialog" />
+		<f:loadBundle var="bundleTokenDialog" basename="#{tokenDialogMBean.screenBundleFilePath}" />
 		
 		<p:remoteCommand name="onTokenTypeChange" action="#{tokenDialogMBean.onTokenTypeChange}" update="@form" />
 

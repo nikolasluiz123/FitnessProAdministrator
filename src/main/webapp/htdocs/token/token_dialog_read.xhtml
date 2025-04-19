@@ -13,7 +13,7 @@
 	</f:facet>
 
 	<h:form id="tokenDialogReadForm">
-		<f:loadBundle var="bundleTokenDialogRead" basename="messages.token_dialog_read" />
+		<f:loadBundle var="bundleTokenDialogRead" basename="#{tokenDialogReadMBean.screenBundleFilePath}" />
 	
 		<p:messages id="tokenDialogReadMessages" closable="true" showSummary="true" showDetail="true"
 			skipDetailIfEqualsSummary="true" />
@@ -42,19 +42,19 @@
 			<div class="ui-g-12">
 				<div class="ui-g-4 vertical-labeled-input ui-g-nopad" jsf:rendered="#{tokenDialogReadMBean.visibleUser}">
 					<p:outputLabel id="labelUser" value="#{bundleTokenDialogRead['label_field_user']}" styleClass="bold-label" />
-					<p:outputLabel id="valueUser" value="#{tokenDialogReadMBean.toServiceToken.toUser.email}" styleClass="label-value" />
+					<p:outputLabel id="valueUser" value="#{tokenDialogReadMBean.toServiceToken.user.email}" styleClass="label-value" />
 				</div>
 
 				<div class="ui-g-4 vertical-labeled-input ui-g-nopad" jsf:rendered="#{tokenDialogReadMBean.visibleApplication}">
 					<p:outputLabel id="labelApplication" value="#{bundleTokenDialogRead['label_field_application']}"
 						styleClass="bold-label" />
-					<p:outputLabel id="valueApplication" value="#{tokenDialogReadMBean.toServiceToken.toApplication.name}"
+					<p:outputLabel id="valueApplication" value="#{tokenDialogReadMBean.toServiceToken.application.name}"
 						styleClass="label-value" />
 				</div>
 
 				<div class="ui-g-4 vertical-labeled-input ui-g-nopad" jsf:rendered="#{tokenDialogReadMBean.visibleDevice}">
 					<p:outputLabel id="labelDevice" value="#{bundleTokenDialogRead['label_field_device']}" styleClass="bold-label" />
-					<p:outputLabel id="valueDevice" value="#{tokenDialogReadMBean.toServiceToken.toDevice.id}" styleClass="label-value" />
+					<p:outputLabel id="valueDevice" value="#{tokenDialogReadMBean.toServiceToken.device.id}" styleClass="label-value" />
 				</div>
 
 				<div class="ui-g-8 vertical-labeled-input ui-g-nopad">

@@ -34,7 +34,7 @@ public class PersonDialogMBean extends AbstractBaseMBean {
 	public void init() {
 		this.toPerson = new TOPerson();
 		this.userTypes = EnumUserType.getEntries().stream().map(x -> getLabeledType(x)).toList();
-		this.toPerson.getToUser().setType(this.userTypes.get(0));
+		this.toPerson.getUser().setType(this.userTypes.get(0));
 	}
 	
 	public void init(TOPerson to) {
@@ -83,7 +83,7 @@ public class PersonDialogMBean extends AbstractBaseMBean {
 	
 	public void onUserTypeChange() {
 		Optional<LabeledEnum<EnumUserType>> value = userTypes.stream().filter(t -> t.getValue().equals(selectedUserType)).findFirst();
-		this.toPerson.getToUser().setType(value.orElseGet(null));
+		this.toPerson.getUser().setType(value.orElseGet(null));
 	}
 	
 	private LabeledEnum<EnumUserType> getLabeledType(EnumUserType x) {
@@ -107,7 +107,7 @@ public class PersonDialogMBean extends AbstractBaseMBean {
 	}
 	
 	public boolean isVisiblePhoneInput() {
-		return this.toPerson.getToUser().getType().getValue() != EnumUserType.ACADEMY_MEMBER;
+		return this.toPerson.getUser().getType().getValue() != EnumUserType.ACADEMY_MEMBER;
 	}
 
 	public List<LabeledEnum<EnumUserType>> getUserTypes() {

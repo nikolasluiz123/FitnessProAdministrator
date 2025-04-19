@@ -14,9 +14,9 @@ public class TOServiceToken extends AbstractModelTO {
 	private LabeledEnum<EnumTokenType> type;
 	private LocalDateTime creationDate;
 	private LocalDateTime expirationDate;
-	private TOUser toUser;
-	private TODevice toDevice;
-	private TOApplication toApplication;
+	private TOUser user;
+	private TODevice device;
+	private TOApplication application;
 
 	public String getJwtToken() {
 		return jwtToken;
@@ -50,28 +50,28 @@ public class TOServiceToken extends AbstractModelTO {
 		this.expirationDate = expirationDate;
 	}
 
-	public TOUser getToUser() {
-		return toUser;
+	public TOUser getUser() {
+		return user;
 	}
 
-	public void setToUser(TOUser toUser) {
-		this.toUser = toUser;
+	public void setUser(TOUser user) {
+		this.user = user;
 	}
 
-	public TODevice getToDevice() {
-		return toDevice;
+	public TODevice getDevice() {
+		return device;
 	}
 
-	public void setToDevice(TODevice toDevice) {
-		this.toDevice = toDevice;
+	public void setDevice(TODevice device) {
+		this.device = device;
 	}
 
-	public TOApplication getToApplication() {
-		return toApplication;
+	public TOApplication getApplication() {
+		return application;
 	}
 
-	public void setToApplication(TOApplication toApplication) {
-		this.toApplication = toApplication;
+	public void setApplication(TOApplication application) {
+		this.application = application;
 	}
 
 }

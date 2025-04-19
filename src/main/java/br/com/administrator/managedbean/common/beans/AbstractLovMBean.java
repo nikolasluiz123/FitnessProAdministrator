@@ -6,7 +6,7 @@ import br.com.administrator.managedbean.lov.ILovCallbacks;
 import br.com.administrator.to.common.AbstractModelTO;
 
 @SuppressWarnings("serial")
-public abstract class AbstractLovMBean<T extends AbstractModelTO> extends AbstractBaseMBean implements ILovMBean<T> {
+public abstract class AbstractLovMBean<T extends AbstractModelTO> extends AbstractSearchMBean<T> implements ILovMBean<T> {
 
 	private ILovCallbacks<T> callback;
 
