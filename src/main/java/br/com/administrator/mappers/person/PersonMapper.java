@@ -14,10 +14,10 @@ public final class PersonMapper {
 
 	private final ModelMapper modelMapper;
 
-	public PersonMapper(EnumUserTypeConverter tokenTypeConverter, LabeledEnumToEnumConverter<EnumUserType> labeledEnumConverter) {
+	public PersonMapper(EnumUserTypeConverter userTypeConverter, LabeledEnumToEnumConverter<EnumUserType> labeledEnumConverter) {
 		this.modelMapper = new ModelMapper();
 
-		modelMapper.addConverter(tokenTypeConverter);
+		modelMapper.addConverter(userTypeConverter);
 		modelMapper.addConverter(labeledEnumConverter);
 	}
 	

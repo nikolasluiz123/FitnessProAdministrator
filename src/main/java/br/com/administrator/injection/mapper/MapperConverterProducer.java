@@ -1,7 +1,10 @@
 package br.com.administrator.injection.mapper;
 
+import br.com.administrator.mappers.labeledenum.execution.ExecutionLabeledEnumMapper;
 import br.com.administrator.mappers.labeledenum.execution.TokenLabeledEnumMapper;
 import br.com.administrator.mappers.labeledenum.execution.UserLabeledEnumMapper;
+import br.com.administrator.mappers.log.converters.EnumExecutionStateConverter;
+import br.com.administrator.mappers.log.converters.EnumExecutionTypeConverter;
 import br.com.administrator.mappers.person.converters.EnumUserTypeConverter;
 import br.com.administrator.mappers.token.converters.EnumTokenTypeConverter;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -18,5 +21,15 @@ public class MapperConverterProducer {
 	@Produces
 	public EnumUserTypeConverter producesEnumUserTypeConverter(UserLabeledEnumMapper labeledMapper) {
 		return new EnumUserTypeConverter(labeledMapper);
+	}
+	
+	@Produces
+	public EnumExecutionStateConverter producesEnumExecutionStateConverter(ExecutionLabeledEnumMapper labeledMapper) {
+		return new EnumExecutionStateConverter(labeledMapper);
+	}
+	
+	@Produces
+	public EnumExecutionTypeConverter producesEnumExecutionTypeConverter(ExecutionLabeledEnumMapper labeledMapper) {
+		return new EnumExecutionTypeConverter(labeledMapper);
 	}
 }

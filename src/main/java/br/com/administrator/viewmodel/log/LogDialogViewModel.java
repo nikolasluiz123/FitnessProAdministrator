@@ -12,6 +12,7 @@ import java.util.Map;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
 
+import br.com.administrator.mappers.log.LogMapper;
 import br.com.administrator.service.webclient.ExecutionLogsWebClient;
 import br.com.administrator.to.TOExecutionLogPackage;
 import br.com.administrator.utils.PrimefacesFiltersUtil;
@@ -28,10 +29,12 @@ public class LogDialogViewModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private final ExecutionLogsWebClient webClient;
+	private final LogMapper logMapper;
 	
 	@Inject
-	public LogDialogViewModel(ExecutionLogsWebClient executionLogsWebClient) {
+	public LogDialogViewModel(ExecutionLogsWebClient executionLogsWebClient, LogMapper logMapper) {
         this.webClient = executionLogsWebClient;
+        this.logMapper = logMapper;
 	}
 
 	public List<TOExecutionLogPackage> getListExecutionLogPackage(int first, 
@@ -45,7 +48,7 @@ public class LogDialogViewModel implements Serializable {
 		
 		List<ExecutionLogPackageDTO> result = webClient.getListExecutionLogPackage(filter, pageInfos);
 		
-		return result.stream().map(this::getExecutionLogPackageTO).toList();
+		return result.stream().map(e -> logMapper.getTOExecutionLogPackageFrom(e)).toList();
 	}
 	
 	private ExecutionLogsPackageFilter getExecutionLogsPackageFilter(Map<String, FilterMeta> filterBy, Map<String, SortMeta> sortBy) {
@@ -75,23 +78,6 @@ public class LogDialogViewModel implements Serializable {
 		
 		return filter;
 	}
-	
-	private TOExecutionLogPackage getExecutionLogPackageTO(ExecutionLogPackageDTO dto) {
-		TOExecutionLogPackage to = new TOExecutionLogPackage();
-		to.setAllItemsCount(dto.getAllItemsCount());
-		to.setClientExecutionEnd(dto.getClientExecutionEnd());
-		to.setClientExecutionStart(dto.getClientExecutionStart());
-		to.setError(dto.getError());
-		to.setId(dto.getId());
-		to.setInsertedItemsCount(dto.getInsertedItemsCount());
-		to.setRequestBody(dto.getRequestBody());
-		to.setServiceExecutionEnd(dto.getServiceExecutionEnd());
-		to.setServiceExecutionStart(dto.getServiceExecutionStart());
-		to.setUpdatedItemsCount(dto.getUpdatedItemsCount());
-		
-		return to;
-	}
-	
 
 	public int getCountListExecutionLogPackage(Map<String, FilterMeta> filterBy, String executionId) throws Exception {
 		ExecutionLogsPackageFilter filter = getExecutionLogsPackageFilter(filterBy, null);

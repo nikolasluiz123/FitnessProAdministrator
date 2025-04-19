@@ -13,8 +13,8 @@ import java.util.Map;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
 
-import br.com.administrator.managedbean.common.labeledenum.LabeledEnum;
 import br.com.administrator.mappers.labeledenum.execution.ExecutionLabeledEnumMapper;
+import br.com.administrator.mappers.log.LogMapper;
 import br.com.administrator.service.webclient.ExecutionLogsWebClient;
 import br.com.administrator.to.TOExecutionLog;
 import br.com.administrator.utils.PrimefacesFiltersUtil;
@@ -33,11 +33,13 @@ public class ExecutionLogsViewModel implements Serializable {
 
 	private final ExecutionLogsWebClient webClient;
 	private final ExecutionLabeledEnumMapper labeledEnumMapper;
+	private final LogMapper logMapper;
 
 	@Inject
-	public ExecutionLogsViewModel(ExecutionLogsWebClient executionLogsWebClient, ExecutionLabeledEnumMapper labeledEnumMapper) {
+	public ExecutionLogsViewModel(ExecutionLogsWebClient executionLogsWebClient, ExecutionLabeledEnumMapper labeledEnumMapper, LogMapper logMapper) {
         this.webClient = executionLogsWebClient;
         this.labeledEnumMapper = labeledEnumMapper;
+        this.logMapper = logMapper;
 	}
 
 	public List<TOExecutionLog> getListExecutionLog(int first, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) throws Exception {
@@ -46,7 +48,7 @@ public class ExecutionLogsViewModel implements Serializable {
 		
 		List<ExecutionLogDTO> result = webClient.getListExecutionLog(filter, pageInfos);
 		
-		return result.stream().map(this::getExecutionLogTO).toList();
+		return result.stream().map(e -> logMapper.getTOExecutionLogFrom(e)).toList();
 	}
 
 	public int getCountListExecutionLog(Map<String, FilterMeta> filterBy) throws Exception {
@@ -86,20 +88,5 @@ public class ExecutionLogsViewModel implements Serializable {
 	
 	public String getLabelExecutionState(EnumExecutionState state) {
 		return labeledEnumMapper.getLabelExecutionState(state);
-	}
-	
-	private TOExecutionLog getExecutionLogTO(ExecutionLogDTO dto) {
-		TOExecutionLog to = new TOExecutionLog();
-		to.setEndpoint(dto.getEndPoint());
-		to.setId(dto.getId());
-		to.setType(new LabeledEnum<EnumExecutionType>(dto.getType(), labeledEnumMapper.getLabelExecutionType(dto.getType())));
-		to.setState(new LabeledEnum<EnumExecutionState>(dto.getState(), labeledEnumMapper.getLabelExecutionState(dto.getState())));
-		to.setMethodName(dto.getMethodName());
-		to.setLastUpdateDate(dto.getLastUpdateDate());
-		to.setPageSize(dto.getPageSize());
-		to.setUserEmail(dto.getUserEmail());
-		to.setCreationDate(dto.getCreationDate());
-		
-		return to;
 	}
 }

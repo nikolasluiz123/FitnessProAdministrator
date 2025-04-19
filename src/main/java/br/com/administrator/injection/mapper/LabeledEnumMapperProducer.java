@@ -23,4 +23,5 @@ public class LabeledEnumMapperProducer {
 	public TokenLabeledEnumMapper producesTokenLabeledEnumMapper() {
 		return new TokenLabeledEnumMapper();
 	}
+	
 }

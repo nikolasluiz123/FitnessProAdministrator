@@ -13,7 +13,7 @@ public class EnumTokenTypeConverter extends AbstractEnumToLabeledEnumConverter<E
 	}
 	
 	@Override
-	protected String getLabelTokenType(EnumTokenType enumerator) {
+	protected String getLabel(EnumTokenType enumerator) {
 		return mapper.getLabelTokenType(enumerator);
 	}
 
