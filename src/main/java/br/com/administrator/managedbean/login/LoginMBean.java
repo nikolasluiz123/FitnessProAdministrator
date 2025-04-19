@@ -18,13 +18,13 @@ public class LoginMBean extends AbstractBaseMBean {
 
 	private TOLogin toLogin;
 	
+	@Inject
+	private LoginViewModel loginViewModel;
+	
 	@PostConstruct
 	public void init() {
 		toLogin = new TOLogin();
 	}
-	
-	@Inject
-	private LoginViewModel loginViewModel;
 	
 	public void authenticate() {
 		try {
@@ -49,6 +49,6 @@ public class LoginMBean extends AbstractBaseMBean {
 
 	@Override
 	public String getScreenBundleFilePath() {
-		return "login";
+		return "messages.login";
 	}
 }

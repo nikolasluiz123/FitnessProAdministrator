@@ -45,7 +45,7 @@ public class AuthenticationWebClient extends AbstractWebClient {
 			
 			return response.getToken();
 		} catch (ConnectException exception) {
-			throw new ServiceException("Não foi possível se conectar ao servidor. Tente novamente mais tarde.", exception);
+			throw new ServiceException(getServiceBundleString("service_connection_error_message"), exception);
 		}
 	}
 	
@@ -65,7 +65,7 @@ public class AuthenticationWebClient extends AbstractWebClient {
 			}
 			
 		} catch (ConnectException exception) {
-			throw new ServiceException("Não foi possível se conectar ao servidor. Tente novamente mais tarde.", exception);
+			throw new ServiceException(getServiceBundleString("service_connection_error_message"), exception);
 		}
 	}
 }
