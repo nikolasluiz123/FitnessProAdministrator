@@ -23,11 +23,6 @@ public class LogPackageDialogMBean extends AbstractBaseMBean {
 		this.toExecutionLogPackage = to;
 	}
 
-	@Override
-	public String getScreenBundleFilePath() {
-		return "log_package_dialog";
-	}
-
 	public TOExecutionLogPackage getToExecutionLogPackage() {
 		return toExecutionLogPackage;
 	}
@@ -43,5 +38,10 @@ public class LogPackageDialogMBean extends AbstractBaseMBean {
 	
 	public boolean isVisibleExportInfos() {
 		return this.toExecutionLogPackage.getAllItemsCount() != null;
+	}
+	
+	@Override
+	public String getScreenBundleFilePath() {
+		return "messages.logs.log_package_dialog";
 	}
 }

@@ -1,4 +1,4 @@
-package br.com.administrator.managedbean.executionlogs;
+package br.com.administrator.managedbean.executionlogs.lazymodel;
 
 import java.util.List;
 import java.util.Map;

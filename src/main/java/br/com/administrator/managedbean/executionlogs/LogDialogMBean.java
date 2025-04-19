@@ -6,10 +6,10 @@ import static br.com.fitnesspro.models.executions.enums.EnumExecutionType.IMPORT
 import org.primefaces.event.SelectEvent;
 
 import br.com.administrator.managedbean.common.beans.AbstractPagingSearchMBean;
+import br.com.administrator.managedbean.executionlogs.lazymodel.LazyExecutionLogPackageDataModel;
 import br.com.administrator.to.TOExecutionLog;
 import br.com.administrator.to.TOExecutionLogPackage;
 import br.com.fitnesspro.models.executions.enums.EnumExecutionType;
-import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -28,8 +28,8 @@ public class LogDialogMBean extends AbstractPagingSearchMBean<TOExecutionLogPack
 	@Inject
 	private LogPackageDialogMBean logPackageDialog;
 	
-	@PostConstruct
-	public void init() {
+	@Override
+	public void onInit() {
 		this.toExecutionLog = new TOExecutionLog();
 	}
 	
@@ -59,7 +59,7 @@ public class LogDialogMBean extends AbstractPagingSearchMBean<TOExecutionLogPack
 
 	@Override
 	public String getScreenBundleFilePath() {
-		return "log_dialog";
+		return "messages.logs.log_dialog";
 	}
 
 	@Override

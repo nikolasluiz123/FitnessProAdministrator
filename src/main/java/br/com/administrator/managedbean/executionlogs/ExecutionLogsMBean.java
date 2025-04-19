@@ -6,6 +6,7 @@ import org.primefaces.event.SelectEvent;
 
 import br.com.administrator.managedbean.common.beans.AbstractPagingSearchMBean;
 import br.com.administrator.managedbean.common.labeledenum.LabeledEnum;
+import br.com.administrator.managedbean.executionlogs.lazymodel.LazyExecutionLogDataModel;
 import br.com.administrator.to.TOExecutionLog;
 import br.com.administrator.viewmodel.log.ExecutionLogsViewModel;
 import br.com.fitnesspro.models.executions.enums.EnumExecutionType;
@@ -39,6 +40,7 @@ public class ExecutionLogsMBean extends AbstractPagingSearchMBean<TOExecutionLog
 		this.executionStates = EnumExecutionState.getEntries().stream().map(x -> getLabeledState(x)).toList();
 	}
 
+	@Override
 	public void onRowSelect(SelectEvent<TOExecutionLog> event) {
 		logDialogMBean.init(event.getObject());
 	}
@@ -66,6 +68,6 @@ public class ExecutionLogsMBean extends AbstractPagingSearchMBean<TOExecutionLog
 	
 	@Override
 	public String getScreenBundleFilePath() {
-		return "execution_logs";
+		return "messages.logs.execution_logs";
 	}
 }

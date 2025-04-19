@@ -79,3 +79,9 @@ body .ui-dialog .ui-dialog-content {
 .ui-full-width-input input {
 	width: 100% !important;
 }
+
+.label-break {
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-all;
+}
