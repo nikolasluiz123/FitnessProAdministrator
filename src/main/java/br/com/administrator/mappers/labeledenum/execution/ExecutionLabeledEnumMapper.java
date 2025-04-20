@@ -4,8 +4,8 @@ import java.util.ResourceBundle;
 
 import br.com.administrator.managedbean.common.constants.ICommonBundlePaths;
 import br.com.administrator.utils.FacesUtils;
-import br.com.fitnesspro.models.executions.enums.EnumExecutionType;
 import br.com.fitnesspro.shared.communication.enums.execution.EnumExecutionState;
+import br.com.fitnesspro.shared.communication.enums.execution.EnumExecutionType;
 
 public final class ExecutionLabeledEnumMapper {
 

@@ -1,7 +1,7 @@
 package br.com.administrator.managedbean.executionlogs;
 
-import static br.com.fitnesspro.models.executions.enums.EnumExecutionType.EXPORTATION;
-import static br.com.fitnesspro.models.executions.enums.EnumExecutionType.IMPORTATION;
+import static br.com.fitnesspro.shared.communication.enums.execution.EnumExecutionType.EXPORTATION;
+import static br.com.fitnesspro.shared.communication.enums.execution.EnumExecutionType.IMPORTATION;
 
 import org.primefaces.event.SelectEvent;
 
@@ -9,7 +9,7 @@ import br.com.administrator.managedbean.common.beans.AbstractPagingSearchMBean;
 import br.com.administrator.managedbean.executionlogs.lazymodel.LazyExecutionLogPackageDataModel;
 import br.com.administrator.to.TOExecutionLog;
 import br.com.administrator.to.TOExecutionLogPackage;
-import br.com.fitnesspro.models.executions.enums.EnumExecutionType;
+import br.com.fitnesspro.shared.communication.enums.execution.EnumExecutionType;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;

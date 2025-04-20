@@ -15,7 +15,7 @@
 			<h:outputLabel for="#{cc.clientId}:lovInput" value="#{cc.attrs.label}" />
 		</div>
 		<div class="input-container">
-			<p:inputText id="lovInput" value="#{cc.attrs.value}" readonly="#{cc.attrs.readonly}" styleClass="lov-input-text" />
+			<p:inputText id="lovInput" value="#{cc.attrs.value}" readonly="true" styleClass="lov-input-text" />
 
 			<p:commandButton icon="pi pi-search" styleClass="rounded-button ui-button-success ui-button-flat"
 				onclick="#{cc.attrs.onShowLov}" disabled="#{cc.attrs.readonly}" />

@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 
 import br.com.administrator.managedbean.common.labeledenum.LabeledEnum;
 import br.com.administrator.to.common.AbstractModelTO;
-import br.com.fitnesspro.models.executions.enums.EnumExecutionType;
 import br.com.fitnesspro.shared.communication.enums.execution.EnumExecutionState;
+import br.com.fitnesspro.shared.communication.enums.execution.EnumExecutionType;
 
 public class TOExecutionLog extends AbstractModelTO {
 
