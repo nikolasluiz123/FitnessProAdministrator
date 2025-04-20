@@ -30,7 +30,7 @@
 				onCompleteOnRowSelect="PF('logDialogWV').show();">
 
 				<p:column headerText="#{bundleExecutionLog['label_column_creation_date']}" filterMatchMode="between"
-					sortBy="#{item.creationDate}" sortOrder="desc" filterBy="#{item.creationDate}" width="150">
+					sortBy="#{item.creationDate}" sortOrder="desc" filterBy="#{item.creationDate}" width="200">
 
 					<f:facet name="filter">
 						<p:datePicker id="filterRangeCreationDate" selectionMode="range" onchange="PF('dataTableLogsWV').filter();"
@@ -68,18 +68,33 @@
 				</p:column>
 
 				<p:column headerText="#{bundleExecutionLog['label_column_endpoint']}" sortBy="#{item.endpoint}"
-					filterBy="#{item.endpoint}" filterMatchMode="contains" field="#{EnumExecutionLogsFields.END_POINT.fieldName}" width="300">
+					filterBy="#{item.endpoint}" filterMatchMode="contains" field="#{EnumExecutionLogsFields.END_POINT.fieldName}"
+					width="300">
 					<h:outputText value="#{item.endpoint}" />
 				</p:column>
 
 				<p:column headerText="#{bundleExecutionLog['label_column_method_name']}" sortBy="#{item.methodName}"
-					filterBy="#{item.methodName}" filterMatchMode="contains" field="#{EnumExecutionLogsFields.METHOD_NAME.fieldName}" width="300">
+					filterBy="#{item.methodName}" filterMatchMode="contains" field="#{EnumExecutionLogsFields.METHOD_NAME.fieldName}"
+					width="300">
 					<h:outputText value="#{item.methodName}" />
 				</p:column>
 
 				<p:column headerText="#{bundleExecutionLog['label_column_user_email']}" sortBy="#{item.userEmail}"
-					filterBy="#{item.userEmail}" filterMatchMode="contains" field="#{EnumExecutionLogsFields.USER_EMAIL.fieldName}" width="300">
+					filterBy="#{item.userEmail}" filterMatchMode="contains" field="#{EnumExecutionLogsFields.USER_EMAIL.fieldName}"
+					width="300">
 					<h:outputText value="#{item.userEmail}" />
+				</p:column>
+
+				<p:column headerText="#{bundleExecutionLog['label_column_device']}" sortBy="#{item.deviceId}"
+					filterBy="#{item.deviceId}" filterMatchMode="contains" field="#{EnumExecutionLogsFields.DEVICE_ID.fieldName}"
+					width="300">
+					<h:outputText value="#{item.deviceId}" />
+				</p:column>
+
+				<p:column headerText="#{bundleExecutionLog['label_column_application']}" sortBy="#{item.applicationName}"
+					filterBy="#{item.applicationName}" filterMatchMode="contains" field="#{EnumExecutionLogsFields.APPLICATION_NAME.fieldName}"
+					width="300">
+					<h:outputText value="#{item.applicationName}" />
 				</p:column>
 			</fit:lazyPagingTable>
 		</h:form>

@@ -1,5 +1,7 @@
 package br.com.administrator.viewmodel.log;
 
+import static br.com.fitnesspro.shared.communication.query.enums.EnumExecutionLogsFields.APPLICATION_NAME;
+import static br.com.fitnesspro.shared.communication.query.enums.EnumExecutionLogsFields.DEVICE_ID;
 import static br.com.fitnesspro.shared.communication.query.enums.EnumExecutionLogsFields.END_POINT;
 import static br.com.fitnesspro.shared.communication.query.enums.EnumExecutionLogsFields.EXECUTION_STATE;
 import static br.com.fitnesspro.shared.communication.query.enums.EnumExecutionLogsFields.EXECUTION_TYPE;
@@ -76,8 +78,17 @@ public class ExecutionLogsViewModel implements Serializable {
 		}
 		
 		if (filterBy.containsKey(USER_EMAIL.getFieldName())) {
-			filter.setEndPoint(filterUtils.getStringFilterValue(USER_EMAIL.getFieldName()));
+			filter.setUserEmail(filterUtils.getStringFilterValue(USER_EMAIL.getFieldName()));
 		}
+		
+		if (filterBy.containsKey(DEVICE_ID.getFieldName())) {
+			filter.setDeviceId(filterUtils.getStringFilterValue(DEVICE_ID.getFieldName()));
+		}
+		
+		if (filterBy.containsKey(APPLICATION_NAME.getFieldName())) {
+			filter.setApplicationName(filterUtils.getStringFilterValue(APPLICATION_NAME.getFieldName()));
+		}
+		
 		
 		return filter;
 	}

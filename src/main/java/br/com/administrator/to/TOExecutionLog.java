@@ -16,6 +16,8 @@ public class TOExecutionLog extends AbstractModelTO {
 	private String endpoint;
 	private String methodName;
 	private String userEmail;
+	private String deviceId;
+	private String applicationName;
 	private Integer pageSize;
 	private LocalDateTime lastUpdateDate;
 	private LocalDateTime creationDate;
@@ -58,6 +60,22 @@ public class TOExecutionLog extends AbstractModelTO {
 
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
+	}
+	
+	public String getDeviceId() {
+		return deviceId;
+	}
+
+	public void setDeviceId(String deviceId) {
+		this.deviceId = deviceId;
+	}
+
+	public String getApplicationName() {
+		return applicationName;
+	}
+
+	public void setApplicationName(String applicationName) {
+		this.applicationName = applicationName;
 	}
 
 	public Integer getPageSize() {
