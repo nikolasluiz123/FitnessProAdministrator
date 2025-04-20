@@ -21,7 +21,7 @@
 			paginator="true"
 			paginatorPosition="both"
 			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-			currentPageReportTemplate="#{cc.attrs.mBean.pageReportTemplate}" 
+			currentPageReportTemplate="{startRecord}-{endRecord} #{searchCommonBundle['label_of']} {totalRecords} #{searchCommonBundle['label_registers']}" 
 			rowsPerPageTemplate="10, 20, 50"
 			widgetVar="#{cc.attrs.id}WV" 
 			selectionMode="#{cc.attrs.selectionMode}" 

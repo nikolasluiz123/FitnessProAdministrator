@@ -30,15 +30,6 @@ public abstract class AbstractPagingSearchMBean<TO extends AbstractModelTO, Lazy
 		
 	}
 	
-	public String getPageReportTemplate() {
-		LazyModel lazyModel = getLazyModel();
-		int first = lazyModel.getFirst();
-		int last = lazyModel.getFirst() + lazyModel.getData().size();
-		int total = lazyModel.getTotalCount();
-		
-		return getSearchBundleString("page_report_template", first, last, total);
-	}
-	
 	@Override
 	public void onRequestReloadDatatable() {
 		getLazyModel().reloadPreservingPagingState();
