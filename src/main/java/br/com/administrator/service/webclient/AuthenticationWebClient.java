@@ -1,10 +1,13 @@
 package br.com.administrator.service.webclient;
 
 import java.net.ConnectException;
+import java.util.function.Predicate;
 
 import br.com.administrator.service.IAuthenticationService;
 import br.com.administrator.service.exception.ServiceException;
 import br.com.fitnesspro.shared.communication.dtos.general.AuthenticationDTO;
+import br.com.fitnesspro.shared.communication.dtos.serviceauth.ServiceTokenDTO;
+import br.com.fitnesspro.shared.communication.enums.serviceauth.EnumTokenType;
 import br.com.fitnesspro.shared.communication.responses.AuthenticationServiceResponse;
 import jakarta.annotation.Nullable;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -43,10 +46,14 @@ public class AuthenticationWebClient extends AbstractWebClient {
 				throw new ServiceException(response.getError());
 			}
 			
-			return response.getToken();
+			return response.getTokens().stream().filter(isUserToken()).findFirst().get().getJwtToken();
 		} catch (ConnectException exception) {
 			throw new ServiceException(getServiceBundleString("service_connection_error_message"), exception);
 		}
+	}
+
+	private Predicate<? super ServiceTokenDTO> isUserToken() {
+		return t -> t.getType().equals(EnumTokenType.USER_AUTHENTICATION_TOKEN);
 	}
 	
 	public void logout(@NotNull String email, @NotNull String password) throws Exception {
