@@ -30,7 +30,8 @@ public class PersonDialogViewModel implements Serializable {
 
 	public TOPerson savePerson(TOPerson to) throws Exception {
 		PersonDTO dto = mapper.getPersonDTOFrom(to);
-
+		dto.setCreateDefaultSchedulerConfig(to.getId() == null);
+		
 		PersistenceServiceResponse<PersonDTO> response = webClient.savePerson(dto);
 
 		if (response.getSuccess()) {

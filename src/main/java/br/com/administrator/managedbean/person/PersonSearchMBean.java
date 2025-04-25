@@ -32,8 +32,7 @@ public class PersonSearchMBean extends AbstractPagingSearchMBean<TOPerson, LazyP
 
 	private List<LabeledEnum<EnumUserType>> userTypes;
 	
-	@PostConstruct
-	public void init() {
+	public void onInit() {
 		this.userTypes = EnumUserType.getEntries().stream().map(x -> getLabeledType(x)).toList();
 	}
 	
