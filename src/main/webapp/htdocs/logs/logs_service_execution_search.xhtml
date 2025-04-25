@@ -29,8 +29,9 @@
 				updateOnRefresh="formMessages:messages, executionLogsSearchForm:dataTableLogs:dataTablePagingLazy"
 				onCompleteOnRowSelect="PF('logDialogWV').show();">
 
-				<p:column headerText="#{bundleExecutionLog['label_column_creation_date']}" filterMatchMode="between"
-					sortBy="#{item.creationDate}" sortOrder="desc" filterBy="#{item.creationDate}" width="200">
+				<p:column headerText="#{bundleExecutionLog['label_column_creation_date']}"
+					field="#{EnumExecutionLogsFields.CREATION_DATE.fieldName}" filterMatchMode="between" sortBy="#{item.creationDate}"
+					sortOrder="desc" filterBy="#{item.creationDate}" width="200">
 
 					<f:facet name="filter">
 						<p:datePicker id="filterRangeCreationDate" selectionMode="range" onchange="PF('dataTableLogsWV').filter();"
@@ -92,8 +93,8 @@
 				</p:column>
 
 				<p:column headerText="#{bundleExecutionLog['label_column_application']}" sortBy="#{item.applicationName}"
-					filterBy="#{item.applicationName}" filterMatchMode="contains" field="#{EnumExecutionLogsFields.APPLICATION_NAME.fieldName}"
-					width="300">
+					filterBy="#{item.applicationName}" filterMatchMode="contains"
+					field="#{EnumExecutionLogsFields.APPLICATION_NAME.fieldName}" width="300">
 					<h:outputText value="#{item.applicationName}" />
 				</p:column>
 			</fit:lazyPagingTable>
