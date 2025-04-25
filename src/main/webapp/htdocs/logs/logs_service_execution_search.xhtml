@@ -27,6 +27,7 @@
 			<fit:lazyPagingTable id="dataTableLogs" mBean="#{executionLogsMBean}"
 				updateOnRowSelect="formMessages:messages, logDialog"
 				updateOnRefresh="formMessages:messages, executionLogsSearchForm:dataTableLogs:dataTablePagingLazy"
+				updateOnToggleFilter="executionLogsSearchForm:dataTableLogs:dataTablePagingLazy"
 				onCompleteOnRowSelect="PF('logDialogWV').show();">
 
 				<p:column headerText="#{bundleExecutionLog['label_column_creation_date']}"

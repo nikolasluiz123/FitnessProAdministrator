@@ -12,6 +12,8 @@ import jakarta.annotation.PostConstruct;
 @SuppressWarnings("serial")
 public abstract class AbstractPagingSearchMBean<TO extends AbstractModelTO, LazyModel extends AbstractLazyDataModel<TO>> extends AbstractBaseMBean implements ISearchMBean<TO> {
 
+	private boolean filterVisible;
+	
 	public abstract LazyModel getLazyModel();
 	
 	@PostConstruct
@@ -28,6 +30,21 @@ public abstract class AbstractPagingSearchMBean<TO extends AbstractModelTO, Lazy
 	@Override
 	public void onInit() {
 		
+	}
+	
+	@Override
+	public Boolean getFilterVisible() {
+		return this.filterVisible;
+	}
+	
+	@Override
+	public void onToggleFilter() {
+		this.filterVisible = !this.filterVisible;
+	}
+	
+	@Override
+	public String getEmptyMessage() {
+		return getSearchBundleString("empty_table_message");
 	}
 	
 	@Override

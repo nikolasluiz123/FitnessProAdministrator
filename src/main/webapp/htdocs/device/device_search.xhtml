@@ -19,7 +19,8 @@
 			<p:importEnum type="br.com.fitnesspro.shared.communication.query.enums.EnumDeviceFields" var="EnumDeviceFields" />
 
 			<fit:lazyPagingTable id="dataTableDevice" mBean="#{deviceSearchMBean}" updateOnRowSelect="formMessages:messages"
-				updateOnRefresh="formMessages:messages, deviceSearchForm:dataTableDevice:dataTablePagingLazy">
+				updateOnRefresh="formMessages:messages, deviceSearchForm:dataTableDevice:dataTablePagingLazy"
+				updateOnToggleFilter="deviceSearchForm:dataTableDevice:dataTablePagingLazy">
 
 				<p:column headerText="#{bundleDeviceSearch['label_column_id']}" sortBy="#{item.id}" filterBy="#{item.id}"
 					filterMatchMode="contains" field="#{EnumDeviceFields.ID.fieldName}" width="300">

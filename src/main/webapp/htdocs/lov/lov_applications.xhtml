@@ -22,6 +22,7 @@
 			<div class="ui-g-12">
 				<fit:pagingTable id="dataTableLovApplication" mBean="#{mbean}" updateOnRowSelect="formMessages:messages"
 					updateOnRefresh="formMessages:messages, applicationsLovDialogForm:dataTableLovApplication:dataTablePaging"
+					updateOnToggleFilter="applicationsLovDialogForm:dataTableLovApplication:dataTablePaging"
 					onCompleteOnRowSelect="PF('applicationsLovDialogWV').hide()">
 
 					<p:column headerText="#{bundleApplicationsLovDialog['label_column_name']}" sortBy="#{item.name}"

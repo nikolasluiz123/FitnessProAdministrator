@@ -10,11 +10,13 @@
 		<cc:attribute name="updateOnRowSelect" />
 		<cc:attribute name="onCompleteOnRowSelect" />
 		<cc:attribute name="updateOnRefresh" />
+		<cc:attribute name="updateOnToggleFilter" />
 	</cc:interface>
 
 	<cc:implementation>
 		<p:dataTable 
 			id="dataTablePaging" 
+			styleClass="#{cc.attrs.mBean.filterVisible ? '' : 'hide-filters'}"
 			var="item" 
 			value="#{cc.attrs.mBean.data}" 
 			rows="10" 
@@ -34,7 +36,12 @@
 					oncomplete="#{cc.attrs.onCompleteOnRowSelect}" />
 
 			<f:facet name="paginatorTopLeft">
-				<p:commandButton icon="pi pi-refresh" action="#{cc.attrs.mBean.onRequestReloadDatatable}" update="#{cc.attrs.updateOnRefresh}" />
+				<p:commandButton icon="pi pi-refresh" action="#{cc.attrs.mBean.onRequestReloadDatatable}" update="#{cc.attrs.updateOnRefresh}" styleClass="margin-right-16" />
+				<p:commandButton icon="pi pi-filter" action="#{cc.attrs.mBean.onToggleFilter}" update="#{cc.attrs.updateOnToggleFilter}" />
+			</f:facet>
+			
+			<f:facet name="emptyMessage">
+				<p:outputLabel id="emptyCustomMessage" value="#{cc.attrs.mBean.emptyMessage}" />
 			</f:facet>
 
 			<cc:insertChildren />

@@ -24,7 +24,8 @@
 		<div class="ui-g">
 			<div class="ui-g-12">
 				<fit:pagingTable id="dataTableEntries" mBean="#{cacheDialogMBean}"
-					updateOnRefresh="formMessages:messages, cacheDialogForm:dataTableEntries:dataTablePaging">
+					updateOnRefresh="formMessages:messages, cacheDialogForm:dataTableEntries:dataTablePaging"
+					updateOnToggleFilter="cacheDialogForm:dataTableEntries:dataTablePaging">
 
 					<p:column headerText="#{bundleCacheDialog['label_column_key']}" width="90%">
 						<h:outputText value="#{item.key}" />

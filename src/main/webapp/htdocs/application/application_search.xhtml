@@ -33,6 +33,7 @@
 			<fit:pagingTable id="dataTableApplication" mBean="#{applicationSearchMBean}"
 				updateOnRowSelect="formMessages:messages, applicationDialog"
 				updateOnRefresh="formMessages:messages, applicationSearchForm:dataTableApplication:dataTablePaging"
+				updateOnToggleFilter="applicationSearchForm:dataTableApplication:dataTablePaging"
 				onCompleteOnRowSelect="PF('applicationDialogWV').show();">
 
 				<p:column headerText="#{bundleApplicationSearch['label_column_name']}" sortBy="#{item.name}" filterBy="#{item.name}"

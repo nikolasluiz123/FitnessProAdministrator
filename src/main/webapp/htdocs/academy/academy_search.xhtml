@@ -32,6 +32,7 @@
 			<fit:lazyPagingTable id="dataTableAcademy" mBean="#{academySearchMBean}"
 				updateOnRowSelect="formMessages:messages, academyDialog"
 				updateOnRefresh="formMessages:messages, academySearchForm:dataTableAcademy:dataTablePagingLazy"
+				updateOnToggleFilter="academySearchForm:dataTableAcademy:dataTablePagingLazy"
 				onCompleteOnRowSelect="PF('academyDialogWV').show();">
 
 				<p:column headerText="#{bundleAcademySearch['label_column_name']}" sortBy="#{item.name}" sortOrder="asc"

@@ -11,4 +11,10 @@ public interface ISearchMBean<TO extends AbstractModelTO> {
 	public void onRequestReloadDatatable();
 	
 	public void onInit();
+	
+	public Boolean getFilterVisible();
+	
+	public void onToggleFilter();
+	
+	public String getEmptyMessage();
 }

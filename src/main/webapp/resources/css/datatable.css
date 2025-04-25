@@ -5,3 +5,11 @@
 .ui-full-width-filter input {
 	width: 100% !important;
 }
+
+.hide-filters .ui-column-filter {
+	display: none !important;
+}
+
+.hide-filters .ui-column-customfilter {
+	display: none;
+}

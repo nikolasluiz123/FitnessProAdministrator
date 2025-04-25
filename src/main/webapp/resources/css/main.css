@@ -85,3 +85,7 @@ body .ui-dialog .ui-dialog-content {
     overflow-wrap: break-word;
     word-break: break-all;
 }
+
+.margin-right-16 {
+	margin-right: 24px !important;
+}

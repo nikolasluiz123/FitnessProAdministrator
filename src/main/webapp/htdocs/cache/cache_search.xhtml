@@ -35,9 +35,11 @@
 			<fit:pagingTable id="dataTableCache" mBean="#{cacheSearchMBean}"
 				updateOnRowSelect="formMessages:messages, cacheDialog"
 				updateOnRefresh="formMessages:messages, cacheSearchForm:dataTableCache:dataTablePaging"
+				updateOnToggleFilter="cacheSearchForm:dataTableCache:dataTablePaging"
 				onCompleteOnRowSelect="PF('cacheDialogWV').show();">
 
-				<p:column headerText="#{bundleCacheSearch['label_column_name']}" width="90%">
+				<p:column headerText="#{bundleCacheSearch['label_column_name']}" width="90%" filterBy="#{item.name}"
+					filterMatchMode="contains" sortBy="#{item.name}">
 					<h:outputText value="#{item.name}" />
 				</p:column>
 

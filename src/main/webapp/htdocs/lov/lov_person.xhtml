@@ -21,6 +21,7 @@
 			<div class="ui-g-12">
 				<fit:lazyPagingTable id="dataTablePersonsLov" mBean="#{mbean}" updateOnRowSelect="formMessages:messages"
 					updateOnRefresh="formMessages:messages, personsLovDialogForm:dataTablePersonsLov:dataTablePagingLazy"
+					updateOnToggleFilter="personsLovDialogForm:dataTablePersonsLov:dataTablePagingLazy"
 					onCompleteOnRowSelect="PF('personsLovDialogWV').hide();">
 
 					<p:column headerText="#{bundlePersonsLovDialog['label_column_name']}" sortBy="#{item.name}" sortOrder="asc"

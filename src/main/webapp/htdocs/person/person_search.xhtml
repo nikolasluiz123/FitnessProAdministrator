@@ -31,6 +31,7 @@
 			<fit:lazyPagingTable id="dataTablePersons" mBean="#{personSearchMBean}"
 				updateOnRowSelect="formMessages:messages, personDialog"
 				updateOnRefresh="formMessages:messages, personSearchForm:dataTablePersons:dataTablePagingLazy"
+				updateOnToggleFilter="personSearchForm:dataTablePersons:dataTablePagingLazy"
 				onCompleteOnRowSelect="PF('personDialogWV').show();">
 
 				<p:column headerText="#{bundlePersonSearch['label_column_name']}" sortBy="#{item.name}" sortOrder="asc"

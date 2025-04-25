@@ -11,6 +11,7 @@ import jakarta.annotation.PostConstruct;
 public abstract class AbstractSearchMBean<TO extends AbstractModelTO> extends AbstractBaseMBean implements ISearchMBean<TO> {
 
 	private List<TO> data;
+	private boolean filterVisible;
 	
 	@PostConstruct
 	public void init() {
@@ -26,6 +27,21 @@ public abstract class AbstractSearchMBean<TO extends AbstractModelTO> extends Ab
 	@Override
 	public void onInit() {
 		
+	}
+	
+	@Override
+	public Boolean getFilterVisible() {
+		return this.filterVisible;
+	}
+	
+	@Override
+	public void onToggleFilter() {
+		this.filterVisible = !this.filterVisible;
+	}
+	
+	@Override
+	public String getEmptyMessage() {
+		return getSearchBundleString("empty_table_message");
 	}
 
 	public List<TO> getData() {

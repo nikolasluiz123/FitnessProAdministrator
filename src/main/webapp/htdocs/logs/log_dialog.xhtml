@@ -72,6 +72,7 @@
 				<fit:lazyPagingTable id="dataTableLogPackages" mBean="#{logDialogMBean}"
 					updateOnRowSelect="formMessages:messages, logPackageDialog"
 					updateOnRefresh="formMessages:messages, logDialogForm:dataTableLogPackages:dataTablePagingLazy"
+					updateOnToggleFilter="logDialogForm:dataTableLogPackages:dataTablePagingLazy"
 					onCompleteOnRowSelect="PF('logPackageDialogWV').show();">
 
 					<p:column field="#{EnumExecutionLogsPackageFields.SERVICE_EXECUTION_START.fieldName}"

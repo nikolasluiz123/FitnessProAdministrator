@@ -10,7 +10,6 @@ import br.com.administrator.managedbean.person.lazymodel.LazyPersonDataModel;
 import br.com.administrator.to.TOPerson;
 import br.com.administrator.viewmodel.person.PersonSearchViewModel;
 import br.com.fitnesspro.shared.communication.enums.general.EnumUserType;
-import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
