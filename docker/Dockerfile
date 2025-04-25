@@ -24,6 +24,15 @@ RUN rm -rf $WILDFLY_HOME/standalone/work/*
 RUN apt-get update && apt-get install -y --no-install-recommends tzdata && rm -rf /var/lib/apt/lists/*
 ENV TZ=America/Sao_Paulo
 
+RUN apt-get update && \
+    apt-get install -y locales && \
+    locale-gen pt_BR.UTF-8 && \
+    update-locale LANG=pt_BR.UTF-8
+
+ENV LANG=pt_BR.UTF-8 \
+    LANGUAGE=pt_BR:pt \
+    LC_ALL=pt_BR.UTF-8
+
 COPY administrator.war $WILDFLY_HOME/standalone/deployments/
 
 EXPOSE 8080
