@@ -34,25 +34,30 @@
 		<h:form id="menuForm">
 			<p:menu id="menuItems" class="menu-container">
 				<p:submenu label="#{menuBundle['label_submenu_monitoring']}">
-					<p:menuitem value="#{menuBundle['label_menu_item_execution_logs']}" action="#{menuMBean.onExecutionLogsClick}" />
-					<p:menuitem value="#{menuBundle['label_menu_item_caches']}" action="#{menuMBean.onCachesClick}" />
+					<p:menuitem ajax="false" value="#{menuBundle['label_menu_item_execution_logs']}" action="#{menuMBean.onExecutionLogsClick}" />
+					<p:menuitem ajax="false" value="#{menuBundle['label_menu_item_caches']}" action="#{menuMBean.onCachesClick}" />
 				</p:submenu>
 
 				<p:submenu label="#{menuBundle['label_submenu_auth']}">
-					<p:menuitem value="#{menuBundle['label_menu_item_application']}" action="#{menuMBean.onApplicationsClick}" />
-					<p:menuitem value="#{menuBundle['label_menu_item_device']}" action="#{menuMBean.onDevicesClick}" />
-					<p:menuitem value="#{menuBundle['label_menu_item_token']}" action="#{menuMBean.onTokensClick}" />
+					<p:menuitem ajax="false" value="#{menuBundle['label_menu_item_application']}" action="#{menuMBean.onApplicationsClick}" />
+					<p:menuitem ajax="false" value="#{menuBundle['label_menu_item_device']}" action="#{menuMBean.onDevicesClick}" />
+					<p:menuitem ajax="false" value="#{menuBundle['label_menu_item_token']}" action="#{menuMBean.onTokensClick}" />
 				</p:submenu>
 
 				<p:submenu label="#{menuBundle['label_submenu_general']}">
-					<p:menuitem value="#{menuBundle['label_menu_item_academies']}" action="#{menuMBean.onAcademiesClick}" />
-					<p:menuitem value="#{menuBundle['label_menu_item_persons']}" action="#{menuMBean.onPresonsClick}" />
+					<p:menuitem ajax="false" value="#{menuBundle['label_menu_item_academies']}" action="#{menuMBean.onAcademiesClick}" />
+					<p:menuitem ajax="false" value="#{menuBundle['label_menu_item_persons']}" action="#{menuMBean.onPresonsClick}" />
 				</p:submenu>
 			</p:menu>
 		</h:form>
 	</div>
 
 	<div class="main-content">
+		<p:ajaxStatus onstart="document.getElementById('loadingBar').style.display = 'block'"
+			onsuccess="document.getElementById('loadingBar').style.display = 'none'" />
+
+		<p:progressBar id="loadingBar" mode="indeterminate" style="height:6px; margin-bottom:8px; display: none;" />
+		
 		<ui:insert name="content" />
 
 		<h:form id="formDefaultDialogs">
