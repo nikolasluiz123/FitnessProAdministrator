@@ -7,18 +7,36 @@ public class TODevice extends AbstractAuditableDTO {
 	private static final long serialVersionUID = 1L;
 
 	private String model;
+	private String brand;
+	private String androidVersion;
 	private Boolean active;
 
 	public TODevice() {
 		this.active = true;
 	}
-	
+
 	public String getModel() {
 		return model;
 	}
 
 	public void setModel(String model) {
 		this.model = model;
+	}
+
+	public String getBrand() {
+		return brand;
+	}
+
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+
+	public String getAndroidVersion() {
+		return androidVersion;
+	}
+
+	public void setAndroidVersion(String androidVersion) {
+		this.androidVersion = androidVersion;
 	}
 
 	public Boolean getActive() {

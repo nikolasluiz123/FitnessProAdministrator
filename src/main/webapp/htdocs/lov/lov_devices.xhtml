@@ -34,6 +34,16 @@
 						<h:outputText value="#{item.model}" />
 					</p:column>
 
+					<p:column headerText="#{bundleDevicesLovDialog['label_column_brand']}" sortBy="#{item.brand}"
+						filterBy="#{item.brand}" filterMatchMode="contains" field="#{EnumDeviceFields.BRAND.fieldName}" width="150">
+						<h:outputText value="#{item.brand}" />
+					</p:column>
+
+					<p:column headerText="#{bundleDevicesLovDialog['label_column_android_version']}" sortBy="#{item.androidVersion}"
+						filterBy="#{item.androidVersion}" filterMatchMode="contains" field="#{EnumDeviceFields.ANDROID_VERSION.fieldName}" width="100">
+						<h:outputText value="#{item.androidVersion}" />
+					</p:column>
+
 					<p:column headerText="#{bundleDevicesLovDialog['label_column_creation_date']}" sortBy="#{item.creationDate}"
 						sortOrder="desc" field="#{EnumDeviceFields.CREATION_DATE.fieldName}" width="200">
 
