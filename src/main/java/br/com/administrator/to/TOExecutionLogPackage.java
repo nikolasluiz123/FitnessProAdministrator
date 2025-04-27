@@ -13,6 +13,7 @@ public class TOExecutionLogPackage extends AbstractModelTO {
 	private LocalDateTime clientExecutionStart;
 	private LocalDateTime clientExecutionEnd;
 	private String requestBody;
+	private String responseBody;
 	private String error;
 	private Integer insertedItemsCount;
 	private Integer updatedItemsCount;
@@ -56,6 +57,14 @@ public class TOExecutionLogPackage extends AbstractModelTO {
 
 	public void setRequestBody(String requestBody) {
 		this.requestBody = requestBody;
+	}
+	
+	public String getResponseBody() {
+		return responseBody;
+	}
+
+	public void setResponseBody(String responseBody) {
+		this.responseBody = responseBody;
 	}
 
 	public String getError() {

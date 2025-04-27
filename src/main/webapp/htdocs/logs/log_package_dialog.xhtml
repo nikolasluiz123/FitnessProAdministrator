@@ -71,13 +71,19 @@
 				</div>
 			</div>
 
-			<div class="ui-g-12 vertical-labeled-input">
+			<div class="ui-g-12 vertical-labeled-input" jsf:rendered="#{logPackageDialogMBean.visibleRequestBody}">
 				<p:outputLabel id="labelRequestBody" for="requestBody" value="#{bundleLogPackageDialog['label_field_request_body']}" />
 				<p:inputTextarea id="requestBody" value="#{logPackageDialogMBean.toExecutionLogPackage.requestBody}" readonly="true"
 					converter="JsonConverter" autoResize="false" styleClass="text-area-log-infos" />
 			</div>
 
-			<div class="ui-g-12 vertical-labeled-input">
+			<div class="ui-g-12 vertical-labeled-input" jsf:rendered="#{logPackageDialogMBean.visibleResponseBody}">
+				<p:outputLabel id="labelResponseBody" for="requestBody" value="#{bundleLogPackageDialog['label_field_response_body']}" />
+				<p:inputTextarea id="responseBody" value="#{logPackageDialogMBean.toExecutionLogPackage.responseBody}" readonly="true"
+					converter="JsonConverter" autoResize="false" styleClass="text-area-log-infos" />
+			</div>
+
+			<div class="ui-g-12 vertical-labeled-input" jsf:rendered="#{logPackageDialogMBean.visibleError}">
 				<p:outputLabel id="labelError" for="error" value="#{bundleLogPackageDialog['label_field_error']}" />
 				<p:inputTextarea id="error" value="#{logPackageDialogMBean.toExecutionLogPackage.error}" readonly="true"
 					autoResize="false" styleClass="text-area-log-infos" />
