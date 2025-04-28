@@ -5,6 +5,7 @@ import java.io.Serializable;
 import br.com.administrator.service.webclient.AuthenticationWebClient;
 import br.com.administrator.to.TOLogin;
 import br.com.administrator.utils.AuthSessionUtils;
+import br.com.fitnesspro.shared.communication.helper.HashHelper;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 
@@ -21,7 +22,8 @@ public class LoginViewModel implements Serializable {
 	}
 
 	public void authenticate(TOLogin toLogin) throws Exception {
-		String token = authenticationWebClient.authenticate(toLogin.getEmail(), toLogin.getPassword());
-		AuthSessionUtils.saveUserInfos(token, toLogin.getEmail(), toLogin.getPassword());
+		String hashedPassword = HashHelper.INSTANCE.applyHash(toLogin.getPassword());
+		String token = authenticationWebClient.authenticate(toLogin.getEmail(), hashedPassword);
+		AuthSessionUtils.saveUserInfos(token, toLogin.getEmail(), hashedPassword);
 	}
 }
