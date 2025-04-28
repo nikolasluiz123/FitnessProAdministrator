@@ -19,7 +19,7 @@
 			<p:importEnum type="br.com.fitnesspro.shared.communication.query.enums.EnumPersonFields" var="EnumPersonFields" />
 
 			<p:remoteCommand name="onRequestReloadDatatable" action="#{personSearchMBean.onRequestReloadDatatable}"
-				update="dataTablePersons" />
+				update="personSearchForm:dataTablePersons:dataTablePagingLazy" />
 
 			<p:toolbar id="topBar" styleClass="main-top-bar">
 				<f:facet name="right">
