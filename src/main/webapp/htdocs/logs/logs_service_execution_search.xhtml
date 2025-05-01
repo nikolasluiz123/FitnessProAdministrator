@@ -71,7 +71,7 @@
 
 				<p:column headerText="#{bundleExecutionLog['label_column_endpoint']}" sortBy="#{item.endpoint}"
 					filterBy="#{item.endpoint}" filterMatchMode="contains" field="#{EnumExecutionLogsFields.END_POINT.fieldName}"
-					width="300">
+					width="400">
 					<h:outputText value="#{item.endpoint}" />
 				</p:column>
 
@@ -89,13 +89,13 @@
 
 				<p:column headerText="#{bundleExecutionLog['label_column_device']}" sortBy="#{item.deviceId}"
 					filterBy="#{item.deviceId}" filterMatchMode="contains" field="#{EnumExecutionLogsFields.DEVICE_ID.fieldName}"
-					width="300">
+					width="250">
 					<h:outputText value="#{item.deviceId}" />
 				</p:column>
 
 				<p:column headerText="#{bundleExecutionLog['label_column_application']}" sortBy="#{item.applicationName}"
 					filterBy="#{item.applicationName}" filterMatchMode="contains"
-					field="#{EnumExecutionLogsFields.APPLICATION_NAME.fieldName}" width="300">
+					field="#{EnumExecutionLogsFields.APPLICATION_NAME.fieldName}" width="250">
 					<h:outputText value="#{item.applicationName}" />
 				</p:column>
 			</fit:lazyPagingTable>

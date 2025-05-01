@@ -73,6 +73,14 @@ public class MenuMBean extends AbstractBaseMBean {
 		}
 	}
 	
+	public void onScheduledTasksClick() {
+		try {
+			FacesUtils.redirect(IScreensRedirect.SCHEDULED_TASKS);
+		} catch (Exception e) {
+			navigationExceptionHandler(e);
+		}
+	}
+	
 	public void onLogout() {
 		try {
 			viewModel.logout();

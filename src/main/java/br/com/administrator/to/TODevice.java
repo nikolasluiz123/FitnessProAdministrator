@@ -1,8 +1,8 @@
 package br.com.administrator.to;
 
-import br.com.administrator.to.common.AbstractAuditableDTO;
+import br.com.administrator.to.common.AbstractAuditableTO;
 
-public class TODevice extends AbstractAuditableDTO {
+public class TODevice extends AbstractAuditableTO {
 
 	private static final long serialVersionUID = 1L;
 

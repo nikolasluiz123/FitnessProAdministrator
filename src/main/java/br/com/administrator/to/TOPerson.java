@@ -2,9 +2,9 @@ package br.com.administrator.to;
 
 import java.time.LocalDate;
 
-import br.com.administrator.to.common.AbstractAuditableDTO;
+import br.com.administrator.to.common.AbstractAuditableTO;
 
-public class TOPerson extends AbstractAuditableDTO {
+public class TOPerson extends AbstractAuditableTO {
 
 	private static final long serialVersionUID = 1L;
 

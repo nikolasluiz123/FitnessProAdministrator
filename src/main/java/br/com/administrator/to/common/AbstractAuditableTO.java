@@ -3,7 +3,7 @@ package br.com.administrator.to.common;
 import java.time.LocalDateTime;
 
 @SuppressWarnings("serial")
-public abstract class AbstractAuditableDTO extends AbstractModelTO {
+public abstract class AbstractAuditableTO extends AbstractModelTO {
 
 	private LocalDateTime creationDate;
 	private LocalDateTime updateDate;

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions" xmlns:fit="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+<h:outputStylesheet name="css/scheduledtask/scheduled_task_dialog.css" />
+
+<p:dialog id="scheduledTaskDialog" widgetVar="scheduledTaskDialogWV" modal="true" fitViewport="true" responsive="true"
+	width="80vw" resizable="false" dynamic="true" onHide="onRequestReloadDatatable();">
+
+	<f:facet name="header">
+		<h:outputText id="dialogHeader" value="#{scheduledTaskDialogMBean.title}" />
+	</f:facet>
+
+	<h:form id="applicationDialogForm">
+		<f:loadBundle var="bundleScheduledTaskDialog" basename="#{scheduledTaskDialogMBean.screenBundleFilePath}" />
+
+		<p:messages id="scheduledTaskDialogMessages" closable="true" showSummary="true" showDetail="true"
+			skipDetailIfEqualsSummary="true" />
+
+		<div class="ui-g">
+			<div class="ui-g-6 vertical-labeled-input">
+				<p:outputLabel id="labelName" for="name" value="#{bundleScheduledTaskDialog['label_field_name']}" />
+
+				<p:inputText id="name" value="#{scheduledTaskDialogMBean.toScheduledTask.name}"
+					disabled="${scheduledTaskDialogMBean.disabledDialog}" required="true" />
+			</div>
+
+			<div class="ui-g-6 vertical-labeled-input">
+				<p:outputLabel id="labelHandlerName" for="handlerName"
+					value="#{bundleScheduledTaskDialog['label_field_handler_name']}" />
+
+				<p:inputText id="handlerName" value="#{scheduledTaskDialogMBean.toScheduledTask.handlerBeanName}"
+					disabled="${scheduledTaskDialogMBean.disabledDialog}" required="true" />
+			</div>
+
+			<div class="ui-g-6 vertical-labeled-input">
+				<p:outputLabel id="labelInterval" for="interval" value="#{bundleScheduledTaskDialog['label_field_interval']}" />
+
+				<p:inputText id="interval" value="#{scheduledTaskDialogMBean.interval}"
+					disabled="${scheduledTaskDialogMBean.disabledDialog}" required="true" />
+			</div>
+
+			<div class="ui-g-6 vertical-labeled-input">
+				<p:outputLabel id="labelTemporalUnit" for="temporalUnit"
+					value="#{bundleScheduledTaskDialog['label_field_temporal_unit']}" />
+
+				<p:selectOneMenu id="temporalUnit" value="#{scheduledTaskDialogMBean.selectedTemporalUnit}" required="true">
+					<f:selectItems value="#{scheduledTaskDialogMBean.temporalUnits}" var="item" itemValue="#{item.value}"
+						itemLabel="#{item.label}" />
+				</p:selectOneMenu>
+
+			</div>
+
+			<div class="ui-g-12 vertical-labeled-input">
+				<p:outputLabel id="labelJsonConfig" for="jsonConfig" value="#{bundleScheduledTaskDialog['label_field_json_config']}" />
+				<p:inputTextarea id="jsonConfig" value="#{scheduledTaskDialogMBean.toScheduledTask.configJson}"
+					converter="JsonConverter" autoResize="false" styleClass="text-area-json-config" />
+			</div>
+		</div>
+
+		<p:toolbar id="toolbar" styleClass="dialog-toolbar">
+			<f:facet name="left">
+				<p:commandButton id="btnInactivate" styleClass="ui-button-danger"
+					value="#{bundleScheduledTaskDialog['label_button_inactivate']}"
+					action="#{scheduledTaskDialogMBean.onScheduledTaskInactivateClick}" update="@form"
+					disabled="${scheduledTaskDialogMBean.disabledInactivateButton}">
+
+					<p:confirm header="#{bundleScheduledTaskDialog['title_dialog_confirmation_inactivation']}"
+						message="#{scheduledTaskDialogMBean.messageConfirmationInactivation}" icon="pi pi-exclamation-triangle" />
+				</p:commandButton>
+			</f:facet>
+
+			<f:facet name="right">
+				<p:commandButton id="btnSave" value="#{bundleScheduledTaskDialog['label_button_save']}"
+					action="#{scheduledTaskDialogMBean.onScheduledTaskSaveClick}" update="@form"
+					disabled="${scheduledTaskDialogMBean.disabledDialog}" />
+			</f:facet>
+		</p:toolbar>
+	</h:form>
+</p:dialog>
+
+</html>

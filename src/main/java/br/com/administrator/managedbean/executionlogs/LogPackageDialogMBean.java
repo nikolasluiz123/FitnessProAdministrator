@@ -32,6 +32,10 @@ public class LogPackageDialogMBean extends AbstractBaseMBean {
 		this.toExecutionLogPackage = toExecutionLogPackage;
 	}
 	
+	public boolean isVisibleImportExportInfos() {
+		return isVisibleImportInfos() || isVisibleExportInfos();
+	}
+	
 	public boolean isVisibleImportInfos() {
 		return this.toExecutionLogPackage.getInsertedItemsCount() != null ||
 				this.toExecutionLogPackage.getUpdatedItemsCount() != null;
@@ -51,6 +55,10 @@ public class LogPackageDialogMBean extends AbstractBaseMBean {
 	
 	public boolean isVisibleError() {
 		return StringUtils.isNotNull(this.toExecutionLogPackage.getError());
+	}
+	
+	public boolean isVisibleExecutionAdditionalInfos() {
+		return StringUtils.isNotNull(this.toExecutionLogPackage.getExecutionAdditionalInfos());
 	}
 	
 	@Override

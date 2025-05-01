@@ -13,13 +13,13 @@ import br.com.administrator.enums.EnumDateTimePatterns;
 
 public class TimeConverterUtil {
 
-	public static LocalDateTime parseLocalDateTime(String value, EnumDateTimePatterns pattern) {
+	public static LocalDateTime parseLocalDateTime(String value, EnumDateTimePatterns pattern, Boolean databaseInfo) {
 	    if (StringUtils.isNullOrEmpty(value)) return null;
 
 	    DateTimeFormatter formatter = getFormatterOfPatternWithLocale(pattern);
 	    LocalDateTime localDateTime = LocalDateTime.parse(value, formatter);
 
-	    return localDateTime.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
+	    return localDateTime.atZone(getZoneId(databaseInfo)).withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
 	}
 	
 	public static LocalDate parseLocalDate(String value, EnumDateTimePatterns pattern) {
@@ -29,13 +29,18 @@ public class TimeConverterUtil {
 		return LocalDate.parse(value, formatter);
 	}
 
-	public static String formatLocalDateTime(LocalDateTime value, EnumDateTimePatterns pattern) {
+	public static String formatLocalDateTime(LocalDateTime value, EnumDateTimePatterns pattern, Boolean databaseInfo) {
 	    if (value == null) return null;
 
-	    ZonedDateTime zonedDateTime = value.atZone(ZoneOffset.UTC).withZoneSameInstant(ZoneId.systemDefault());
+	    ZoneId zoneId = getZoneId(databaseInfo);
+	    ZonedDateTime zonedDateTime = value.atZone(zoneId).withZoneSameInstant(ZoneId.systemDefault());
 	    DateTimeFormatter formatter = getFormatterOfPatternWithLocale(pattern).withZone(ZoneId.systemDefault());
 
 	    return formatter.format(zonedDateTime);
+	}
+
+	private static ZoneId getZoneId(Boolean databaseInfo) {
+		return databaseInfo ? ZoneOffset.UTC : ZoneOffset.systemDefault();
 	}
 	
 	public static String formatLocalDate(LocalDate value, EnumDateTimePatterns pattern) {

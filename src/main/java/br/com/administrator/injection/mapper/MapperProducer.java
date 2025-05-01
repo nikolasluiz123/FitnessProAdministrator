@@ -4,6 +4,7 @@ import br.com.administrator.mappers.AcademyMapper;
 import br.com.administrator.mappers.ApplicationMapper;
 import br.com.administrator.mappers.CacheMapper;
 import br.com.administrator.mappers.DeviceMapper;
+import br.com.administrator.mappers.ScheduledTaskMapper;
 import br.com.administrator.mappers.log.LogMapper;
 import br.com.administrator.mappers.log.converters.EnumExecutionStateConverter;
 import br.com.administrator.mappers.log.converters.EnumExecutionTypeConverter;
@@ -57,5 +58,10 @@ public class MapperProducer {
 									   LabeledExecutionTypeEnumToEnumConverter executionTypeEnumToEnumConverter, 
 									   LabeledExecutionStateEnumToEnumConverter executionStateEnumToEnumConverter) {
 		return new LogMapper(enumStateConverter, enumTypeConverter, executionTypeEnumToEnumConverter, executionStateEnumToEnumConverter);
+	}
+	
+	@Produces
+	public ScheduledTaskMapper producesScheduledTaskMapper() {
+		return new ScheduledTaskMapper();
 	}
 }

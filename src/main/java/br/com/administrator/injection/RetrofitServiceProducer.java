@@ -7,6 +7,7 @@ import br.com.administrator.service.ICacheService;
 import br.com.administrator.service.IDeviceService;
 import br.com.administrator.service.IExecutionLogsService;
 import br.com.administrator.service.IPersonService;
+import br.com.administrator.service.IScheduledTaskService;
 import br.com.administrator.service.ITokenService;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
@@ -54,5 +55,9 @@ public class RetrofitServiceProducer {
 	public IPersonService producePersonService(Retrofit retrofit) {
 		return retrofit.create(IPersonService.class);
 	}
-
+	
+	@Produces
+	public IScheduledTaskService produceScheduledTaskService(Retrofit retrofit) {
+		return retrofit.create(IScheduledTaskService.class);
+	}
 }

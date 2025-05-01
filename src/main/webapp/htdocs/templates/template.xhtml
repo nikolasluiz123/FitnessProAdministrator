@@ -37,6 +37,10 @@
 					<p:menuitem ajax="false" value="#{menuBundle['label_menu_item_execution_logs']}" action="#{menuMBean.onExecutionLogsClick}" />
 					<p:menuitem ajax="false" value="#{menuBundle['label_menu_item_caches']}" action="#{menuMBean.onCachesClick}" />
 				</p:submenu>
+				
+				<p:submenu label="#{menuBundle['label_submenu_administration']}">
+					<p:menuitem ajax="false" value="#{menuBundle['label_menu_item_scheduled_tasks']}" action="#{menuMBean.onScheduledTasksClick}" />
+				</p:submenu>
 
 				<p:submenu label="#{menuBundle['label_submenu_auth']}">
 					<p:menuitem ajax="false" value="#{menuBundle['label_menu_item_application']}" action="#{menuMBean.onApplicationsClick}" />

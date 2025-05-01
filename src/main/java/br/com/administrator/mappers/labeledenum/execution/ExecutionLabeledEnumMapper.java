@@ -10,56 +10,26 @@ import br.com.fitnesspro.shared.communication.enums.execution.EnumExecutionType;
 public final class ExecutionLabeledEnumMapper {
 
 	private ResourceBundle bundle = FacesUtils.getResourceBundle(ICommonBundlePaths.LABELED_ENUMS);
-	
+
 	public String getLabelExecutionType(EnumExecutionType type) {
-		String label = null;
-		
-		switch(type) {
-		case DELETE:
-			label = bundle.getString("label_execution_type_delete");
-			break;
-		case EXPORTATION:
-			label = bundle.getString("label_execution_type_exportation");
-			break;
-		case GET:
-			label = bundle.getString("label_execution_type_get");
-			break;
-		case IMPORTATION:
-			label = bundle.getString("label_execution_type_importation");
-			break;
-		case POST:
-			label = bundle.getString("label_execution_type_post");
-			break;
-		case PUT:
-			label = bundle.getString("label_execution_type_put");
-			break;
-		default:
-			break;
-		}
-		
-		return label;
+		return switch (type) {
+		case DELETE -> bundle.getString("label_execution_type_delete");
+		case EXPORTATION -> bundle.getString("label_execution_type_exportation");
+		case GET -> bundle.getString("label_execution_type_get");
+		case IMPORTATION -> bundle.getString("label_execution_type_importation");
+		case POST -> bundle.getString("label_execution_type_post");
+		case PUT -> bundle.getString("label_execution_type_put");
+		case SCHEDULED_TASK -> bundle.getString("label_execution_type_scheduled_task");
+		default -> null;
+		};
 	}
-	
+
 	public String getLabelExecutionState(EnumExecutionState state) {
-		String label = null;
-		
-		switch(state) {
-		case ERROR:
-			label = bundle.getString("label_execution_state_error");
-			break;
-		case FINISHED:
-			label = bundle.getString("label_execution_state_finished");
-			break;
-		case PENDING:
-			label = bundle.getString("label_execution_state_pending");
-			break;
-		case RUNNING:
-			label = bundle.getString("label_execution_state_running");
-			break;
-		default:
-			break;
-		}
-		
-		return label;
+		return switch (state) {
+		case ERROR -> bundle.getString("label_execution_state_error");
+		case FINISHED -> bundle.getString("label_execution_state_finished");
+		case PENDING -> bundle.getString("label_execution_state_pending");
+		case RUNNING -> bundle.getString("label_execution_state_running");
+		};
 	}
 }

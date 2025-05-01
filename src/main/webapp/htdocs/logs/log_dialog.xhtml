@@ -26,7 +26,8 @@
 				<div class="ui-g-2 vertical-labeled-input">
 					<p:outputLabel id="labelExecutionType" value="#{bundleLogDialog['label_field_execution_type']}"
 						styleClass="bold-label" />
-					<p:outputLabel id="valueExecutionType" value="#{logDialogMBean.toExecutionLog.type.label}" styleClass="label-value label-break" />
+					<p:outputLabel id="valueExecutionType" value="#{logDialogMBean.toExecutionLog.type.label}"
+						styleClass="label-value label-break" />
 				</div>
 
 				<div class="ui-g-2 vertical-labeled-input">
@@ -38,17 +39,20 @@
 
 				<div class="ui-g-2 vertical-labeled-input" jsf:rendered="#{logDialogMBean.visibleUserEmail}">
 					<p:outputLabel id="labelUser" value="#{bundleLogDialog['label_field_user']}" styleClass="bold-label" />
-					<p:outputLabel id="valueUser" value="#{logDialogMBean.toExecutionLog.userEmail}" styleClass="label-value label-break" />
+					<p:outputLabel id="valueUser" value="#{logDialogMBean.toExecutionLog.userEmail}"
+						styleClass="label-value label-break" />
 				</div>
 
 				<div class="ui-g-3 vertical-labeled-input">
 					<p:outputLabel id="labelEndPoint" value="#{bundleLogDialog['label_field_end_point']}" styleClass="bold-label" />
-					<p:outputLabel id="valueEndPoint" value="#{logDialogMBean.toExecutionLog.endpoint}" styleClass="label-value label-break" />
+					<p:outputLabel id="valueEndPoint" value="#{logDialogMBean.toExecutionLog.endpoint}"
+						styleClass="label-value label-break" />
 				</div>
 
 				<div class="ui-g-3 vertical-labeled-input">
 					<p:outputLabel id="labelMethodName" value="#{bundleLogDialog['label_field_method_name']}" styleClass="bold-label" />
-					<p:outputLabel id="valueMethodName" value="#{logDialogMBean.toExecutionLog.methodName}" styleClass="label-value label-break" />
+					<p:outputLabel id="valueMethodName" value="#{logDialogMBean.toExecutionLog.methodName}"
+						styleClass="label-value label-break" />
 				</div>
 			</div>
 
@@ -56,7 +60,8 @@
 				<div class="ui-g-4 vertical-labeled-input">
 					<p:outputLabel id="labelPageSize" value="#{bundleLogDialog['label_field_page_size']}" styleClass="bold-label" />
 
-					<p:outputLabel id="valuePageSize" value="#{logDialogMBean.toExecutionLog.pageSize}" styleClass="label-value label-break" />
+					<p:outputLabel id="valuePageSize" value="#{logDialogMBean.toExecutionLog.pageSize}"
+						styleClass="label-value label-break" />
 				</div>
 
 				<div class="ui-g-4 vertical-labeled-input" jsf:rendered="#{logDialogMBean.visibleLastUpdateDate}">
@@ -104,7 +109,7 @@
 
 					<p:column field="#{EnumExecutionLogsPackageFields.CLIENT_EXECUTION_START.fieldName}"
 						headerText="#{bundleLogDialog['label_column_client_execution_start']}" filterMatchMode="between"
-						sortBy="#{item.clientExecutionStart}" width="200">
+						sortBy="#{item.clientExecutionStart}" width="200" rendered="#{logDialogMBean.visibleImportExportInfos}">
 						<f:facet name="filter">
 							<p:datePicker id="filterRangeClientExecutionStart" selectionMode="range"
 								onchange="PF('executionLogsTableWV').filter()" converter="LocalDateConverter" styleClass="ui-full-width-filter" />
@@ -117,7 +122,7 @@
 
 					<p:column field="#{EnumExecutionLogsPackageFields.CLIENT_EXECUTION_END.fieldName}"
 						headerText="#{bundleLogDialog['label_column_client_execution_end']}" filterMatchMode="between"
-						sortBy="#{item.clientExecutionEnd}" width="200">
+						sortBy="#{item.clientExecutionEnd}" width="200" rendered="#{logDialogMBean.visibleImportExportInfos}">
 						<f:facet name="filter">
 							<p:datePicker id="filterRangeClientExecutionEnd" selectionMode="range"
 								onchange="PF('executionLogsTableWV').filter()" converter="LocalDateConverter" styleClass="ui-full-width-filter" />

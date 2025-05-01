@@ -14,10 +14,19 @@ import br.com.administrator.service.gson.adapter.LocalTimeTypeAdapter;
 public class GsonUtils {
 
 	public static Gson getDefaultGson() {
-		return new GsonBuilder()
+		return getDefaultGson(false);
+	}
+	
+	public static Gson getDefaultGson(Boolean prettyPrint) {
+		GsonBuilder builder = new GsonBuilder()
 				.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter())
 		        .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
-		        .registerTypeAdapter(LocalTime.class, new LocalTimeTypeAdapter())
-		        .create();
+		        .registerTypeAdapter(LocalTime.class, new LocalTimeTypeAdapter());
+		
+		if (prettyPrint) {
+			builder.setPrettyPrinting();
+		}
+		
+		return builder.create();
 	}
 }

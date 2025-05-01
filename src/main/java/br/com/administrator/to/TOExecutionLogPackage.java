@@ -15,6 +15,7 @@ public class TOExecutionLogPackage extends AbstractModelTO {
 	private String requestBody;
 	private String responseBody;
 	private String error;
+	private String executionAdditionalInfos;
 	private Integer insertedItemsCount;
 	private Integer updatedItemsCount;
 	private Integer allItemsCount;
@@ -58,7 +59,7 @@ public class TOExecutionLogPackage extends AbstractModelTO {
 	public void setRequestBody(String requestBody) {
 		this.requestBody = requestBody;
 	}
-	
+
 	public String getResponseBody() {
 		return responseBody;
 	}
@@ -97,6 +98,14 @@ public class TOExecutionLogPackage extends AbstractModelTO {
 
 	public void setAllItemsCount(Integer allItemsCount) {
 		this.allItemsCount = allItemsCount;
+	}
+
+	public String getExecutionAdditionalInfos() {
+		return executionAdditionalInfos;
+	}
+
+	public void setExecutionAdditionalInfos(String executionAdditionalInfos) {
+		this.executionAdditionalInfos = executionAdditionalInfos;
 	}
 
 }

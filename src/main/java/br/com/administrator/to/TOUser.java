@@ -1,10 +1,10 @@
 package br.com.administrator.to;
 
 import br.com.administrator.managedbean.common.labeledenum.LabeledEnum;
-import br.com.administrator.to.common.AbstractAuditableDTO;
+import br.com.administrator.to.common.AbstractAuditableTO;
 import br.com.fitnesspro.shared.communication.enums.general.EnumUserType;
 
-public class TOUser extends AbstractAuditableDTO {
+public class TOUser extends AbstractAuditableTO {
 
 	private static final long serialVersionUID = 1L;
 

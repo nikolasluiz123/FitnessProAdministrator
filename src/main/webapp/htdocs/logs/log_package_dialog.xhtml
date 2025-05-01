@@ -31,14 +31,14 @@
 						styleClass="label-value" converter="LocalDateTimeConverter" />
 				</div>
 
-				<div class="ui-g-3 vertical-labeled-input ui-g-nopad">
+				<div class="ui-g-3 vertical-labeled-input ui-g-nopad" jsf:rendered="#{logPackageDialogMBean.visibleImportExportInfos}">
 					<p:outputLabel id="labelClientStart" value="#{bundleLogPackageDialog['label_field_client_start']}"
 						styleClass="bold-label" />
 					<p:outputLabel id="valueClientStart" value="#{logPackageDialogMBean.toExecutionLogPackage.clientExecutionStart}"
 						styleClass="label-value" converter="LocalDateTimeConverter" />
 				</div>
 
-				<div class="ui-g-3 vertical-labeled-input ui-g-nopad">
+				<div class="ui-g-3 vertical-labeled-input ui-g-nopad" jsf:rendered="#{logPackageDialogMBean.visibleImportExportInfos}">
 					<p:outputLabel id="labelClientEnd" value="#{bundleLogPackageDialog['label_field_client_end']}"
 						styleClass="bold-label" />
 					<p:outputLabel id="valueClientEnd" value="#{logPackageDialogMBean.toExecutionLogPackage.clientExecutionEnd}"
@@ -69,6 +69,12 @@
 					<p:outputLabel id="valueAllItemsCount" value="#{logPackageDialogMBean.toExecutionLogPackage.allItemsCount}"
 						styleClass="label-value" />
 				</div>
+			</div>
+
+			<div class="ui-g-12 vertical-labeled-input" jsf:rendered="#{logPackageDialogMBean.visibleExecutionAdditionalInfos}">
+				<p:outputLabel id="labelAdditionalInfos" for="requestBody" value="#{bundleLogPackageDialog['label_field_additional_infos']}" />
+				<p:inputTextarea id="additionalInfos" value="#{logPackageDialogMBean.toExecutionLogPackage.executionAdditionalInfos}" readonly="true"
+					autoResize="false" styleClass="text-area-log-infos" />
 			</div>
 
 			<div class="ui-g-12 vertical-labeled-input" jsf:rendered="#{logPackageDialogMBean.visibleRequestBody}">

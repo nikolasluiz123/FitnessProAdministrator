@@ -11,7 +11,6 @@ import br.com.administrator.to.TOExecutionLog;
 import br.com.administrator.viewmodel.log.ExecutionLogsViewModel;
 import br.com.fitnesspro.shared.communication.enums.execution.EnumExecutionState;
 import br.com.fitnesspro.shared.communication.enums.execution.EnumExecutionType;
-import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -34,8 +33,8 @@ public class ExecutionLogsMBean extends AbstractPagingSearchMBean<TOExecutionLog
 	private List<LabeledEnum<EnumExecutionType>> executionTypes;
 	private List<LabeledEnum<EnumExecutionState>> executionStates;
 	
-	@PostConstruct
-	public void init() {
+	@Override
+	public void onInit() {
 		this.executionTypes = EnumExecutionType.getEntries().stream().map(x -> getLabeledType(x)).toList();
 		this.executionStates = EnumExecutionState.getEntries().stream().map(x -> getLabeledState(x)).toList();
 	}

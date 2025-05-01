@@ -14,12 +14,12 @@ public class LocalDateTimeConverter implements Converter<LocalDateTime> {
 
 	@Override
 	public LocalDateTime getAsObject(FacesContext context, UIComponent component, String value) {
-		return TimeConverterUtil.parseLocalDateTime(value, EnumDateTimePatterns.DATE_TIME);
+		return TimeConverterUtil.parseLocalDateTime(value, EnumDateTimePatterns.DATE_TIME, true);
 	}
 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, LocalDateTime value) {
-		return TimeConverterUtil.formatLocalDateTime(value, EnumDateTimePatterns.DATE_TIME);
+		return TimeConverterUtil.formatLocalDateTime(value, EnumDateTimePatterns.DATE_TIME, true);
 	}
 
 }
