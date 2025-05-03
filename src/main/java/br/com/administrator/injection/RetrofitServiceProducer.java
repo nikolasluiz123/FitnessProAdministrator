@@ -6,6 +6,7 @@ import br.com.administrator.service.IAuthenticationService;
 import br.com.administrator.service.ICacheService;
 import br.com.administrator.service.IDeviceService;
 import br.com.administrator.service.IExecutionLogsService;
+import br.com.administrator.service.INotificationService;
 import br.com.administrator.service.IPersonService;
 import br.com.administrator.service.IScheduledTaskService;
 import br.com.administrator.service.ITokenService;
@@ -59,5 +60,10 @@ public class RetrofitServiceProducer {
 	@Produces
 	public IScheduledTaskService produceScheduledTaskService(Retrofit retrofit) {
 		return retrofit.create(IScheduledTaskService.class);
+	}
+	
+	@Produces
+	public INotificationService produceNotificationService(Retrofit retrofit) {
+		return retrofit.create(INotificationService.class);
 	}
 }

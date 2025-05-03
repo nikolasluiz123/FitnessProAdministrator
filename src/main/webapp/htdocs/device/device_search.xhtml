@@ -18,6 +18,13 @@
 		<h:form id="deviceSearchForm">
 			<p:importEnum type="br.com.fitnesspro.shared.communication.query.enums.EnumDeviceFields" var="EnumDeviceFields" />
 
+			<p:toolbar id="topBar" styleClass="main-top-bar">
+				<f:facet name="left">
+					<p:commandButton id="btnNotifyAll" value="#{bundleDeviceSearch['label_button_notify_all']}"
+						oncomplete="PF('globalNotificationDialogWV').show();" update="globalNotificationDialog" />
+				</f:facet>
+			</p:toolbar>
+
 			<fit:lazyPagingTable id="dataTableDevice" mBean="#{deviceSearchMBean}" updateOnRowSelect="formMessages:messages"
 				updateOnRefresh="formMessages:messages, deviceSearchForm:dataTableDevice:dataTablePagingLazy"
 				updateOnToggleFilter="deviceSearchForm:dataTableDevice:dataTablePagingLazy">
@@ -32,8 +39,8 @@
 					<h:outputText value="#{item.model}" />
 				</p:column>
 
-				<p:column headerText="#{bundleDeviceSearch['label_column_brand']}" sortBy="#{item.brand}"
-					filterBy="#{item.brand}" filterMatchMode="contains" field="#{EnumDeviceFields.BRAND.fieldName}" width="150">
+				<p:column headerText="#{bundleDeviceSearch['label_column_brand']}" sortBy="#{item.brand}" filterBy="#{item.brand}"
+					filterMatchMode="contains" field="#{EnumDeviceFields.BRAND.fieldName}" width="150">
 					<h:outputText value="#{item.brand}" />
 				</p:column>
 
@@ -68,8 +75,17 @@
 						<f:converter converterId="LocalDateTimeConverter" />
 					</h:outputText>
 				</p:column>
+
+				<p:column width="50">
+					<p:commandButton id="btnNotifyDevice" styleClass="rounded-button" icon="pi pi-bell ui-button-info"
+						action="#{deviceSearchMBean.onNotifyDeviceClick(item)}" update="formMessages:messages, notificationDialog"
+						oncomplete="PF('notificationDialogWV').show()" />
+				</p:column>
 			</fit:lazyPagingTable>
 		</h:form>
+
+		<ui:include src="/htdocs/notification/notification_dialog.xhtml" />
+		<ui:include src="/htdocs/notification/global_notification_dialog.xhtml" />
 	</ui:define>
 </ui:composition>
 </html>

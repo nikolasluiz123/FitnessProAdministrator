@@ -4,6 +4,7 @@ import br.com.administrator.mappers.AcademyMapper;
 import br.com.administrator.mappers.ApplicationMapper;
 import br.com.administrator.mappers.CacheMapper;
 import br.com.administrator.mappers.DeviceMapper;
+import br.com.administrator.mappers.NotificationMapper;
 import br.com.administrator.mappers.ScheduledTaskMapper;
 import br.com.administrator.mappers.log.LogMapper;
 import br.com.administrator.mappers.log.converters.EnumExecutionStateConverter;
@@ -63,5 +64,10 @@ public class MapperProducer {
 	@Produces
 	public ScheduledTaskMapper producesScheduledTaskMapper() {
 		return new ScheduledTaskMapper();
+	}
+	
+	@Produces
+	public NotificationMapper producesNotificationMapper() {
+		return new NotificationMapper();
 	}
 }
