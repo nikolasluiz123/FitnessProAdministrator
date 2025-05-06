@@ -39,7 +39,7 @@
 				<div class="ui-g-4 vertical-labeled-input">
 					<p:outputLabel id="labelPassword" value="#{bundlePersonDialog['label_input_password']}" for="inputPassword" />
 					<p:password id="inputPassword" value="#{personDialogMBean.toPerson.user.password}" feedback="true"
-						required="true" readonly="#{personDialogMBean.disabledDialog}" maxlength="1024"
+						readonly="#{personDialogMBean.disabledDialog}" maxlength="1024"
 						requiredMessage="#{personDialogMBean.getRequiredMessage(bundlePersonDialog['label_input_password'])}" />
 				</div>
 			</div>
