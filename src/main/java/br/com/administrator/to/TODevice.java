@@ -11,6 +11,7 @@ public class TODevice extends AbstractAuditableTO {
 	private String androidVersion;
 	private Boolean active;
 	private String firebaseMessagingToken;
+	private TOPerson person;
 
 	public TODevice() {
 		this.active = true;
@@ -54,6 +55,14 @@ public class TODevice extends AbstractAuditableTO {
 
 	public void setFirebaseMessagingToken(String firebaseMessagingToken) {
 		this.firebaseMessagingToken = firebaseMessagingToken;
+	}
+
+	public TOPerson getPerson() {
+		return person;
+	}
+
+	public void setPerson(TOPerson person) {
+		this.person = person;
 	}
 	
 }

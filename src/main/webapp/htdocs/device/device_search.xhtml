@@ -30,12 +30,12 @@
 				updateOnToggleFilter="deviceSearchForm:dataTableDevice:dataTablePagingLazy">
 
 				<p:column headerText="#{bundleDeviceSearch['label_column_id']}" sortBy="#{item.id}" filterBy="#{item.id}"
-					filterMatchMode="contains" field="#{EnumDeviceFields.ID.fieldName}" width="300">
+					filterMatchMode="contains" field="#{EnumDeviceFields.ID.fieldName}" width="250">
 					<h:outputText value="#{item.id}" />
 				</p:column>
 
 				<p:column headerText="#{bundleDeviceSearch['label_column_model']}" sortBy="#{item.model}" sortOrder="asc"
-					filterBy="#{item.model}" filterMatchMode="contains" field="#{EnumDeviceFields.MODEL.fieldName}" width="400">
+					filterBy="#{item.model}" filterMatchMode="contains" field="#{EnumDeviceFields.MODEL.fieldName}" width="200">
 					<h:outputText value="#{item.model}" />
 				</p:column>
 
@@ -48,6 +48,12 @@
 					filterBy="#{item.androidVersion}" filterMatchMode="contains" field="#{EnumDeviceFields.ANDROID_VERSION.fieldName}"
 					width="100">
 					<h:outputText value="#{item.androidVersion}" />
+				</p:column>
+
+				<p:column headerText="#{bundleDeviceSearch['label_column_person']}" sortBy="#{item.person.name}"
+					filterBy="#{item.person.name}" filterMatchMode="contains" field="#{EnumDeviceFields.PERSON_NAME.fieldName}"
+					width="200">
+					<h:outputText value="#{item.person.name}" />
 				</p:column>
 
 				<p:column headerText="#{bundleDeviceSearch['label_column_creation_date']}" sortBy="#{item.creationDate}"

@@ -25,12 +25,12 @@
 					onCompleteOnRowSelect="PF('devicesLovDialogWV').hide();">
 
 					<p:column headerText="#{bundleDevicesLovDialog['label_column_id']}" sortBy="#{item.id}" filterBy="#{item.id}"
-						filterMatchMode="contains" field="#{EnumDeviceFields.ID.fieldName}" width="300">
+						filterMatchMode="contains" field="#{EnumDeviceFields.ID.fieldName}" width="200">
 						<h:outputText value="#{item.id}" />
 					</p:column>
 
 					<p:column headerText="#{bundleDevicesLovDialog['label_column_model']}" sortBy="#{item.model}" sortOrder="asc"
-						filterBy="#{item.model}" filterMatchMode="contains" field="#{EnumDeviceFields.MODEL.fieldName}"  width="300">
+						filterBy="#{item.model}" filterMatchMode="contains" field="#{EnumDeviceFields.MODEL.fieldName}" width="200">
 						<h:outputText value="#{item.model}" />
 					</p:column>
 
@@ -39,8 +39,15 @@
 						<h:outputText value="#{item.brand}" />
 					</p:column>
 
+					<p:column headerText="#{bundleDevicesLovDialog['label_column_person']}" sortBy="#{item.person.name}"
+						filterBy="#{item.person.name}" filterMatchMode="contains" field="#{EnumDeviceFields.PERSON_NAME.fieldName}"
+						width="200">
+						<h:outputText value="#{item.person.name}" />
+					</p:column>
+
 					<p:column headerText="#{bundleDevicesLovDialog['label_column_android_version']}" sortBy="#{item.androidVersion}"
-						filterBy="#{item.androidVersion}" filterMatchMode="contains" field="#{EnumDeviceFields.ANDROID_VERSION.fieldName}" width="100">
+						filterBy="#{item.androidVersion}" filterMatchMode="contains" field="#{EnumDeviceFields.ANDROID_VERSION.fieldName}"
+						width="100">
 						<h:outputText value="#{item.androidVersion}" />
 					</p:column>
 

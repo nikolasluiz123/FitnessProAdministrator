@@ -65,6 +65,10 @@ public class DeviceSearchViewModel implements Serializable {
 			filter.setAndroidVersion(filterUtils.getStringFilterValue(EnumDeviceFields.ANDROID_VERSION.getFieldName()));
 		}
 		
+		if (filterBy.containsKey(EnumDeviceFields.PERSON_NAME.getFieldName())) {
+			filter.setPersonName(filterUtils.getStringFilterValue(EnumDeviceFields.PERSON_NAME.getFieldName()));
+		}
+		
 		if (filterBy.containsKey(EnumDeviceFields.CREATION_DATE.getFieldName())) {
 			filter.setCreationDate(filterUtils.getDateTimeRangeFilter(EnumDeviceFields.CREATION_DATE.getFieldName()));
 		}
