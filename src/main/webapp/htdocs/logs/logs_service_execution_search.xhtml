@@ -44,7 +44,7 @@
 					</h:outputText>
 				</p:column>
 
-				<p:column headerText="#{bundleExecutionLog['label_column_type']}" filterBy="#{item.type.value}"
+				<p:column headerText="#{bundleExecutionLog['label_column_type']}" sortBy="#{item.type.label}" filterBy="#{item.type.value}"
 					filterMatchMode="exact" field="#{EnumExecutionLogsFields.EXECUTION_TYPE.fieldName}" width="150">
 					<f:facet name="filter">
 						<p:selectOneMenu id="filterType" onchange="PF('dataTableLogsWV').filter();" styleClass="ui-full-width-filter">
@@ -57,7 +57,7 @@
 					<h:outputText value="#{item.type.label}" />
 				</p:column>
 
-				<p:column headerText="#{bundleExecutionLog['label_column_state']}" filterBy="#{item.state.value}"
+				<p:column headerText="#{bundleExecutionLog['label_column_state']}" sortBy="#{item.state.label}" filterBy="#{item.state.value}"
 					filterMatchMode="exact" field="#{EnumExecutionLogsFields.EXECUTION_STATE.fieldName}" width="150">
 					<f:facet name="filter">
 						<p:selectOneMenu id="filterState" onchange="PF('dataTableLogsWV').filter();" styleClass="ui-full-width-filter">

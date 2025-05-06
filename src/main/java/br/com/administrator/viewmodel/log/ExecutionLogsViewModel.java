@@ -25,6 +25,7 @@ import br.com.fitnesspro.shared.communication.dtos.logs.ExecutionLogDTO;
 import br.com.fitnesspro.shared.communication.enums.execution.EnumExecutionState;
 import br.com.fitnesspro.shared.communication.enums.execution.EnumExecutionType;
 import br.com.fitnesspro.shared.communication.paging.CommonPageInfos;
+import br.com.fitnesspro.shared.communication.query.enums.EnumExecutionLogsFields;
 import br.com.fitnesspro.shared.communication.query.filter.ExecutionLogsFilter;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
@@ -92,6 +93,10 @@ public class ExecutionLogsViewModel implements Serializable {
 		
 		if (filterBy.containsKey(CREATION_DATE.getFieldName())) {
 			filter.setCreationDate(filterUtils.getDateTimeRangeFilter(CREATION_DATE.getFieldName()));
+		}
+		
+		if (sortBy != null && !sortBy.values().isEmpty()) {
+			filter.setSort(filterUtils.getSortFromFieldList(sortBy, EnumExecutionLogsFields.getEntries()));
 		}
 		
 		return filter;
