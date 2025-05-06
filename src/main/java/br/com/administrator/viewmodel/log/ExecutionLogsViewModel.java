@@ -75,7 +75,7 @@ public class ExecutionLogsViewModel implements Serializable {
 		}
 		
 		if (filterBy.containsKey(METHOD_NAME.getFieldName())) {
-			filter.setEndPoint(filterUtils.getStringFilterValue(METHOD_NAME.getFieldName()));
+			filter.setMethodName(filterUtils.getStringFilterValue(METHOD_NAME.getFieldName()));
 		}
 		
 		if (filterBy.containsKey(USER_EMAIL.getFieldName())) {
