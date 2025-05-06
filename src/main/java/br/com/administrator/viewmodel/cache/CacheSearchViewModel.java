@@ -2,6 +2,7 @@ package br.com.administrator.viewmodel.cache;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import br.com.administrator.mappers.CacheMapper;
 import br.com.administrator.service.webclient.CacheWebClient;
@@ -27,7 +28,7 @@ public class CacheSearchViewModel implements Serializable {
 	
 	public List<TOCache> getListCache() throws Exception {
 		List<CacheDTO> caches = webClient.getListCache();
-		return caches.stream().map(c -> mapper.getTOCacheFrom(c)).toList();
+		return caches.stream().map(c -> mapper.getTOCacheFrom(c)).collect(Collectors.toList());
 	}
 	
 	public void clearAllCaches() throws Exception {
