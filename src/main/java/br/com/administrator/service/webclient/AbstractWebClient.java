@@ -40,9 +40,9 @@ public abstract class AbstractWebClient {
 	protected void validateResponse(IFitnessProServiceResponse response) throws Exception {
 		if (!response.getSuccess()) {
 			if (response.getErrorType() == EnumErrorType.EXPIRED_TOKEN) {
-				throw new ExpiredTokenException();
+				throw new ExpiredTokenException(getServiceBundleString("expired_token"));
 			} else if (response.getErrorType() == EnumErrorType.INVALID_TOKEN) {
-				throw new NotFoundTokenException();
+				throw new NotFoundTokenException(getServiceBundleString("not_found_token"));
 			} else {
 				throw new ServiceException(response.getError());
 			}
