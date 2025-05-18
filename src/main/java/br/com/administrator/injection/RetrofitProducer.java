@@ -48,10 +48,10 @@ public class RetrofitProducer {
 	public OkHttpClient produceOkHttpClient(HttpLoggingInterceptor httpLoggingInterceptor) {
 		return new OkHttpClient.Builder()
 				.addInterceptor(httpLoggingInterceptor)
-	            .callTimeout(Timeouts.OPERATION_HIGH_TIMEOUT, TimeUnit.SECONDS)
-	            .connectTimeout(Timeouts.CONNECT_TIMEOUT, TimeUnit.SECONDS)
-	            .readTimeout(Timeouts.OPERATION_MEDIUM_TIMEOUT, TimeUnit.SECONDS)
-	            .writeTimeout(Timeouts.OPERATION_HIGH_TIMEOUT, TimeUnit.SECONDS)
+	            .callTimeout(Timeouts.OPERATION_VERY_LOW_TIMEOUT, TimeUnit.SECONDS)
+	            .connectTimeout(Timeouts.OPERATION_VERY_LOW_TIMEOUT, TimeUnit.SECONDS)
+	            .readTimeout(Timeouts.OPERATION_LOW_TIMEOUT, TimeUnit.SECONDS)
+	            .writeTimeout(Timeouts.OPERATION_LOW_TIMEOUT, TimeUnit.SECONDS)
 	            .build();
 	}
 	
