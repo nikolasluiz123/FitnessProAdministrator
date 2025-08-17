@@ -20,6 +20,7 @@ public final class ExecutionLabeledEnumMapper {
 		case POST -> bundle.getString("label_execution_type_post");
 		case PUT -> bundle.getString("label_execution_type_put");
 		case SCHEDULED_TASK -> bundle.getString("label_execution_type_scheduled_task");
+		case STORAGE -> bundle.getString("label_execution_type_storage");
 		default -> null;
 		};
 	}
