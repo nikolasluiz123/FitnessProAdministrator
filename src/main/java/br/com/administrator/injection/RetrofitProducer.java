@@ -1,16 +1,10 @@
 package br.com.administrator.injection;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.concurrent.TimeUnit;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
-import br.com.administrator.service.gson.adapter.LocalDateTimeTypeAdapter;
-import br.com.administrator.service.gson.adapter.LocalDateTypeAdapter;
-import br.com.administrator.service.gson.adapter.LocalTimeTypeAdapter;
+import br.com.administrator.service.gson.utils.GsonUtils;
 import br.com.administrator.utils.ConfigProperties;
 import br.com.fitnesspro.shared.communication.constants.Timeouts;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -25,10 +19,7 @@ public class RetrofitProducer {
 	
 	 @Produces
      public Retrofit produceRetrofit(OkHttpClient client, ConfigProperties config) {
-		Gson gson = new GsonBuilder()
-				.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter())
-				.registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
-				.registerTypeAdapter(LocalTime.class, new LocalTimeTypeAdapter()).create();
+		Gson gson = GsonUtils.getDefaultGson();
 		 
 		String host = config.getEnvironmentPropertyValue("service.host");
 		

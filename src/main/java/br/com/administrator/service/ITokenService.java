@@ -6,7 +6,7 @@ import br.com.fitnesspro.shared.communication.dtos.serviceauth.ServiceTokenGener
 import br.com.fitnesspro.shared.communication.responses.FitnessProServiceResponse;
 import br.com.fitnesspro.shared.communication.responses.ReadServiceResponse;
 import br.com.fitnesspro.shared.communication.responses.SingleValueServiceResponse;
-import jakarta.validation.constraints.NotNull;
+import jakarta.annotation.Nonnull;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -27,17 +27,17 @@ public interface ITokenService {
 	
 	@GET(EndPointsV1.TOKEN)
 	Call<ReadServiceResponse<ServiceTokenDTO>> getListServiceToken(@Header("Authorization") String token,
-															       @Query("filter") @NotNull String filter, 
-															       @Query("pageInfos") @NotNull String pageInfos);
+															       @Query("filter") @Nonnull String filter, 
+															       @Query("pageInfos") @Nonnull String pageInfos);
 	
 	@GET(TOKEN_COUNT_END_POINT)
-	Call<SingleValueServiceResponse<Integer>> getCountServiceToken(@Header("Authorization") String token, @Query("filter") @NotNull String filter);
+	Call<SingleValueServiceResponse<Integer>> getCountServiceToken(@Header("Authorization") String token, @Query("filter") @Nonnull String filter);
 	
 	@POST(EndPointsV1.TOKEN)
-	Call<SingleValueServiceResponse<ServiceTokenDTO>> generateToken(@Header("Authorization") String token, @Body @NotNull ServiceTokenGenerationDTO serviceTokenGenerationDTO);
+	Call<SingleValueServiceResponse<ServiceTokenDTO>> generateToken(@Header("Authorization") String token, @Body @Nonnull ServiceTokenGenerationDTO serviceTokenGenerationDTO);
 	
 	@PUT(TOKEN_INVALIDATE_END_POINT)
-	Call<FitnessProServiceResponse> invalidateToken(@Header("Authorization") String token, @Path("id") @NotNull String id);
+	Call<FitnessProServiceResponse> invalidateToken(@Header("Authorization") String token, @Path("id") @Nonnull String id);
 	
 	@POST(TOKEN_INVALIDATE_ALL_END_POINT)
 	Call<FitnessProServiceResponse> invalidateAllTokens(@Header("Authorization") String token);
@@ -46,7 +46,7 @@ public interface ITokenService {
 	Call<SingleValueServiceResponse<String>> getSecretKey(@Header("Authorization") String token);
 	
 	@GET(TOKEN_BY_ID_END_POINT)
-	Call<SingleValueServiceResponse<ServiceTokenDTO>> getTokenService(@Header("Authorization") String token, @Path("id") @NotNull String tokenId);
+	Call<SingleValueServiceResponse<ServiceTokenDTO>> getTokenService(@Header("Authorization") String token, @Path("id") @Nonnull String tokenId);
 
 
 }

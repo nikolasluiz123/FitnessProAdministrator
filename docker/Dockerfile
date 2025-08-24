@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 
 RUN apt-get update && \
-    apt-get install -y openjdk-21-jdk && \
+    apt-get install -y openjdk-23-jdk && \
     rm -rf /var/lib/apt/lists/*
 
 ENV WILDFLY_VERSION=30.0.1.Final

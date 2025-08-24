@@ -9,10 +9,10 @@ import br.com.fitnesspro.shared.communication.dtos.general.AuthenticationDTO;
 import br.com.fitnesspro.shared.communication.dtos.serviceauth.ServiceTokenDTO;
 import br.com.fitnesspro.shared.communication.enums.serviceauth.EnumTokenType;
 import br.com.fitnesspro.shared.communication.responses.AuthenticationServiceResponse;
+import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.validation.constraints.NotNull;
 import retrofit2.Call;
 
 @ApplicationScoped
@@ -30,7 +30,7 @@ public class AuthenticationWebClient extends AbstractWebClient {
 	}
 	
 	@Nullable
-	public String authenticate(@NotNull String email, @NotNull String password) throws Exception {
+	public String authenticate(@Nonnull String email, @Nonnull String password) throws Exception {
 		try {
 			String applicationToken = getApplicationJWTToken();
 			
@@ -57,7 +57,7 @@ public class AuthenticationWebClient extends AbstractWebClient {
 		return t -> t.getType().equals(EnumTokenType.USER_AUTHENTICATION_TOKEN);
 	}
 	
-	public void logout(@NotNull String email, @NotNull String password) throws Exception {
+	public void logout(@Nonnull String email, @Nonnull String password) throws Exception {
 		try {
 			String token = getFormatedToken();
 			

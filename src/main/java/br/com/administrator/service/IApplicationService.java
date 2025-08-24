@@ -4,7 +4,7 @@ import br.com.fitnesspro.shared.communication.constants.EndPointsV1;
 import br.com.fitnesspro.shared.communication.dtos.serviceauth.ApplicationDTO;
 import br.com.fitnesspro.shared.communication.responses.PersistenceServiceResponse;
 import br.com.fitnesspro.shared.communication.responses.ReadServiceResponse;
-import jakarta.validation.constraints.NotNull;
+import jakarta.annotation.Nonnull;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -17,5 +17,5 @@ public interface IApplicationService {
 	Call<ReadServiceResponse<ApplicationDTO>> getListApplication(@Header("Authorization") String token);
 	
 	@POST(EndPointsV1.APPLICATION)
-	Call<PersistenceServiceResponse<ApplicationDTO>> saveApplication(@Header("Authorization") String token, @Body @NotNull ApplicationDTO applicationDTO);
+	Call<PersistenceServiceResponse<ApplicationDTO>> saveApplication(@Header("Authorization") String token, @Body @Nonnull ApplicationDTO applicationDTO);
 }
