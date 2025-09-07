@@ -1,7 +1,7 @@
-FROM ubuntu:latest
+FROM openjdk:23-jdk
 
 RUN apt-get update && \
-    apt-get install -y openjdk-23-jdk && \
+    apt-get install -y wget tzdata locales && \
     rm -rf /var/lib/apt/lists/*
 
 ENV WILDFLY_VERSION=30.0.1.Final
