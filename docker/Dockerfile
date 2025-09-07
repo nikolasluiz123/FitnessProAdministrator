@@ -1,7 +1,11 @@
-FROM openjdk:23-jdk
+FROM ubuntu:latest
 
 RUN apt-get update && \
-    apt-get install -y wget tzdata locales && \
+    apt-get install -y wget gnupg && \
+    wget -qO - https://repos.azul.com/azul-repo.key | apt-key add - && \
+    echo "deb http://repos.azul.com/zulu/deb stable main" > /etc/apt/sources.list.d/zulu.list && \
+    apt-get update && \
+    apt-get install -y zulu23-jdk && \
     rm -rf /var/lib/apt/lists/*
 
 ENV WILDFLY_VERSION=30.0.1.Final
