@@ -16,6 +16,7 @@
 
 	<ui:define name="content">
 		<h:outputStylesheet name="css/logs_service_execution_search/log_package_dialog.css" />
+		<h:outputStylesheet name="css/logs_service_execution_search/log_search.css" />
 
 		<h:form id="executionLogsSearchForm">
 			<p:importEnum type="br.com.fitnesspro.shared.communication.query.enums.EnumExecutionLogsFields"
@@ -23,6 +24,42 @@
 
 			<p:remoteCommand name="onRequestReloadDatatableLogs" action="#{executionLogsMBean.onRequestReloadDatatable}"
 				update="executionLogsSearchForm:dataTableLogs:dataTablePagingLazy" />
+
+			<p:panel header="#{bundleExecutionLog['header_filters']}" toggleable="true" toggleSpeed="500" widgetVar="panel"
+				styleClass="panel-filter">
+
+				<p:outputPanel styleClass="ui-fluid">
+					<div class="ui-g">
+						<div class="ui-g-4">
+							<p:outputLabel for="showExecutionsWithInsertedEntities"
+								value="#{bundleExecutionLog['label_filter_show_executions_with_inserted_entities']}" />
+								
+							<p:selectOneRadio id="showExecutionsWithInsertedEntities"
+								value="#{executionLogsMBean.showExecutionsWithInsertedEntities}" layout="lineDirection" unselectable="false">
+								
+								<f:selectItems value="#{executionLogsMBean.showExecutionsOptions}" var="option" itemLabel="#{option.label}"
+									itemValue="#{option.value}" />
+
+								<p:ajax listener="#{executionLogsMBean.onAdvancedFilterChange}" oncomplete="onRequestReloadDatatableLogs()" />
+							</p:selectOneRadio>
+						</div>
+
+						<div class="ui-g-4">
+							<p:outputLabel for="showExecutionsWithUpdatedEntities"
+								value="#{bundleExecutionLog['label_filter_show_executions_with_updated_entities']}" />
+								
+							<p:selectOneRadio id="showExecutionsWithUpdatedEntities"
+								value="#{executionLogsMBean.showExecutionsWithUpdatedEntities}" layout="lineDirection" unselectable="false">
+								
+								<f:selectItems value="#{executionLogsMBean.showExecutionsOptions}" var="option" itemLabel="#{option.label}"
+									itemValue="#{option.value}" />
+
+								<p:ajax listener="#{executionLogsMBean.onAdvancedFilterChange}" oncomplete="onRequestReloadDatatableLogs()" />
+							</p:selectOneRadio>
+						</div>
+					</div>
+				</p:outputPanel>
+			</p:panel>
 
 			<fit:lazyPagingTable id="dataTableLogs" mBean="#{executionLogsMBean}"
 				updateOnRowSelect="formMessages:messages, logDialog"
@@ -44,8 +81,9 @@
 					</h:outputText>
 				</p:column>
 
-				<p:column headerText="#{bundleExecutionLog['label_column_type']}" sortBy="#{item.type.label}" filterBy="#{item.type.value}"
-					filterMatchMode="exact" field="#{EnumExecutionLogsFields.EXECUTION_TYPE.fieldName}" width="150">
+				<p:column headerText="#{bundleExecutionLog['label_column_type']}" sortBy="#{item.type.label}"
+					filterBy="#{item.type.value}" filterMatchMode="exact" field="#{EnumExecutionLogsFields.EXECUTION_TYPE.fieldName}"
+					width="150">
 					<f:facet name="filter">
 						<p:selectOneMenu id="filterType" onchange="PF('dataTableLogsWV').filter();" styleClass="ui-full-width-filter">
 							<f:selectItem itemLabel="#{bundleExecutionLog['label_filter_all']}" itemValue="#{null}" noSelectionOption="true" />
@@ -57,8 +95,9 @@
 					<h:outputText value="#{item.type.label}" />
 				</p:column>
 
-				<p:column headerText="#{bundleExecutionLog['label_column_state']}" sortBy="#{item.state.label}" filterBy="#{item.state.value}"
-					filterMatchMode="exact" field="#{EnumExecutionLogsFields.EXECUTION_STATE.fieldName}" width="150">
+				<p:column headerText="#{bundleExecutionLog['label_column_state']}" sortBy="#{item.state.label}"
+					filterBy="#{item.state.value}" filterMatchMode="exact" field="#{EnumExecutionLogsFields.EXECUTION_STATE.fieldName}"
+					width="150">
 					<f:facet name="filter">
 						<p:selectOneMenu id="filterState" onchange="PF('dataTableLogsWV').filter();" styleClass="ui-full-width-filter">
 							<f:selectItem itemLabel="#{bundleExecutionLog['label_filter_all']}" itemValue="#{null}" noSelectionOption="true" />
@@ -73,12 +112,6 @@
 					filterBy="#{item.endpoint}" filterMatchMode="contains" field="#{EnumExecutionLogsFields.END_POINT.fieldName}"
 					width="400">
 					<h:outputText value="#{item.endpoint}" />
-				</p:column>
-
-				<p:column headerText="#{bundleExecutionLog['label_column_method_name']}" sortBy="#{item.methodName}"
-					filterBy="#{item.methodName}" filterMatchMode="contains" field="#{EnumExecutionLogsFields.METHOD_NAME.fieldName}"
-					width="300">
-					<h:outputText value="#{item.methodName}" />
 				</p:column>
 
 				<p:column headerText="#{bundleExecutionLog['label_column_user_email']}" sortBy="#{item.userEmail}"

@@ -16,6 +16,8 @@ import java.util.Map;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
 
+import br.com.administrator.managedbean.executionlogs.enums.EnumThreeOptions;
+import br.com.administrator.mappers.labeledenum.ThreeOptionsLabeledEnumMapper;
 import br.com.administrator.mappers.labeledenum.execution.ExecutionLabeledEnumMapper;
 import br.com.administrator.mappers.log.LogMapper;
 import br.com.administrator.service.webclient.ExecutionLogsWebClient;
@@ -27,23 +29,37 @@ import br.com.fitnesspro.shared.communication.enums.execution.EnumExecutionType;
 import br.com.fitnesspro.shared.communication.paging.CommonPageInfos;
 import br.com.fitnesspro.shared.communication.query.enums.EnumExecutionLogsFields;
 import br.com.fitnesspro.shared.communication.query.filter.ExecutionLogsFilter;
-import jakarta.enterprise.context.Dependent;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 
-@Dependent
+@ViewScoped
 public class ExecutionLogsViewModel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private final ExecutionLogsWebClient webClient;
-	private final ExecutionLabeledEnumMapper labeledEnumMapper;
-	private final LogMapper logMapper;
-
 	@Inject
-	public ExecutionLogsViewModel(ExecutionLogsWebClient executionLogsWebClient, ExecutionLabeledEnumMapper labeledEnumMapper, LogMapper logMapper) {
-        this.webClient = executionLogsWebClient;
-        this.labeledEnumMapper = labeledEnumMapper;
-        this.logMapper = logMapper;
+	private ExecutionLogsWebClient webClient;
+	
+	@Inject
+	private ExecutionLabeledEnumMapper labeledEnumMapper;
+	
+	@Inject
+	private ThreeOptionsLabeledEnumMapper threeOptionsEnumMapper;
+	
+	@Inject
+	private LogMapper logMapper;
+	
+	private EnumThreeOptions showExecutionsWithInsertedEntities;
+	private EnumThreeOptions showExecutionsWithUpdatedEntities;
+
+	public ExecutionLogsViewModel() {
+        if (this.showExecutionsWithInsertedEntities == null) {
+        	this.showExecutionsWithInsertedEntities = EnumThreeOptions.ALL;
+        }
+        
+        if (this.showExecutionsWithUpdatedEntities == null) {
+        	this.showExecutionsWithUpdatedEntities = EnumThreeOptions.ALL;
+        }
 	}
 
 	public List<TOExecutionLog> getListExecutionLog(int first, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) throws Exception {
@@ -99,6 +115,18 @@ public class ExecutionLogsViewModel implements Serializable {
 			filter.setSort(filterUtils.getSortFromFieldList(sortBy, EnumExecutionLogsFields.getEntries()));
 		}
 		
+		switch (this.showExecutionsWithInsertedEntities) {
+			case YES -> filter.setExecutionsWithInsertedEntities(true);
+			case NO -> filter.setExecutionsWithInsertedEntities(false);
+			case ALL -> filter.setExecutionsWithInsertedEntities(null);
+		}
+		
+		switch (this.showExecutionsWithUpdatedEntities) {
+			case YES -> filter.setExecutionsWithUpdatedEntities(true);
+			case NO -> filter.setExecutionsWithUpdatedEntities(false);
+			case ALL -> filter.setExecutionsWithUpdatedEntities(null);
+		}
+
 		return filter;
 	}
 	
@@ -109,4 +137,17 @@ public class ExecutionLogsViewModel implements Serializable {
 	public String getLabelExecutionState(EnumExecutionState state) {
 		return labeledEnumMapper.getLabelExecutionState(state);
 	}
+	
+	public String getLabelThreeOption(EnumThreeOptions option) {
+		return threeOptionsEnumMapper.getLabelThreeOptions(option);
+	}
+
+	public void setShowExecutionsWithInsertedEntities(EnumThreeOptions showExecutionsWithInsertedEntities) {
+		this.showExecutionsWithInsertedEntities = showExecutionsWithInsertedEntities;
+	}
+
+	public void setShowExecutionsWithUpdatedEntities(EnumThreeOptions showExecutionsWithUpdatedEntities) {
+		this.showExecutionsWithUpdatedEntities = showExecutionsWithUpdatedEntities;
+	}
+	
 }

@@ -1,5 +1,6 @@
 package br.com.administrator.injection.mapper;
 
+import br.com.administrator.mappers.labeledenum.ThreeOptionsLabeledEnumMapper;
 import br.com.administrator.mappers.labeledenum.chronounit.ChronoUnitLabeledEnumMapper;
 import br.com.administrator.mappers.labeledenum.execution.ExecutionLabeledEnumMapper;
 import br.com.administrator.mappers.labeledenum.execution.TokenLabeledEnumMapper;
@@ -28,5 +29,10 @@ public class LabeledEnumMapperProducer {
 	@Produces
 	public ChronoUnitLabeledEnumMapper producesChronoUnitLabeledEnumMapper() {
 		return new ChronoUnitLabeledEnumMapper();
+	}
+	
+	@Produces
+	public ThreeOptionsLabeledEnumMapper producesThreeOptionsLabeledEnumMapper() {
+		return new ThreeOptionsLabeledEnumMapper();
 	}
 }

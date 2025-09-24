@@ -1,5 +1,6 @@
 package br.com.administrator.mappers.labeledenum.execution;
 
+import java.io.Serializable;
 import java.util.ResourceBundle;
 
 import br.com.administrator.managedbean.common.constants.ICommonBundlePaths;
@@ -7,8 +8,10 @@ import br.com.administrator.utils.FacesUtils;
 import br.com.fitnesspro.shared.communication.enums.execution.EnumExecutionState;
 import br.com.fitnesspro.shared.communication.enums.execution.EnumExecutionType;
 
-public final class ExecutionLabeledEnumMapper {
+public final class ExecutionLabeledEnumMapper implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private ResourceBundle bundle = FacesUtils.getResourceBundle(ICommonBundlePaths.LABELED_ENUMS);
 
 	public String getLabelExecutionType(EnumExecutionType type) {
