@@ -24,6 +24,9 @@ public class LogPackageDialogMBean extends AbstractPagingSearchMBean<TOExecution
 	@Inject
 	private LazyExecutionLogSubPackageDataModel lazyModel;
 
+	@Inject
+	private LogSubPackageDialogMBean logSubPackageDialogMBean;
+
 	@Override
 	public void onInit() {
 		this.toExecutionLogPackage = new TOExecutionLogPackage();
@@ -44,7 +47,7 @@ public class LogPackageDialogMBean extends AbstractPagingSearchMBean<TOExecution
 	
 	@Override
 	public void onRowSelect(SelectEvent<TOExecutionLogSubPackage> event) {
-		
+		logSubPackageDialogMBean.init(event.getObject());
 	}
 	
 	public boolean isVisibleImportExportInfos() {

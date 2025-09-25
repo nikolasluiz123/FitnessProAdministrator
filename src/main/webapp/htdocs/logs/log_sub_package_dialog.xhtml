@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions" xmlns:fit="http://xmlns.jcp.org/jsf/composite/components"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+<p:dialog id="logSubPackageDialog" widgetVar="logSubPackageDialogWV" modal="true" fitViewport="true" responsive="true"
+	width="70vw" resizable="false" dynamic="true">
+
+	<f:facet name="header">
+		<h:outputText value="#{bundleLogSubPackageDialog['label_title']}" />
+	</f:facet>
+
+	<h:form id="logSubPackageDialogForm">
+		<f:loadBundle var="bundleLogSubPackageDialog" basename="#{logSubPackageDialogMBean.screenBundleFilePath}" />
+
+		<div class="ui-g">
+			<div class="ui-g-12">
+				<div class="ui-g-3 vertical-labeled-input ui-g-nopad">
+					<p:outputLabel id="labelEntityName" value="#{bundleLogSubPackageDialog['label_field_entity_name']}"
+						styleClass="bold-label" />
+					<p:outputLabel id="valueEntityName" value="#{logSubPackageDialogMBean.toExecutionLogSubPackage.entityName}"
+						styleClass="label-value" />
+				</div>
+
+				<div class="ui-g-3 vertical-labeled-input ui-g-nopad">
+					<p:outputLabel id="labelInsertedItems" value="#{bundleLogSubPackageDialog['label_field_inserted_items']}"
+						styleClass="bold-label" />
+					<p:outputLabel id="valueInsertedItems"
+						value="#{logSubPackageDialogMBean.toExecutionLogSubPackage.insertedItemsCount}" styleClass="label-value" />
+				</div>
+
+				<div class="ui-g-3 vertical-labeled-input ui-g-nopad">
+					<p:outputLabel id="labelUpdatedItems" value="#{bundleLogSubPackageDialog['label_field_updated_items']}"
+						styleClass="bold-label" />
+					<p:outputLabel id="valueUpdatedItems"
+						value="#{logSubPackageDialogMBean.toExecutionLogSubPackage.updatedItemsCount}" styleClass="label-value" />
+				</div>
+
+				<div class="ui-g-3 vertical-labeled-input ui-g-nopad">
+					<p:outputLabel id="labelAllItems" value="#{bundleLogSubPackageDialog['label_field_all_items']}"
+						styleClass="bold-label" />
+					<p:outputLabel id="valueAllItems"
+						value="#{logSubPackageDialogMBean.toExecutionLogSubPackage.allItemsCount}" styleClass="label-value" />
+				</div>
+			</div>
+			<div class="ui-g-12">
+				<div class="ui-g-3 vertical-labeled-input ui-g-nopad">
+					<p:outputLabel id="labelSize" value="#{bundleLogSubPackageDialog['label_field_size']}" styleClass="bold-label" />
+					<p:outputLabel id="valueSize" value="#{logSubPackageDialogMBean.executionSize}"
+						styleClass="label-value label-break" />
+				</div>
+
+				<div class="ui-g-3 vertical-labeled-input ui-g-nopad">
+					<p:outputLabel id="labelLastUpdate" value="#{bundleLogSubPackageDialog['label_field_last_update']}"
+						styleClass="bold-label" />
+					<p:outputLabel id="valueLastUpdate" value="#{logSubPackageDialogMBean.toExecutionLogSubPackage.lastUpdateDate}"
+						styleClass="label-value" converter="LocalDateTimeMilliConverter" />
+				</div>
+			</div>
+
+			<div class="ui-g-12 vertical-labeled-input" jsf:rendered="#{logSubPackageDialogMBean.visibleRequestBody}">
+				<p:outputLabel id="labelRequestBody" for="requestBody"
+					value="#{bundleLogSubPackageDialog['label_field_request_body']}" />
+				<p:inputTextarea id="requestBody" value="#{logSubPackageDialogMBean.toExecutionLogSubPackage.requestBody}"
+					readonly="true" converter="JsonConverter" autoResize="false" styleClass="text-area-log-infos-extended" />
+			</div>
+
+			<div class="ui-g-12 vertical-labeled-input" jsf:rendered="#{logSubPackageDialogMBean.visibleResponseBody}">
+				<p:outputLabel id="labelResponseBody" for="requestBody"
+					value="#{bundleLogSubPackageDialog['label_field_response_body']}" />
+				<p:inputTextarea id="responseBody" value="#{logSubPackageDialogMBean.toExecutionLogSubPackage.responseBody}"
+					readonly="true" converter="JsonConverter" autoResize="false" styleClass="text-area-log-infos-extended" />
+			</div>
+		</div>
+	</h:form>
+</p:dialog>
+</html>

@@ -98,7 +98,9 @@
 				<fit:lazyPagingTable id="dataTableLogSubPackages" mBean="#{logPackageDialogMBean}"
 					updateOnRefresh="formMessages:messages, logPackageDialogForm:dataTableLogSubPackages:dataTablePagingLazy"
 					updateOnToggleFilter="logPackageDialogForm:dataTableLogSubPackages:dataTablePagingLazy"
-					filterClickAjax="true">
+					filterClickAjax="true"
+					onCompleteOnRowSelect="PF('logSubPackageDialogWV').show();"
+					updateOnRowSelect="formMessages:messages, logSubPackageDialog">
 
 					<p:column headerText="#{bundleLogPackageDialog['label_column_entity_name']}" field="entityName"
 						sortBy="#{item.entityName}" filterBy="#{item.entityName}" width="300">
