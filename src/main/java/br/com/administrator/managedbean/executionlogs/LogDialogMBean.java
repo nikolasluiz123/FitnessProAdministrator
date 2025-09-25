@@ -9,6 +9,8 @@ import br.com.administrator.managedbean.common.beans.AbstractPagingSearchMBean;
 import br.com.administrator.managedbean.executionlogs.lazymodel.LazyExecutionLogPackageDataModel;
 import br.com.administrator.to.TOExecutionLog;
 import br.com.administrator.to.TOExecutionLogPackage;
+import br.com.administrator.utils.TimeConverterUtil;
+import br.com.administrator.utils.UnityFormatterUtil;
 import br.com.fitnesspro.shared.communication.enums.execution.EnumExecutionType;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -46,10 +48,6 @@ public class LogDialogMBean extends AbstractPagingSearchMBean<TOExecutionLogPack
 	public boolean isVisibleUserEmail() {
 		return this.toExecutionLog.getUserEmail() != null;
 	}
-
-	public boolean isVisibleLastUpdateDate() {
-		return this.toExecutionLog.getLastUpdateDate() != null;
-	}
 	
 	public boolean isVisibleImportExportInfos() {
 		EnumExecutionType executionType = this.toExecutionLog.getType().getValue();
@@ -57,6 +55,18 @@ public class LogDialogMBean extends AbstractPagingSearchMBean<TOExecutionLogPack
 		return executionType == EXPORTATION || executionType == IMPORTATION;
 	}
 
+	public String getExecutionSize() {
+		return UnityFormatterUtil.formatKilobytes(this.toExecutionLog.getKbSize());
+	}
+	
+	public String getServiceProcessingDuration() {
+		return TimeConverterUtil.formatDuration(this.toExecutionLog.getServiceProcessingDuration());
+	}
+	
+	public String getClientProcessingDuration() {
+		return TimeConverterUtil.formatDuration(this.toExecutionLog.getClientProcessingDuration());
+	}
+	
 	@Override
 	public String getScreenBundleFilePath() {
 		return "messages.logs.log_dialog";

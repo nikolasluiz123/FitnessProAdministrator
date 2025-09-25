@@ -1,5 +1,6 @@
 package br.com.administrator.utils;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -52,5 +53,19 @@ public class TimeConverterUtil {
 	
 	private static DateTimeFormatter getFormatterOfPatternWithLocale(EnumDateTimePatterns pattern) {
 		return DateTimeFormatter.ofPattern(pattern.getPattern(), Locale.getDefault(Category.FORMAT));
+	}
+	
+	public static String formatDuration(Long millis) {
+		if (millis == null) {
+			return null;
+		}
+
+		Duration duration = Duration.ofMillis(millis);
+		long hours = duration.toHours();
+		long minutes = duration.toMinutesPart();
+		long seconds = duration.toSecondsPart();
+		long milliseconds = duration.toMillisPart();
+
+		return String.format("%02d:%02d:%02d.%03d", hours, minutes, seconds, milliseconds);
 	}
 }

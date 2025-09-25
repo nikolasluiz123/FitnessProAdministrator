@@ -18,9 +18,13 @@ public class TOExecutionLog extends AbstractModelTO {
 	private String userEmail;
 	private String deviceId;
 	private String applicationName;
-	private Integer pageSize;
-	private LocalDateTime lastUpdateDate;
 	private LocalDateTime creationDate;
+	private Integer insertedItems;
+	private Integer updatedItems;
+	private Integer allItemsCount;
+	private Long kbSize;
+	private Long serviceProcessingDuration;
+	private Long clientProcessingDuration;
 
 	public LabeledEnum<EnumExecutionType> getType() {
 		return type;
@@ -61,7 +65,7 @@ public class TOExecutionLog extends AbstractModelTO {
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
 	}
-	
+
 	public String getDeviceId() {
 		return deviceId;
 	}
@@ -78,20 +82,28 @@ public class TOExecutionLog extends AbstractModelTO {
 		this.applicationName = applicationName;
 	}
 
-	public Integer getPageSize() {
-		return pageSize;
+	public Integer getInsertedItems() {
+		return insertedItems;
 	}
 
-	public void setPageSize(Integer pageSize) {
-		this.pageSize = pageSize;
+	public void setInsertedItems(Integer insertedItems) {
+		this.insertedItems = insertedItems;
 	}
 
-	public LocalDateTime getLastUpdateDate() {
-		return lastUpdateDate;
+	public Integer getUpdatedItems() {
+		return updatedItems;
 	}
 
-	public void setLastUpdateDate(LocalDateTime lastUpdateDate) {
-		this.lastUpdateDate = lastUpdateDate;
+	public void setUpdatedItems(Integer updatedItems) {
+		this.updatedItems = updatedItems;
+	}
+
+	public Integer getAllItemsCount() {
+		return allItemsCount;
+	}
+
+	public void setAllItemsCount(Integer allItemsCount) {
+		this.allItemsCount = allItemsCount;
 	}
 
 	public LocalDateTime getCreationDate() {
@@ -100,6 +112,30 @@ public class TOExecutionLog extends AbstractModelTO {
 
 	public void setCreationDate(LocalDateTime creationDate) {
 		this.creationDate = creationDate;
+	}
+
+	public Long getKbSize() {
+		return kbSize;
+	}
+
+	public void setKbSize(Long kbSize) {
+		this.kbSize = kbSize;
+	}
+
+	public Long getServiceProcessingDuration() {
+		return serviceProcessingDuration;
+	}
+
+	public void setServiceProcessingDuration(Long serviceProcessingDuration) {
+		this.serviceProcessingDuration = serviceProcessingDuration;
+	}
+
+	public Long getClientProcessingDuration() {
+		return clientProcessingDuration;
+	}
+
+	public void setClientProcessingDuration(Long clientProcessingDuration) {
+		this.clientProcessingDuration = clientProcessingDuration;
 	}
 
 }

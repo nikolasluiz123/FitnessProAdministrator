@@ -19,6 +19,8 @@ public class TOExecutionLogPackage extends AbstractModelTO {
 	private Integer insertedItemsCount;
 	private Integer updatedItemsCount;
 	private Integer allItemsCount;
+	private Long serviceProcessingDuration;
+	private Long clientProcessingDuration;
 
 	public LocalDateTime getServiceExecutionStart() {
 		return serviceExecutionStart;
@@ -106,6 +108,22 @@ public class TOExecutionLogPackage extends AbstractModelTO {
 
 	public void setExecutionAdditionalInfos(String executionAdditionalInfos) {
 		this.executionAdditionalInfos = executionAdditionalInfos;
+	}
+
+	public Long getServiceProcessingDuration() {
+		return serviceProcessingDuration;
+	}
+
+	public void setServiceProcessingDuration(Long serviceProcessingDuration) {
+		this.serviceProcessingDuration = serviceProcessingDuration;
+	}
+
+	public Long getClientProcessingDuration() {
+		return clientProcessingDuration;
+	}
+
+	public void setClientProcessingDuration(Long clientProcessingDuration) {
+		this.clientProcessingDuration = clientProcessingDuration;
 	}
 
 }

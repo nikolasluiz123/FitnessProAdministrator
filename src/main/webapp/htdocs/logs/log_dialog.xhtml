@@ -43,33 +43,60 @@
 						styleClass="label-value label-break" />
 				</div>
 
+				<div class="ui-g-2 vertical-labeled-input">
+					<p:outputLabel id="labelMethodName" value="#{bundleLogDialog['label_field_method_name']}" styleClass="bold-label" />
+					<p:outputLabel id="valueMethodName" value="#{logDialogMBean.toExecutionLog.methodName}"
+						styleClass="label-value label-break" />
+				</div>
+				
 				<div class="ui-g-3 vertical-labeled-input">
 					<p:outputLabel id="labelEndPoint" value="#{bundleLogDialog['label_field_end_point']}" styleClass="bold-label" />
 					<p:outputLabel id="valueEndPoint" value="#{logDialogMBean.toExecutionLog.endpoint}"
 						styleClass="label-value label-break" />
 				</div>
-
-				<div class="ui-g-3 vertical-labeled-input">
-					<p:outputLabel id="labelMethodName" value="#{bundleLogDialog['label_field_method_name']}" styleClass="bold-label" />
-					<p:outputLabel id="valueMethodName" value="#{logDialogMBean.toExecutionLog.methodName}"
-						styleClass="label-value label-break" />
-				</div>
 			</div>
 
 			<div class="ui-g-12" jsf:rendered="#{logDialogMBean.visibleImportExportInfos}">
-				<div class="ui-g-4 vertical-labeled-input">
-					<p:outputLabel id="labelPageSize" value="#{bundleLogDialog['label_field_page_size']}" styleClass="bold-label" />
+				<div class="ui-g-2 vertical-labeled-input">
+					<p:outputLabel id="labelInsertedItems" value="#{bundleLogDialog['label_field_inserted_items']}" styleClass="bold-label" />
 
-					<p:outputLabel id="valuePageSize" value="#{logDialogMBean.toExecutionLog.pageSize}"
+					<p:outputLabel id="valueInsertedItems" value="#{logDialogMBean.toExecutionLog.insertedItems}"
 						styleClass="label-value label-break" />
 				</div>
+				
+				<div class="ui-g-2 vertical-labeled-input">
+					<p:outputLabel id="labelUpdatedItems" value="#{bundleLogDialog['label_field_updated_items']}" styleClass="bold-label" />
 
-				<div class="ui-g-4 vertical-labeled-input" jsf:rendered="#{logDialogMBean.visibleLastUpdateDate}">
-					<p:outputLabel id="labelLastUpdateDate" value="#{bundleLogDialog['label_field_last_update_date']}"
-						styleClass="bold-label" />
+					<p:outputLabel id="valueUpdatedItems" value="#{logDialogMBean.toExecutionLog.updatedItems}"
+						styleClass="label-value label-break" />
+				</div>
+				
+				<div class="ui-g-2 vertical-labeled-input">
+					<p:outputLabel id="labelProcessedItems" value="#{bundleLogDialog['label_field_processed_items']}" styleClass="bold-label" />
 
-					<p:outputLabel id="valueLastUpdateDate" value="#{logDialogMBean.toExecutionLog.lastUpdateDate}"
-						styleClass="label-value label-break" converter="LocalDateTimeConverter" />
+					<p:outputLabel id="valueProcessedItems" value="#{logDialogMBean.toExecutionLog.allItemsCount}"
+						styleClass="label-value label-break" />
+				</div>
+				
+				<div class="ui-g-2 vertical-labeled-input">
+					<p:outputLabel id="labelSize" value="#{bundleLogDialog['label_field_size']}" styleClass="bold-label" />
+
+					<p:outputLabel id="valueSize" value="#{logDialogMBean.getExecutionSize()}"
+						styleClass="label-value label-break" />
+				</div>
+				
+				<div class="ui-g-2 vertical-labeled-input">
+					<p:outputLabel id="labelServiceProcessDuration" value="#{bundleLogDialog['label_field_service_process_duration']}" styleClass="bold-label" />
+
+					<p:outputLabel id="valueServiceProcessDuration" value="#{logDialogMBean.getServiceProcessingDuration()}"
+						styleClass="label-value label-break" />
+				</div>
+				
+				<div class="ui-g-2 vertical-labeled-input">
+					<p:outputLabel id="labelClientProcessDuration" value="#{bundleLogDialog['label_field_client_process_duration']}" styleClass="bold-label" />
+
+					<p:outputLabel id="valueClientProcessDuration" value="#{logDialogMBean.getClientProcessingDuration()}"
+						styleClass="label-value label-break" />
 				</div>
 			</div>
 
