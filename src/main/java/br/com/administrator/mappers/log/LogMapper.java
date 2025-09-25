@@ -10,8 +10,10 @@ import br.com.administrator.mappers.log.converters.LabeledExecutionStateEnumToEn
 import br.com.administrator.mappers.log.converters.LabeledExecutionTypeEnumToEnumConverter;
 import br.com.administrator.to.TOExecutionLog;
 import br.com.administrator.to.TOExecutionLogPackage;
+import br.com.administrator.to.TOExecutionLogSubPackage;
 import br.com.fitnesspro.shared.communication.dtos.logs.ExecutionLogDTO;
 import br.com.fitnesspro.shared.communication.dtos.logs.ExecutionLogPackageDTO;
+import br.com.fitnesspro.shared.communication.dtos.logs.ExecutionLogSubPackageDTO;
 
 public final class LogMapper implements Serializable {
 
@@ -45,5 +47,9 @@ public final class LogMapper implements Serializable {
 	
 	public TOExecutionLogPackage getTOExecutionLogPackageFrom(ExecutionLogPackageDTO executionLogPackageDTO) {
 		return modelMapper.map(executionLogPackageDTO, TOExecutionLogPackage.class);
+	}
+	
+	public TOExecutionLogSubPackage getTOExecutionLogSubPackageFrom(ExecutionLogSubPackageDTO executionLogSubPackageDTO) {
+		return modelMapper.map(executionLogSubPackageDTO, TOExecutionLogSubPackage.class);
 	}
 }

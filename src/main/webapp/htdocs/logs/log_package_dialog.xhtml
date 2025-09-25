@@ -14,31 +14,33 @@
 
 	<h:form id="logPackageDialogForm">
 		<f:loadBundle var="bundleLogPackageDialog" basename="#{logPackageDialogMBean.screenBundleFilePath}" />
-	
+
 		<div class="ui-g">
 			<div class="ui-g-12">
-				<div class="ui-g-3 vertical-labeled-input ui-g-nopad">
+				<div class="ui-g-2 vertical-labeled-input ui-g-nopad">
 					<p:outputLabel id="labelServiceStart" value="#{bundleLogPackageDialog['label_field_service_start']}"
 						styleClass="bold-label" />
 					<p:outputLabel id="valueServiceStart" value="#{logPackageDialogMBean.toExecutionLogPackage.serviceExecutionStart}"
 						styleClass="label-value" converter="LocalDateTimeConverter" />
 				</div>
 
-				<div class="ui-g-3 vertical-labeled-input ui-g-nopad">
+				<div class="ui-g-2 vertical-labeled-input ui-g-nopad">
 					<p:outputLabel id="labelServiceEnd" value="#{bundleLogPackageDialog['label_field_service_end']}"
 						styleClass="bold-label" />
 					<p:outputLabel id="valueServiceEnd" value="#{logPackageDialogMBean.toExecutionLogPackage.serviceExecutionEnd}"
 						styleClass="label-value" converter="LocalDateTimeConverter" />
 				</div>
 
-				<div class="ui-g-3 vertical-labeled-input ui-g-nopad" jsf:rendered="#{logPackageDialogMBean.visibleImportExportInfos}">
+				<div class="ui-g-2 vertical-labeled-input ui-g-nopad"
+					jsf:rendered="#{logPackageDialogMBean.visibleImportExportInfos}">
 					<p:outputLabel id="labelClientStart" value="#{bundleLogPackageDialog['label_field_client_start']}"
 						styleClass="bold-label" />
 					<p:outputLabel id="valueClientStart" value="#{logPackageDialogMBean.toExecutionLogPackage.clientExecutionStart}"
 						styleClass="label-value" converter="LocalDateTimeConverter" />
 				</div>
 
-				<div class="ui-g-3 vertical-labeled-input ui-g-nopad" jsf:rendered="#{logPackageDialogMBean.visibleImportExportInfos}">
+				<div class="ui-g-2 vertical-labeled-input ui-g-nopad"
+					jsf:rendered="#{logPackageDialogMBean.visibleImportExportInfos}">
 					<p:outputLabel id="labelClientEnd" value="#{bundleLogPackageDialog['label_field_client_end']}"
 						styleClass="bold-label" />
 					<p:outputLabel id="valueClientEnd" value="#{logPackageDialogMBean.toExecutionLogPackage.clientExecutionEnd}"
@@ -46,35 +48,99 @@
 				</div>
 			</div>
 
-			<div class="ui-g-12" jsf:rendered="#{logPackageDialogMBean.visibleImportInfos}">
-				<div class="ui-g-3 vertical-labeled-input ui-g-nopad">
+			<div class="ui-g-12" jsf:rendered="#{logPackageDialogMBean.visibleImportExportInfos}">
+				<div class="ui-g-2 vertical-labeled-input ui-g-nopad">
 					<p:outputLabel id="labelInsertedItemsCount" value="#{bundleLogPackageDialog['label_field_inserted_items_count']}"
 						styleClass="bold-label" />
 					<p:outputLabel id="valueInsertedItemsCount"
 						value="#{logPackageDialogMBean.toExecutionLogPackage.insertedItemsCount}" styleClass="label-value" />
 				</div>
 
-				<div class="ui-g-3 vertical-labeled-input ui-g-nopad">
+				<div class="ui-g-2 vertical-labeled-input ui-g-nopad">
 					<p:outputLabel id="labelUpdatedItemsCount" value="#{bundleLogPackageDialog['label_field_updated_items_count']}"
 						styleClass="bold-label" />
 					<p:outputLabel id="valueUpdatedItemsCount" value="#{logPackageDialogMBean.toExecutionLogPackage.updatedItemsCount}"
 						styleClass="label-value" />
 				</div>
-			</div>
 
-			<div class="ui-g-12" jsf:rendered="#{logPackageDialogMBean.visibleExportInfos}">
-				<div class="ui-g-4 vertical-labeled-input ui-g-nopad">
+				<div class="ui-g-2 vertical-labeled-input ui-g-nopad">
 					<p:outputLabel id="labelAllItemsCount" value="#{bundleLogPackageDialog['label_field_all_items_count']}"
 						styleClass="bold-label" />
 					<p:outputLabel id="valueAllItemsCount" value="#{logPackageDialogMBean.toExecutionLogPackage.allItemsCount}"
 						styleClass="label-value" />
 				</div>
+
+				<div class="ui-g-2 vertical-labeled-input ui-g-nopad">
+					<p:outputLabel id="labelSize" value="#{bundleLogPackageDialog['label_field_size']}" styleClass="bold-label" />
+
+					<p:outputLabel id="valueSize" value="#{logPackageDialogMBean.getExecutionSize()}"
+						styleClass="label-value label-break" />
+				</div>
+
+				<div class="ui-g-2 vertical-labeled-input ui-g-nopad">
+					<p:outputLabel id="labelServiceProcessDuration"
+						value="#{bundleLogPackageDialog['label_field_service_process_duration']}" styleClass="bold-label" />
+
+					<p:outputLabel id="valueServiceProcessDuration" value="#{logPackageDialogMBean.getServiceProcessingDuration()}"
+						styleClass="label-value label-break" />
+				</div>
+
+				<div class="ui-g-2 vertical-labeled-input ui-g-nopad">
+					<p:outputLabel id="labelClientProcessDuration"
+						value="#{bundleLogPackageDialog['label_field_client_process_duration']}" styleClass="bold-label" />
+
+					<p:outputLabel id="valueClientProcessDuration" value="#{logPackageDialogMBean.getClientProcessingDuration()}"
+						styleClass="label-value label-break" />
+				</div>
+			</div>
+
+			<div class="ui-g-12">
+				<fit:lazyPagingTable id="dataTableLogSubPackages" mBean="#{logPackageDialogMBean}"
+					updateOnRefresh="formMessages:messages, logPackageDialogForm:dataTableLogSubPackages:dataTablePagingLazy"
+					updateOnToggleFilter="logPackageDialogForm:dataTableLogSubPackages:dataTablePagingLazy"
+					filterClickAjax="true">
+
+					<p:column headerText="#{bundleLogPackageDialog['label_column_entity_name']}" field="entityName"
+						sortBy="#{item.entityName}" filterBy="#{item.entityName}" width="300">
+						<h:outputText value="#{item.entityName}" />
+					</p:column>
+
+					<p:column headerText="#{bundleLogPackageDialog['label_column_inserted_items']}" field="insertedItemsCount"
+						sortBy="#{item.insertedItemsCount}" width="200">
+						<h:outputText value="#{item.insertedItemsCount}" />
+					</p:column>
+
+					<p:column headerText="#{bundleLogPackageDialog['label_column_updated_items']}" field="updatedItemsCount"
+						sortBy="#{item.updatedItemsCount}" width="200">
+						<h:outputText value="#{item.updatedItemsCount}" />
+					</p:column>
+
+					<p:column headerText="#{bundleLogPackageDialog['label_column_total_items']}" field="allItemsCount"
+						sortBy="#{item.allItemsCount}" width="200">
+						<h:outputText value="#{item.allItemsCount}" />
+					</p:column>
+
+					<p:column headerText="#{bundleLogPackageDialog['label_column_kbsize']}" field="kbSize" sortBy="#{item.kbSize}"
+						width="100">
+						<h:outputText value="#{logPackageDialogMBean.getExecutionSize(item.kbSize)}" />
+					</p:column>
+
+					<p:column headerText="#{bundleLogPackageDialog['label_column_last_update']}" field="lastUpdateDate"
+						sortBy="#{item.lastUpdateDate}" width="200">
+						<h:outputText value="#{item.lastUpdateDate}">
+							<f:converter converterId="LocalDateTimeMilliConverter" />
+						</h:outputText>
+					</p:column>
+
+				</fit:lazyPagingTable>
 			</div>
 
 			<div class="ui-g-12 vertical-labeled-input" jsf:rendered="#{logPackageDialogMBean.visibleExecutionAdditionalInfos}">
-				<p:outputLabel id="labelAdditionalInfos" for="requestBody" value="#{bundleLogPackageDialog['label_field_additional_infos']}" />
-				<p:inputTextarea id="additionalInfos" value="#{logPackageDialogMBean.toExecutionLogPackage.executionAdditionalInfos}" readonly="true"
-					autoResize="false" styleClass="text-area-log-infos" />
+				<p:outputLabel id="labelAdditionalInfos" for="requestBody"
+					value="#{bundleLogPackageDialog['label_field_additional_infos']}" />
+				<p:inputTextarea id="additionalInfos"
+					value="#{logPackageDialogMBean.toExecutionLogPackage.executionAdditionalInfos}" readonly="true" autoResize="false"
+					styleClass="text-area-log-infos" />
 			</div>
 
 			<div class="ui-g-12 vertical-labeled-input" jsf:rendered="#{logPackageDialogMBean.visibleRequestBody}">
@@ -84,9 +150,10 @@
 			</div>
 
 			<div class="ui-g-12 vertical-labeled-input" jsf:rendered="#{logPackageDialogMBean.visibleResponseBody}">
-				<p:outputLabel id="labelResponseBody" for="requestBody" value="#{bundleLogPackageDialog['label_field_response_body']}" />
-				<p:inputTextarea id="responseBody" value="#{logPackageDialogMBean.toExecutionLogPackage.responseBody}" readonly="true"
-					converter="JsonConverter" autoResize="false" styleClass="text-area-log-infos" />
+				<p:outputLabel id="labelResponseBody" for="requestBody"
+					value="#{bundleLogPackageDialog['label_field_response_body']}" />
+				<p:inputTextarea id="responseBody" value="#{logPackageDialogMBean.toExecutionLogPackage.responseBody}"
+					readonly="true" converter="JsonConverter" autoResize="false" styleClass="text-area-log-infos" />
 			</div>
 
 			<div class="ui-g-12 vertical-labeled-input" jsf:rendered="#{logPackageDialogMBean.visibleError}">

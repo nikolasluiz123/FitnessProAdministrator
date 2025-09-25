@@ -10,7 +10,9 @@ import br.com.administrator.service.exception.ServiceException;
 import br.com.administrator.service.gson.utils.GsonUtils;
 import br.com.fitnesspro.shared.communication.dtos.logs.ExecutionLogDTO;
 import br.com.fitnesspro.shared.communication.dtos.logs.ExecutionLogPackageDTO;
+import br.com.fitnesspro.shared.communication.dtos.logs.ExecutionLogSubPackageDTO;
 import br.com.fitnesspro.shared.communication.paging.CommonPageInfos;
+import br.com.fitnesspro.shared.communication.query.filter.ExecutionLogSubPackageFilter;
 import br.com.fitnesspro.shared.communication.query.filter.ExecutionLogsFilter;
 import br.com.fitnesspro.shared.communication.query.filter.ExecutionLogsPackageFilter;
 import br.com.fitnesspro.shared.communication.responses.ReadServiceResponse;
@@ -90,6 +92,39 @@ public class ExecutionLogsWebClient extends AbstractWebClient {
 			Gson defaultGson = GsonUtils.getDefaultGson();
 			
 			Call<SingleValueServiceResponse<Integer>> serviceCall = service.getCountListExecutionLogPackage(token, defaultGson.toJson(filter));
+			SingleValueServiceResponse<Integer> response = getSingleResponseBody(serviceCall, Integer.class);
+			validateResponse(response);
+			
+			return response.getValue();
+		} catch (ConnectException exception) {
+			throw new ServiceException(getServiceBundleString("service_connection_error_message"), exception);
+		}
+	}
+	
+	public List<ExecutionLogSubPackageDTO> getListExecutionLogSubPackage(ExecutionLogSubPackageFilter filter, CommonPageInfos pageInfos) throws Exception {
+		try {
+			String token = getFormatedToken();
+			Gson defaultGson = GsonUtils.getDefaultGson();
+			
+			Call<ReadServiceResponse<ExecutionLogSubPackageDTO>> serviceCall = service.getListExecutionLogSubPackage(token,
+																													defaultGson.toJson(filter), 
+																													defaultGson.toJson(pageInfos));
+			
+			ReadServiceResponse<ExecutionLogSubPackageDTO> response = getReadResponseBody(serviceCall, ExecutionLogSubPackageDTO.class);
+			validateResponse(response);
+			
+			return response.getValues();
+		} catch (ConnectException exception) {
+			throw new ServiceException(getServiceBundleString("service_connection_error_message"), exception);
+		}
+	}
+
+	public Integer getCountListExecutionLogSubPackage(ExecutionLogSubPackageFilter filter) throws Exception {
+		try {
+			String token = getFormatedToken();
+			Gson defaultGson = GsonUtils.getDefaultGson();
+			
+			Call<SingleValueServiceResponse<Integer>> serviceCall = service.getCountListExecutionLogSubPackage(token, defaultGson.toJson(filter));
 			SingleValueServiceResponse<Integer> response = getSingleResponseBody(serviceCall, Integer.class);
 			validateResponse(response);
 			

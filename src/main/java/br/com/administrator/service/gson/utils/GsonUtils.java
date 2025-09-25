@@ -37,10 +37,12 @@ import br.com.fitnesspro.shared.communication.dtos.general.interfaces.IScheduler
 import br.com.fitnesspro.shared.communication.dtos.general.interfaces.IUserDTO;
 import br.com.fitnesspro.shared.communication.dtos.logs.ExecutionLogDTO;
 import br.com.fitnesspro.shared.communication.dtos.logs.ExecutionLogPackageDTO;
+import br.com.fitnesspro.shared.communication.dtos.logs.ExecutionLogSubPackageDTO;
 import br.com.fitnesspro.shared.communication.dtos.logs.UpdatableExecutionLogInfosDTO;
 import br.com.fitnesspro.shared.communication.dtos.logs.UpdatableExecutionLogPackageInfosDTO;
 import br.com.fitnesspro.shared.communication.dtos.logs.interfaces.IExecutionLogDTO;
 import br.com.fitnesspro.shared.communication.dtos.logs.interfaces.IExecutionLogPackageDTO;
+import br.com.fitnesspro.shared.communication.dtos.logs.interfaces.IExecutionLogSubPackageDTO;
 import br.com.fitnesspro.shared.communication.dtos.logs.interfaces.IUpdatableExecutionLogInfosDTO;
 import br.com.fitnesspro.shared.communication.dtos.logs.interfaces.IUpdatableExecutionLogPackageInfosDTO;
 import br.com.fitnesspro.shared.communication.dtos.notification.GlobalNotificationDTO;
@@ -114,6 +116,7 @@ public class GsonUtils {
             .registerTypeAdapterFactory(new GenericInterfaceAdapterFactory<>(IExecutionLogPackageDTO.class, ExecutionLogPackageDTO.class))
             .registerTypeAdapterFactory(new GenericInterfaceAdapterFactory<>(IUpdatableExecutionLogInfosDTO.class, UpdatableExecutionLogInfosDTO.class))
             .registerTypeAdapterFactory(new GenericInterfaceAdapterFactory<>(IUpdatableExecutionLogPackageInfosDTO.class, UpdatableExecutionLogPackageInfosDTO.class))
+            .registerTypeAdapterFactory(new GenericInterfaceAdapterFactory<>(IExecutionLogSubPackageDTO.class, ExecutionLogSubPackageDTO.class))
 
             .registerTypeAdapterFactory(new GenericInterfaceAdapterFactory<>(IGlobalNotificationDTO.class, GlobalNotificationDTO.class))
             .registerTypeAdapterFactory(new GenericInterfaceAdapterFactory<>(INotificationDTO.class, NotificationDTO.class))

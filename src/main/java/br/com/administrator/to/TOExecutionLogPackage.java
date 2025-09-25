@@ -21,6 +21,7 @@ public class TOExecutionLogPackage extends AbstractModelTO {
 	private Integer allItemsCount;
 	private Long serviceProcessingDuration;
 	private Long clientProcessingDuration;
+	private Long kbSize;
 
 	public LocalDateTime getServiceExecutionStart() {
 		return serviceExecutionStart;
@@ -124,6 +125,14 @@ public class TOExecutionLogPackage extends AbstractModelTO {
 
 	public void setClientProcessingDuration(Long clientProcessingDuration) {
 		this.clientProcessingDuration = clientProcessingDuration;
+	}
+
+	public Long getKbSize() {
+		return kbSize;
+	}
+
+	public void setKbSize(Long kbSize) {
+		this.kbSize = kbSize;
 	}
 
 }

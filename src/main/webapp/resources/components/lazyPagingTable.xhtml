@@ -11,6 +11,8 @@
 		<cc:attribute name="onCompleteOnRowSelect" />
 		<cc:attribute name="updateOnRefresh" />
 		<cc:attribute name="updateOnToggleFilter" />
+		
+		<cc:attribute name="filterClickAjax" default="false" />
 	</cc:interface>
 
 	<cc:implementation>
@@ -37,7 +39,7 @@
 
 			<f:facet name="paginatorTopLeft">
 				<p:commandButton icon="pi pi-refresh" action="#{cc.attrs.mBean.onRequestReloadDatatable}" update="#{cc.attrs.updateOnRefresh}" styleClass="margin-right-16" />
-				<p:commandButton ajax="false" icon="pi pi-filter" action="#{cc.attrs.mBean.onToggleFilter}" update="#{cc.attrs.updateOnToggleFilter}" />
+				<p:commandButton ajax="#{cc.attrs.filterClickAjax}" icon="pi pi-filter" action="#{cc.attrs.mBean.onToggleFilter}" update="#{cc.attrs.updateOnToggleFilter}" />
 			</f:facet>
 
 			<f:facet name="emptyMessage">
