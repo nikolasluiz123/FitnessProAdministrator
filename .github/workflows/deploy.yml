@@ -35,6 +35,8 @@ jobs:
           tags: nikolasluiz123/fitnesspro-administrator:latest
           secrets: |
             "PACKAGES_TOKEN=${{ secrets.PACKAGES_TOKEN }}"
+          build-args: |
+            GITHUB_ACTOR=${{ github.actor }}
 
   release:
     needs: build-and-push
