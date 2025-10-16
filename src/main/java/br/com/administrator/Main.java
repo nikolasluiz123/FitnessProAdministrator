@@ -32,7 +32,8 @@ public class Main {
             context.setJarScanner(jarScanner);
         } else {
             System.out.println("Configurando para ambiente de produção (JAR)...");
-            tomcat.addWebapp(contextPath, new File(".").getAbsolutePath());
+            Context context = tomcat.addWebapp(contextPath, "/");
+            context.addLifecycleListener(new Tomcat.FixContextListener());
         }
 
         tomcat.start();
