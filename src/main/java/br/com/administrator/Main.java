@@ -1,7 +1,7 @@
 package br.com.administrator;
 
+import org.apache.catalina.Context;
 import org.apache.catalina.startup.Tomcat;
-
 import java.io.File;
 
 public class Main {
@@ -10,7 +10,8 @@ public class Main {
         tomcat.setPort(8080);
         tomcat.getConnector();
 
-        tomcat.addWebapp("", new File(".").getAbsolutePath());
+        Context context = tomcat.addWebapp("", new File(".").getAbsolutePath());
+        Tomcat.initWebappDefaults(context);
 
         tomcat.start();
         tomcat.getServer().await();
