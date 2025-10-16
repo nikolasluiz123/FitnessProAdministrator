@@ -7,7 +7,6 @@ import org.apache.catalina.webresources.StandardRoot;
 import org.apache.tomcat.util.scan.StandardJarScanner;
 
 import java.io.File;
-import java.nio.file.Files;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -33,17 +32,7 @@ public class Main {
             context.setJarScanner(jarScanner);
         } else {
             System.out.println("Configurando para ambiente de produção (JAR)...");
-
-            File baseDir = Files.createTempDirectory("tomcat-base").toFile();
-            baseDir.deleteOnExit();
-
-            Context context = tomcat.addContext(contextPath, baseDir.getAbsolutePath());
-
-            context.addLifecycleListener(new Tomcat.DefaultWebXmlListener());
-
-            StandardJarScanner jarScanner = new StandardJarScanner();
-            jarScanner.setScanClassPath(true);
-            context.setJarScanner(jarScanner);
+            tomcat.addWebapp(contextPath, new File(".").getAbsolutePath());
         }
 
         tomcat.start();
