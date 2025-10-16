@@ -1,11 +1,13 @@
 package br.com.administrator.mappers;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import org.modelmapper.ModelMapper;
 
 import br.com.administrator.to.TOAcademy;
 import br.com.fitnesspro.shared.communication.dtos.general.AcademyDTO;
 
-public final class AcademyMapper {
+@ApplicationScoped
+public class AcademyMapper {
 
 	private ModelMapper modelMapper = new ModelMapper();
 	

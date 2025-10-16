@@ -1,11 +1,13 @@
 package br.com.administrator.mappers;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import org.modelmapper.ModelMapper;
 
 import br.com.administrator.to.TOScheduledTask;
 import br.com.fitnesspro.shared.communication.dtos.scheduledtask.ScheduledTaskDTO;
 
-public final class ScheduledTaskMapper {
+@ApplicationScoped
+public class ScheduledTaskMapper {
 
 	private ModelMapper modelMapper = new ModelMapper();
 	

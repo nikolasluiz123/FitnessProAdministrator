@@ -1,14 +1,16 @@
 package br.com.administrator.mappers.labeledenum.chronounit;
 
+import br.com.administrator.managedbean.common.constants.ICommonBundlePaths;
+import br.com.administrator.utils.FacesUtils;
+import jakarta.enterprise.context.ApplicationScoped;
+
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import br.com.administrator.managedbean.common.constants.ICommonBundlePaths;
-import br.com.administrator.utils.FacesUtils;
-
-public final class ChronoUnitLabeledEnumMapper {
+@ApplicationScoped
+public class ChronoUnitLabeledEnumMapper {
 
 	private ResourceBundle bundle = FacesUtils.getResourceBundle(ICommonBundlePaths.LABELED_ENUMS);
 	

@@ -1,6 +1,6 @@
 package br.com.administrator.managedbean.common.labeledenum;
 
-public final class LabeledEnum<T> {
+public class LabeledEnum<T> {
 
 	private T value;
 	private String label;

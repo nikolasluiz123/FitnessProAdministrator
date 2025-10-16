@@ -1,14 +1,16 @@
 package br.com.administrator.mappers.labeledenum.execution;
 
-import java.io.Serializable;
-import java.util.ResourceBundle;
-
 import br.com.administrator.managedbean.common.constants.ICommonBundlePaths;
 import br.com.administrator.utils.FacesUtils;
 import br.com.fitnesspro.shared.communication.enums.execution.EnumExecutionState;
 import br.com.fitnesspro.shared.communication.enums.execution.EnumExecutionType;
+import jakarta.enterprise.context.ApplicationScoped;
 
-public final class ExecutionLabeledEnumMapper implements Serializable {
+import java.io.Serializable;
+import java.util.ResourceBundle;
+
+@ApplicationScoped
+public class ExecutionLabeledEnumMapper implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	

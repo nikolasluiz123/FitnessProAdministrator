@@ -1,11 +1,13 @@
 package br.com.administrator.mappers;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import org.modelmapper.ModelMapper;
 
 import br.com.administrator.to.TOApplication;
 import br.com.fitnesspro.shared.communication.dtos.serviceauth.ApplicationDTO;
 
-public final class ApplicationMapper {
+@ApplicationScoped
+public class ApplicationMapper {
 
 	private ModelMapper modelMapper = new ModelMapper();
 	

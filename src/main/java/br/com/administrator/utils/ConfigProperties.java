@@ -1,8 +1,11 @@
 package br.com.administrator.utils;
 
+import jakarta.enterprise.context.ApplicationScoped;
+
 import java.io.InputStream;
 import java.util.Properties;
 
+@ApplicationScoped
 public class ConfigProperties {
 
 	private static String CONFIG_FOLDER = "config/";

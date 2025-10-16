@@ -1,5 +1,6 @@
 package br.com.administrator.mappers;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import org.modelmapper.ModelMapper;
 
 import br.com.administrator.to.TOGlobalNotification;
@@ -7,7 +8,8 @@ import br.com.administrator.to.TONotification;
 import br.com.fitnesspro.shared.communication.dtos.notification.GlobalNotificationDTO;
 import br.com.fitnesspro.shared.communication.dtos.notification.NotificationDTO;
 
-public final class NotificationMapper {
+@ApplicationScoped
+public class NotificationMapper {
 
 	private ModelMapper modelMapper = new ModelMapper();
 	

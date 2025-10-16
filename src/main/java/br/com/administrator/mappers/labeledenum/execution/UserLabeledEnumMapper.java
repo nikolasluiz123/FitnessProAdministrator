@@ -1,12 +1,14 @@
 package br.com.administrator.mappers.labeledenum.execution;
 
-import java.util.ResourceBundle;
-
 import br.com.administrator.managedbean.common.constants.ICommonBundlePaths;
 import br.com.administrator.utils.FacesUtils;
 import br.com.fitnesspro.shared.communication.enums.general.EnumUserType;
+import jakarta.enterprise.context.ApplicationScoped;
 
-public final class UserLabeledEnumMapper {
+import java.util.ResourceBundle;
+
+@ApplicationScoped
+public class UserLabeledEnumMapper {
 
 	private ResourceBundle bundle = FacesUtils.getResourceBundle(ICommonBundlePaths.LABELED_ENUMS);
 	

@@ -1,18 +1,17 @@
 package br.com.administrator.injection;
 
-import java.util.concurrent.TimeUnit;
-
-import com.google.gson.Gson;
-
 import br.com.administrator.service.gson.utils.GsonUtils;
 import br.com.administrator.utils.ConfigProperties;
 import br.com.fitnesspro.shared.communication.constants.Timeouts;
+import com.google.gson.Gson;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import java.util.concurrent.TimeUnit;
 
 @ApplicationScoped
 public class RetrofitProducer {
@@ -46,9 +45,4 @@ public class RetrofitProducer {
 	            .build();
 	}
 	
-	@Produces
-	public ConfigProperties produceConfigProperties() throws Exception {
-		return new ConfigProperties();
-	}
-
 }

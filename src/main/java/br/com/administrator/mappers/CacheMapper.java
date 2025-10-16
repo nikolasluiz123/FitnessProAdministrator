@@ -1,13 +1,14 @@
 package br.com.administrator.mappers;
 
-import org.modelmapper.ModelMapper;
-
 import br.com.administrator.to.TOCache;
 import br.com.administrator.to.TOCacheEntry;
 import br.com.fitnesspro.shared.communication.dtos.cache.CacheDTO;
 import br.com.fitnesspro.shared.communication.dtos.cache.CacheEntryDTO;
+import jakarta.enterprise.context.ApplicationScoped;
+import org.modelmapper.ModelMapper;
 
-public final class CacheMapper {
+@ApplicationScoped
+public class CacheMapper {
 
 	private ModelMapper modelMapper = new ModelMapper();
 	
