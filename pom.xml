@@ -194,13 +194,12 @@
                         </goals>
                         <configuration>
                             <transformers>
-                                <transformers>
-                                    <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer">
+                                </transformer>
 
-                                    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                        <mainClass>br.com.administrator.Main</mainClass>
-                                    </transformer>
-                                </transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>br.com.administrator.Main</mainClass>
+                                </transformer>
                             </transformers>
                             <filters>
                                 <filter>
