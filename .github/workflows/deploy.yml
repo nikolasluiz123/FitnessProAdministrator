@@ -2,14 +2,15 @@ name: Deploy Web App
 
 permissions:
   contents: write
-  
+  packages: write
+
 on:
   push:
     branches:
       - main
 
 jobs:
-  build:
+  build-and-push:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,59 +21,33 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: '23'
-          distribution: 'adopt'
+          distribution: 'temurin'
+          cache: 'maven'
 
-      - name: Grant execute permission for mvnw
-        run: chmod +x ./mvnw
-
-      - name: Set up Maven Authentication
+      - name: Set up Maven Authentication for GitHub Packages
         run: |
-            mkdir -p ~/.m2
-            echo "
-            <settings>
-               <servers>
-                  <server>
-                     <id>github</id>
-                     <username>${{ github.actor }}</username>
-                     <password>${{ secrets.PACKAGES_TOKEN }}</password>
-                  </server>
-               </servers>
-            </settings>
-            " > ~/.m2/settings.xml
+          mkdir -p ~/.m2
+          echo "<settings><servers><server><id>github</id><username>${{ github.actor }}</username><password>${{ secrets.PACKAGES_TOKEN }}</password></server></servers></settings>" > ~/.m2/settings.xml
 
-      - name: Build with Maven
-        run: ./mvnw clean package
-
-      - name: Upload WAR artifact
-        uses: actions/upload-artifact@v4
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
         with:
-          name: webapp-war
-          path: target/*.war
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Download WAR artifact
-        uses: actions/download-artifact@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
         with:
-          name: webapp-war
-          path: docker-build
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: nikolasluiz123/fitnesspro-administrator:latest
 
-      - name: Create Docker context directory
-        run: mkdir -p docker
-
-      - name: Copy WAR to Docker context
-        run: |
-          cp docker-build/*.war docker/administrator.war
-
-      - name: Build Docker image
-        run: |
-          docker build -t nikolasluiz123/fitnesspro-administrator:latest docker
-
-      - name: Push Docker image to Docker Hub
-        run: |
-          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-          docker push nikolasluiz123/fitnesspro-administrator
-  
   release:
-    needs: build
+    needs: build-and-push
     runs-on: ubuntu-latest
 
     steps:
@@ -81,28 +56,21 @@ jobs:
 
       - name: Set up XML tools
         run: |
-         sudo apt-get update
-         sudo apt-get install -y libxml2-utils
+          sudo apt-get update
+          sudo apt-get install -y libxml2-utils
 
       - name: Extract version
         id: get_version
         run: |
           RAW_VERSION=$(xmllint --xpath "/*[local-name()='project']/*[local-name()='version']/text()" pom.xml)
-          CLEAN_VERSION=$(echo "$RAW_VERSION" | sed 's/-SNAPSHOT//')
-          FINAL_VERSION="${CLEAN_VERSION}${{ github.event.inputs.tag_suffix }}"
-          echo "VERSION=$FINAL_VERSION" >> $GITHUB_ENV
+          echo "VERSION=${RAW_VERSION}" >> $GITHUB_ENV
 
       - name: Configure Git
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
 
-      - name: Create Git tag
-        run: |
-          git tag ${{ env.VERSION }}
-          git push origin ${{ env.VERSION }}
-
-      - name: Create GitHub Release
+      - name: Create Git tag and GitHub Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ env.VERSION }}
@@ -117,14 +85,16 @@ jobs:
         run: |
           echo "${{ secrets.SERVER_SSH_KEY }}" > private_key.pem
           chmod 600 private_key.pem
-          ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} << EOF
+          ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} << 'EOF'
             docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
-            docker pull nikolasluiz123/fitnesspro-administrator
-            docker stop administrator-web-app
+            docker pull nikolasluiz123/fitnesspro-administrator:latest
+            docker stop administrator-web-app || true
+            docker rm administrator-web-app || true
             docker image prune -a -f
-            docker rm administrator-web-app        
             docker run -d -p 8080:8080 \
-            -e JAVA_OPTS="-DFITNESS_PRO_ADMINISTRATOR_ENV=remote -DJWT_TOKEN=${{ secrets.JWT_TOKEN }}" \
-            --name administrator-web-app nikolasluiz123/fitnesspro-administrator
+              -e FITNESS_PRO_ADMINISTRATOR_ENV=remote \
+              -e JWT_TOKEN="${{ secrets.JWT_TOKEN }}" \
+              --name administrator-web-app \
+              nikolasluiz123/fitnesspro-administrator:latest
           EOF
           rm private_key.pem
