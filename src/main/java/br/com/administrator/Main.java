@@ -35,24 +35,16 @@ public class Main {
             context.setJarScanner(jarScanner);
         } else {
             System.out.println("Configurando para ambiente de produção (JAR)...");
-
-            // Cria um contexto sem um diretório base, pois os recursos estão no JAR.
             Context context = tomcat.addContext(contextPath, null);
 
-            // Localiza o JAR que está em execução.
             final URL location = Main.class.getProtectionDomain().getCodeSource().getLocation();
-            final String docBase = location.toURI().toString();
 
-            // Cria um gerenciador de recursos para o contexto.
+            final String docBase = new File(location.toURI()).getAbsolutePath();
+
             WebResourceRoot resources = new StandardRoot(context);
-
-            // Mapeia a raiz da aplicação web ('/') para a raiz DENTRO do JAR ('/').
-            // Isso fará com que o Tomcat encontre o WEB-INF e suas páginas.
             resources.addPreResources(new JarResourceSet(resources, "/", docBase, "/"));
             context.setResources(resources);
 
-            // Adiciona listeners essenciais para que o Tomcat processe o web.xml,
-            // as anotações e outras configurações de dentro do JAR.
             context.addLifecycleListener(new Tomcat.DefaultWebXmlListener());
             context.addLifecycleListener(new Tomcat.FixContextListener());
         }
