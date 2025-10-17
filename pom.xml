@@ -7,7 +7,7 @@
 
 	<groupId>br.com.fitnesspro</groupId>
 	<artifactId>administrator</artifactId>
-	<version>2.0.8</version>
+	<version>2.0.9</version>
 	<packaging>jar</packaging>
 
 	<name>administrator Maven Webapp</name>
@@ -148,6 +148,14 @@
 
 	<build>
 		<finalName>administrator</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>src/main/webapp</directory>
+            </resource>
+        </resources>
 		<pluginManagement>
 			<plugins>
 				<plugin>

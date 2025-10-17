@@ -35,26 +35,26 @@ public class Main {
             context.setJarScanner(jarScanner);
         } else {
             System.out.println("Configurando para ambiente de produção (JAR)...");
-            // Cria um contexto vazio. O docBase é nulo porque vamos definir os recursos manualmente.
+
+            // Cria um contexto sem um diretório base, pois os recursos estão no JAR.
             Context context = tomcat.addContext(contextPath, null);
 
-            // Descobre a localização do JAR que está em execução
+            // Localiza o JAR que está em execução.
             final URL location = Main.class.getProtectionDomain().getCodeSource().getLocation();
-            final String docBase = location.toURI().getPath();
+            final String docBase = location.toURI().toString();
 
-            // Aponta o gerenciador de recursos para o próprio JAR
+            // Cria um gerenciador de recursos para o contexto.
             WebResourceRoot resources = new StandardRoot(context);
-            // O caminho webAppMount é a raiz da aplicação, e o internalPath é onde os recursos
-            // estão dentro do JAR (normalmente em META-INF/resources)
-            resources.addPreResources(new JarResourceSet(resources, "/", docBase, "/META-INF/resources"));
+
+            // Mapeia a raiz da aplicação web ('/') para a raiz DENTRO do JAR ('/').
+            // Isso fará com que o Tomcat encontre o WEB-INF e suas páginas.
+            resources.addPreResources(new JarResourceSet(resources, "/", docBase, "/"));
             context.setResources(resources);
 
-            // Como estamos configurando manualmente, precisamos registrar o FacesServlet
-            Tomcat.addServlet(context, "FacesServlet", "jakarta.faces.webapp.FacesServlet");
-            context.addServletMappingDecoded("*.jsf", "FacesServlet");
-
-            // Também é bom adicionar o listener do Weld (CDI) aqui
-            context.addApplicationListener("org.jboss.weld.environment.servlet.Listener");
+            // Adiciona listeners essenciais para que o Tomcat processe o web.xml,
+            // as anotações e outras configurações de dentro do JAR.
+            context.addLifecycleListener(new Tomcat.DefaultWebXmlListener());
+            context.addLifecycleListener(new Tomcat.FixContextListener());
         }
 
         tomcat.start();
